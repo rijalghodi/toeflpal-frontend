@@ -4,7 +4,7 @@ import '@mantine/notifications/styles.css';
 import { ColorSchemeScript, MantineProvider } from '@mantine/core';
 import { ModalsProvider } from '@mantine/modals';
 import { Notifications } from '@mantine/notifications';
-import { Inter } from 'next/font/google';
+import { EB_Garamond, Inter } from 'next/font/google';
 import React from 'react';
 
 import { ClientProviders } from '@/features/ClientProviders';
@@ -12,7 +12,12 @@ import { ClientProviders } from '@/features/ClientProviders';
 import { theme } from '../../theme';
 
 const font = Inter({
-  weight: ['300', '400', '500', '600', '700'],
+  weight: ['300', '400', '500', '600', '700', '800'],
+  subsets: ['latin'],
+});
+
+const titleFont = EB_Garamond({
+  weight: ['400', '500', '600', '700', '800'],
   subsets: ['latin'],
 });
 
@@ -32,10 +37,19 @@ export default function RootLayout({ children }: { children: any }) {
           content="minimum-scale=1, initial-scale=1, width=device-width, user-scalable=no"
         />
       </head>
-      <body className={`${font.className}`}>
+      <body
+      // className={`${titleFont.className} ${font.className}`}
+      >
         <ClientProviders>
           <MantineProvider
-            theme={{ ...theme, fontFamily: font.style.fontFamily }}
+            theme={{
+              ...theme,
+              fontFamily: font.style.fontFamily,
+              headings: {
+                ...theme?.headings,
+                fontFamily: titleFont.style.fontFamily,
+              },
+            }}
           >
             <Notifications position="top-center" autoClose={5000} />
             <ModalsProvider

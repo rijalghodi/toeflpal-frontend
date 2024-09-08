@@ -1,7 +1,6 @@
 import { createTheme, MantineProviderProps } from '@mantine/core';
 
 import classes from '@/styles/mantine.module.css';
-import { generateColors } from '@mantine/colors-generator';
 
 export const theme: MantineProviderProps['theme'] = createTheme({
   spacing: {
@@ -40,8 +39,7 @@ export const theme: MantineProviderProps['theme'] = createTheme({
   },
 
   headings: {
-    fontWeight: '700',
-
+    fontWeight: '600',
     // properties for individual headings, all of them are optional
     sizes: {
       h1: { fontSize: '2.125rem' }, // 34px
