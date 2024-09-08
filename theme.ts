@@ -1,6 +1,7 @@
 import { createTheme, MantineProviderProps } from '@mantine/core';
 
 import classes from '@/styles/mantine.module.css';
+import { generateColors } from '@mantine/colors-generator';
 
 export const theme: MantineProviderProps['theme'] = createTheme({
   spacing: {
@@ -52,20 +53,20 @@ export const theme: MantineProviderProps['theme'] = createTheme({
     },
   },
   colors: {
-    brand: [
-      '#f3f0ff',
-      '#e5dbff',
-      '#d0bfff',
-      '#b197fc',
-      '#9775fa',
-      '#845ef7',
-      '#7950f2',
-      '#7048e8',
-      '#6741d9',
-      '#5f3dc4',
+    azure: [
+      '#e7effe',
+      '#87a6f1',
+      '#5781ea',
+      '#3f6fe7',
+      '#3366e5',
+      '#265ce3',
+      '#2354ce',
+      '#204cbb',
+      '#1d45aa',
+      '#1a3f9b',
     ],
   },
-  primaryColor: 'blue',
+  primaryColor: 'indigo',
   primaryShade: 5,
   black: '#3b3b3b',
   white: '#fff',

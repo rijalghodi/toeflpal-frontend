@@ -7,7 +7,7 @@ type Props = {
 
 export default function AuthLayout({ children }: Props) {
   return (
-    <Box bg={{ base: undefined, xs: '#F8F9FA' }}>
+    <Box bg={{ base: undefined, xs: 'aliceblue' }}>
       <Container maw={1000} miw={300} mih="100vh" mx="auto">
         {children}
       </Container>

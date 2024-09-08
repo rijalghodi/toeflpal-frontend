@@ -372,6 +372,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@mantine/colors-generator@npm:^7.12.2":
+  version: 7.12.2
+  resolution: "@mantine/colors-generator@npm:7.12.2"
+  peerDependencies:
+    chroma-js: ^2.4.2
+  checksum: 10c0/4c3ed0e72f568b496ec25836214c0154b8436e08e51663ac5191b95767da3983711e17d5ed740adc95d7350aa2fba7ef2e9dd365cba46124eb55314c033f25d5
+  languageName: node
+  linkType: hard
+
 "@mantine/core@npm:7.12.2":
   version: 7.12.2
   resolution: "@mantine/core@npm:7.12.2"
@@ -1356,6 +1365,13 @@ __metadata:
     ansi-styles: "npm:^4.1.0"
     supports-color: "npm:^7.1.0"
   checksum: 10c0/4a3fef5cc34975c898ffe77141450f679721df9dde00f6c304353fa9c8b571929123b26a0e4617bde5018977eb655b31970c297b91b63ee83bb82aeb04666880
+  languageName: node
+  linkType: hard
+
+"chroma-js@npm:^3.1.1":
+  version: 3.1.1
+  resolution: "chroma-js@npm:3.1.1"
+  checksum: 10c0/fb5e3cd958a954b8cd44017f70aff42ae37bc561cdcea0ebeeb6d2df5989e7402e02c674274af2eefd1478ee172e05ce51ac353e3cbe1db139f599b338523339
   languageName: node
   linkType: hard
 
@@ -4980,6 +4996,7 @@ __metadata:
   resolution: "toefl-pal@workspace:."
   dependencies:
     "@hookform/resolvers": "npm:^3.9.0"
+    "@mantine/colors-generator": "npm:^7.12.2"
     "@mantine/core": "npm:7.12.2"
     "@mantine/form": "npm:^7.12.2"
     "@mantine/hooks": "npm:7.12.2"
@@ -4995,6 +5012,7 @@ __metadata:
     "@typescript-eslint/eslint-plugin": "npm:^8.4.0"
     "@typescript-eslint/parser": "npm:^8.4.0"
     axios: "npm:^1.7.7"
+    chroma-js: "npm:^3.1.1"
     eslint: "npm:8.57.0"
     eslint-config-next: "npm:14.2.4"
     eslint-config-prettier: "npm:^9.1.0"

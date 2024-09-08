@@ -1,20 +1,18 @@
 import '@mantine/core/styles.css';
-// Mantine styles
-import '@mantine/core/styles.css';
 import '@mantine/notifications/styles.css';
 
 import { ColorSchemeScript, MantineProvider } from '@mantine/core';
 import { ModalsProvider } from '@mantine/modals';
 import { Notifications } from '@mantine/notifications';
-import { Roboto } from 'next/font/google';
+import { Inter } from 'next/font/google';
 import React from 'react';
 
 import { ClientProviders } from '@/features/ClientProviders';
 
 import { theme } from '../../theme';
 
-const font = Roboto({
-  weight: ['300', '400', '500', '700'],
+const font = Inter({
+  weight: ['300', '400', '500', '600', '700'],
   subsets: ['latin'],
 });
 
