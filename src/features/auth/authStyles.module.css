@@ -1,0 +1,18 @@
+.auth-card {
+  border-radius: var(--mantine-radius-lg);
+  background-color: var(--mantine-color-white);
+  padding-left: var(--mantine-spacing-xl);
+  padding-right: var(--mantine-spacing-xl);
+  padding-top: var(--mantine-spacing-lg);
+  padding-bottom: var(--mantine-spacing-lg);
+  box-shadow: var(--mantine-shadow-sm);
+  width: 500px;
+}
+
+@media (max-width: 36em) {
+  .auth-card {
+    padding-left: 0;
+    padding-right: 0;
+    box-shadow: none;
+  }
+}

@@ -1,0 +1,57 @@
+.label {
+  font-weight: 400;
+  color: var(--mantine-color-text);
+}
+
+.input[data-error] {
+  border: 1px solid var(--mantine-color-default-border);
+  color: var(--mantine-color-text);
+}
+
+.input[data-error]::placeholder {
+  color: var(--mantine-color-placeholder);
+}
+
+.input[data-invalid]::placeholder {
+  color: var(--mantine-color-placeholder) !important;
+}
+
+.dropdown {
+  box-shadow: var(--mantine-shadow-sm);
+}
+
+.notification-root {
+  align-items: start !important;
+  box-shadow: var(--mantine-shadow-sm) !important;
+  border: 1px solid var(--mantine-color-gray-3);
+}
+
+.notification-icon {
+  margin-inline-end: 16px !important;
+}
+
+.notification-title {
+  color: var(--mantine-color-text);
+  line-height: 28px;
+}
+.notification-description {
+  min-height: 28px;
+  display: flex;
+  align-items: center;
+}
+
+.modal-title {
+  font-size: var(--mantine-font-size-md);
+  font-weight: 600;
+}
+
+.modal-body {
+  font-size: var(--mantine-font-size-sm);
+}
+
+.modal-overlay {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+.modal-header {
+  padding-bottom: var(--mantine-spacing-sm);
+}
