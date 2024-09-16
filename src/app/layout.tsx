@@ -1,10 +1,11 @@
 import '@mantine/core/styles.css';
 import '@mantine/notifications/styles.css';
+import '@/styles/global.css';
 
 import { ColorSchemeScript, MantineProvider } from '@mantine/core';
 import { ModalsProvider } from '@mantine/modals';
 import { Notifications } from '@mantine/notifications';
-import { EB_Garamond, Inter } from 'next/font/google';
+import { Inter, Plus_Jakarta_Sans } from 'next/font/google';
 import React from 'react';
 
 import { ClientProviders } from '@/features/ClientProviders';
@@ -12,11 +13,11 @@ import { ClientProviders } from '@/features/ClientProviders';
 import { theme } from '../../theme';
 
 const font = Inter({
-  weight: ['300', '400', '500', '600', '700', '800'],
+  weight: ['400', '500', '600', '700', '800'],
   subsets: ['latin'],
 });
 
-const titleFont = EB_Garamond({
+const titleFont = Inter({
   weight: ['400', '500', '600', '700', '800'],
   subsets: ['latin'],
 });

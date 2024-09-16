@@ -1,6 +1,9 @@
 'use client';
 
+import { Icon } from '@iconify-icon/react';
+import quoteL from '@iconify-icons/fa/quote-left';
 import {
+  Anchor,
   AppShell,
   Box,
   Burger,
@@ -15,37 +18,65 @@ import {
   useMantineTheme,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import {
-  IconEditCircle,
-  IconHeadphones,
-  IconReportAnalytics,
-} from '@tabler/icons-react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
 import hero from '~/hero.png';
 import logo from '~/logo.png';
 
+const features = [
+  {
+    title: '20+',
+    desc: 'TOEFL Test',
+  },
+  {
+    title: '99+',
+    desc: 'TOEFL lessons',
+  },
+  {
+    title: '1000  +',
+    desc: 'Growing users',
+  },
+];
+
+const navs = [
+  {
+    title: 'Simulation',
+    href: '/app/simulation',
+  },
+  {
+    title: 'Practice',
+    href: '/app/practice',
+  },
+  {
+    title: 'Lessons',
+    href: '/app/lessons',
+  },
+];
+
 export default function Home() {
   const { colors } = useMantineTheme();
   const [opened, { toggle }] = useDisclosure();
-  const features = [
-    {
-      title: 'TOEFL Simulation',
-      desc: 'Take reliable TOEFL Test simulation',
-      icon: <IconHeadphones size={32} color={colors.indigo[5]} />,
-    },
-    {
-      title: 'TOEFL Evaluation',
-      desc: 'Get evaluation from your mistake',
-      icon: <IconReportAnalytics size={32} color={colors.indigo[5]} />,
-    },
-    {
-      title: 'TOEFL Learning',
-      desc: 'Learn and explore TOEFL materials',
-      icon: <IconEditCircle size={32} color={colors.indigo[5]} />,
-    },
-  ];
+
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 100) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   return (
     <AppShell
       header={{ height: { base: 70, xs: 80 }, offset: true }}
@@ -57,7 +88,14 @@ export default function Home() {
       withBorder={false}
       padding="md"
     >
-      <AppShell.Header bg="aliceblue">
+      <AppShell.Header
+        bg="#F5FBFF"
+        style={{
+          boxShadow: scrolled
+            ? 'rgba(17, 12, 46, 0.05) 0px 5px 20px 0px'
+            : undefined,
+        }}
+      >
         <Group
           justify="space-between"
           h="100%"
@@ -67,26 +105,39 @@ export default function Home() {
           pl="md"
           pr="md"
         >
-          <Group gap="md">
+          <Group gap="xs">
             <Image src={logo} alt="Logo" height={50} width={50} />
-            <Text fw={500} fz="h2" ff="heading">
-              Toefl Pal
+            <Text fw={800} fz="h4" ff="heading" c="indigo.5">
+              TOEFL PAL
             </Text>
           </Group>
-          <Burger opened={opened} onClick={toggle} hiddenFrom="xs" size="sm" />
-          <Group gap="md" visibleFrom="xs">
-            <Button variant="outline" size="md" component={Link} href="/login">
+          <Group align="center" gap="xl" component="nav" visibleFrom="sm">
+            {navs.map((item, i) => (
+              <Anchor
+                underline="hover"
+                component={Link}
+                href={item.href}
+                c="dark"
+                key={i}
+              >
+                {item.title}
+              </Anchor>
+            ))}
+          </Group>
+          <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
+          <Group gap="md" visibleFrom="sm">
+            <Button variant="light" size="sm" component={Link} href="/login">
               Login
             </Button>
-            <Button size="md" component={Link} href="/register">
+            <Button size="sm" component={Link} href="/register">
               Register
             </Button>
           </Group>
         </Group>
       </AppShell.Header>
 
-      <AppShell.Main bg="aliceblue">
-        <Stack bg="aliceblue" pb={120} py={0}>
+      <AppShell.Main bg="#f5fbff">
+        <Stack bg="#f5fbff" pb={80} py={0}>
           <Container py="xl" pos="relative" component="section">
             <Flex
               direction={{ base: 'column', sm: 'row' }}
@@ -103,18 +154,17 @@ export default function Home() {
               >
                 <Title
                   fz={{ base: 44, xs: 54 }}
-                  ff="heading"
-                  fw={500}
+                  fw={700}
                   ta={{ sm: 'left', base: 'center' }}
                 >
-                  Supercharge Your Next{' '}
+                  Boost Your Next{' '}
                   <Text
                     span
-                    c={colors.indigo[4]}
+                    c={colors.indigo[5]}
                     fz={{ base: 44, xs: 54 }}
-                    fw={500}
+                    fw={700}
                   >
-                    TOEFL Test
+                    TOEFL Score
                   </Text>
                 </Title>
                 <Text
@@ -122,8 +172,8 @@ export default function Home() {
                   c="dark.3"
                   ta={{ sm: 'left', base: 'center' }}
                 >
-                  Realiable TOEFL test simulator to maximize your next score.
-                  Practice and learn all in one place
+                  TOEFL Pal offers reliable TOEFL simulations and helps you
+                  prepare systematically—all in one place!
                 </Text>
                 <Group>
                   <Button component={Link} href="/register" size="lg">
@@ -137,50 +187,92 @@ export default function Home() {
                 miw={300}
                 style={{ aspectRatio: '1 / 1' }}
               >
-                <Image src={hero} fill alt="hero" style={{}} />
+                <Image src={hero} fill alt="hero" />
               </Box>
             </Flex>
           </Container>
-          <Container component="section" w="100%" maw={1200}>
-            <Stack>
-              {/* <Title fz="h1" ta="center">
-                Features
-              </Title> */}
-              <Group gap="xl" align="center" justify="center">
-                {features.map((v, i) => (
-                  <Paper key={i} radius="lg" p="lg" shadow="md" w={320}>
-                    <Stack align="center" gap="xs">
-                      <Box>{v.icon}</Box>
-                      <Title size="h4" mt="xs" ta="center" ff="text">
-                        {v.title}
-                      </Title>
-                      <Text c="dimmed" ta="center">
-                        {v.desc}
-                      </Text>
-                    </Stack>
-                  </Paper>
+
+          <Container component="section" w="100%" maw={1000}>
+            <Paper radius="lg" px="lg" py="lg" shadow="xs" w="100%">
+              <Group
+                gap="xl"
+                align="center"
+                justify="space-between"
+                wrap="wrap"
+              >
+                {features.map((feature, i) => (
+                  <Stack align="center" gap="xs" key={i} flex={1} miw={200}>
+                    <Title size="h2" mt="xs" ta="center" ff="text">
+                      {feature.title}
+                    </Title>
+                    <Text c="dimmed" ta="center" fz="lg">
+                      {feature.desc}
+                    </Text>
+                  </Stack>
                 ))}
               </Group>
-            </Stack>
+            </Paper>
+          </Container>
+
+          <Container component="section" w="100%" maw={1000} pt={80}>
+            <Box maw={700} mx="auto" pos="relative">
+              <Text
+                fz="h2"
+                fw={700}
+                component="blockquote"
+                c="dark.5"
+                pos="relative"
+                ml={12}
+                mt={32}
+              >
+                <Icon
+                  icon={quoteL}
+                  height={32}
+                  width={32}
+                  style={{ position: 'absolute', left: -12, top: -40 }}
+                />
+                I got 600+ score TOEFL without taking any courses. Just by doing
+                a ton of simulations on TOEFL Pal.
+                <Text c="dimmed" mt="md">
+                  - Dimaz Adhitya, Magister Student
+                </Text>
+              </Text>
+            </Box>
           </Container>
         </Stack>
       </AppShell.Main>
-      <AppShell.Aside py="md" px={4} bg="aliceblue">
-        <Stack maw={200} mx="auto" pt="xl" pb="xl">
-          <Button variant="outline" size="md" component={Link} href="/login">
-            Login
-          </Button>
-          <Button size="md" component={Link} href="/register">
-            Register
-          </Button>
-        </Stack>
-      </AppShell.Aside>
 
-      <Group align="center" justify="center" h={50} bg="aliceblue">
-        <Text ta="center" fz="sm" c="dimmed">
+      <Group align="center" justify="center" h={50} bg="#f5fbff">
+        <Text ta="center" fz="sm">
           Made with ❤️ by Rijal Ghodi 2024
         </Text>
       </Group>
+
+      <AppShell.Aside py="md" px={4} bg="#f5fbff">
+        <Stack maw={200} mx="auto" pt="xl" pb="xl" gap="xl">
+          {navs.map((item, i) => (
+            <Anchor
+              underline="hover"
+              component={Link}
+              href={item.href}
+              c="dark"
+              ta="center"
+              fz="xl"
+              key={i}
+            >
+              {item.title}
+            </Anchor>
+          ))}
+          <Stack>
+            <Button variant="light" size="md" component={Link} href="/login">
+              Login
+            </Button>
+            <Button size="md" component={Link} href="/register">
+              Register
+            </Button>
+          </Stack>
+        </Stack>
+      </AppShell.Aside>
     </AppShell>
   );
 }

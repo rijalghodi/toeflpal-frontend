@@ -66,14 +66,15 @@ export const theme: MantineProviderProps['theme'] = createTheme({
   },
   primaryColor: 'indigo',
   primaryShade: 5,
-  black: '#3b3b3b',
+  black: '#3f3f3f',
   white: '#fff',
 
   shadows: {
-    xs: '0px 2px 8px 0px rgba(0, 0, 0, 0.1',
-    sm: '0px 4px 12px 0px rgba(0, 0, 0, 0.1)',
-    md: '0px 6px 18px 0px rgba(0, 0, 0, .1)',
-    xl: '0px 8px 24px 0px rgba(0, 0, 0, .1)',
+    xs: 'rgba(100, 100, 111, 0.2) 0px 3px 10px 0px',
+    sm: 'rgba(100, 100, 111, 0.2) 0px 4px 20px 0px',
+    md: 'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px',
+    lg: 'rgba(100, 100, 111, 0.2) 0px 10px 32px 0px',
+    xl: 'rgba(100, 100, 111, 0.2) 0px 13px 32px 0px',
   },
 
   components: {
