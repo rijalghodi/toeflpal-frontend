@@ -1,6 +1,6 @@
 import { GResponse } from '@/types';
 
-import { client } from '../client';
+import { axiosInstance } from '../axiosInstance';
 
 type ListToeflRequest = {
   published?: boolean;
@@ -20,7 +20,7 @@ type ListToeflResponse = GResponse<
 export const listToefl = async (
   req: ListToeflRequest,
 ): Promise<ListToeflResponse> => {
-  const response = await client.get<ListToeflResponse>('/toefl', {
+  const response = await axiosInstance.get<ListToeflResponse>('/toefl', {
     params: { published: req.published },
   });
   return response.data;

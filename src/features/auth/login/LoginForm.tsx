@@ -10,6 +10,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { login, setAuthCookie } from '@/services';
 import { LoginFormValues } from '@/types';
+import { routes } from '@/utils/constant/routes';
 import { loginSchema } from '@/utils/form-schema/auth/login.schema';
 
 export function LoginForm() {
@@ -37,7 +38,7 @@ export function LoginForm() {
           expires: accessToken.expiredAt,
         });
       }
-      router.push('/');
+      router.push(routes.dashboard);
     },
     onError: (error) => {
       notifications.show({

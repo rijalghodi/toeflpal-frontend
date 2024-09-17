@@ -22,7 +22,7 @@ export function ClientProviders({ children }: Props) {
       <ReactQueryDevtools initialIsOpen={false} position="bottom" />
       <AppProgressBar
         height="3px"
-        color="#1c7ed6"
+        color="#5c7cfa"
         options={{ showSpinner: false }}
         shallowRouting
       />

@@ -1,4 +1,18 @@
-import { createTheme, MantineProviderProps } from '@mantine/core';
+import {
+  Button,
+  createTheme,
+  FileInput,
+  Group,
+  Loader,
+  MantineProviderProps,
+  Modal,
+  Notification,
+  NumberInput,
+  PasswordInput,
+  Select,
+  Textarea,
+  TextInput,
+} from '@mantine/core';
 
 import classes from '@/styles/mantine.module.css';
 
@@ -78,48 +92,48 @@ export const theme: MantineProviderProps['theme'] = createTheme({
   },
 
   components: {
-    TextInput: {
+    TextInput: TextInput.extend({
       classNames: {
         label: classes.label,
         input: classes.input,
         wrapper: classes.wrapper,
       },
-    },
-    PasswordInput: {
+    }),
+    PasswordInput: PasswordInput.extend({
       classNames: {
         label: classes.label,
         input: classes.input,
         innerInput: classes.input,
       },
-    },
-    Textarea: {
+    }),
+    Textarea: Textarea.extend({
       classNames: {
         label: classes.label,
         input: classes.input,
         wrapper: classes.wrapper,
       },
-    },
-    FileInput: {
+    }),
+    FileInput: FileInput.extend({
       classNames: {
         label: classes.label,
         input: classes.input,
         wrapper: classes.wrapper,
       },
-    },
-    NumberInput: {
+    }),
+    NumberInput: NumberInput.extend({
       classNames: {
         label: classes.label,
         input: classes.input,
         wrapper: classes.wrapper,
       },
-    },
-    Select: {
+    }),
+    Select: Select.extend({
       classNames: {
         label: classes.label,
         input: classes.input,
         dropdown: classes.dropdown,
       },
-    },
+    }),
     DatePickerInput: {
       classNames: {
         label: classes.label,
@@ -133,26 +147,40 @@ export const theme: MantineProviderProps['theme'] = createTheme({
         input: classes.input,
       },
     },
-    Notification: {
+    Notification: Notification.extend({
       classNames: {
         root: classes['notification-root'],
         title: classes['notification-title'],
         description: classes['notification-description'],
         icon: classes['notification-icon'],
       },
-    },
-    Modal: {
+    }),
+    Modal: Modal.extend({
       classNames: {
         title: classes['modal-title'],
         body: classes['modal-body'],
         overlay: classes['modal-overlay'],
         header: classes['modal-header'],
       },
-    },
-    Group: {
+    }),
+    Group: Group.extend({
       defaultProps: {
         gap: 'sm',
       },
-    },
+    }),
+
+    Button: Button.extend({
+      defaultProps: {
+        loaderProps: {
+          type: 'dots',
+        },
+      },
+    }),
+
+    Loader: Loader.extend({
+      defaultProps: {
+        type: 'dots',
+      },
+    }),
   },
 });

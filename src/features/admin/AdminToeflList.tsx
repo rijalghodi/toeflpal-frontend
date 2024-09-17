@@ -1,8 +1,16 @@
-import { Badge, Group, Paper, SimpleGrid, Stack, Text } from '@mantine/core';
+import {
+  Badge,
+  Group,
+  Paper,
+  Select,
+  SimpleGrid,
+  Stack,
+  Text,
+} from '@mantine/core';
 import { IconCrown } from '@tabler/icons-react';
 import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
-import React from 'react';
+import React, { useState } from 'react';
 
 import { LoadingState } from '@/elements/feedbacks/LoadingState';
 import { listToefl } from '@/services/toefl/list-toefl';
@@ -11,9 +19,13 @@ import { routes } from '@/utils/constant/routes';
 type Props = {
   expectedHeight?: number | string;
 };
-export function ToeflList({ expectedHeight }: Props) {
+export function AdminToeflList({ expectedHeight }: Props) {
+  const [published, setPublished] = useState<string | null>('');
+
+  // Read user
+
   const { data, isPending } = useQuery({
-    queryKey: ['toefl-list'],
+    queryKey: ['admin-toefl-list', published],
     queryFn: () => listToefl({ published: true }),
   });
 
@@ -22,7 +34,19 @@ export function ToeflList({ expectedHeight }: Props) {
   }
 
   return (
-    <Stack>
+    <Stack gap="md">
+      <Select
+        label="Status"
+        data={[
+          { label: 'Published', value: '1' },
+          { label: 'Draft', value: '0' },
+          { label: 'All', value: '' },
+        ]}
+        value={published}
+        onChange={setPublished}
+        w={200}
+        allowDeselect={false}
+      />
       <SimpleGrid cols={{ base: 1, xs: 2, md: 2 }}>
         {data?.data.map((toefl) => (
           <Paper
@@ -30,14 +54,11 @@ export function ToeflList({ expectedHeight }: Props) {
             withBorder
             p="md"
             component={Link}
-            href={routes.toeflList}
+            href={routes.adminToeflDetail(toefl.id)}
           >
             <Group justify="space-between">
               <Text>{toefl.name}</Text>
               <Group>
-                <Badge variant="light" tt="capitalize">
-                  Score: 500
-                </Badge>
                 <Badge variant="light" tt="capitalize" color="gray">
                   Draft
                 </Badge>

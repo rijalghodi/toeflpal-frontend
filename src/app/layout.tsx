@@ -2,29 +2,26 @@ import '@mantine/core/styles.css';
 import '@mantine/notifications/styles.css';
 import '@/styles/global.css';
 
-import { ColorSchemeScript, MantineProvider } from '@mantine/core';
-import { ModalsProvider } from '@mantine/modals';
-import { Notifications } from '@mantine/notifications';
-import { Inter, Plus_Jakarta_Sans } from 'next/font/google';
+import { ColorSchemeScript } from '@mantine/core';
+import { Inter } from 'next/font/google';
 import React from 'react';
 
+import { MantineProviders } from '@/elements/providers/MantineProvider';
 import { ClientProviders } from '@/features/ClientProviders';
-
-import { theme } from '../../theme';
 
 const font = Inter({
   weight: ['400', '500', '600', '700', '800'],
   subsets: ['latin'],
 });
 
-const titleFont = Inter({
+const headingFont = Inter({
   weight: ['400', '500', '600', '700', '800'],
   subsets: ['latin'],
 });
 
 export const metadata = {
-  title: 'Toefl Pal - Real TOEFL Simulation',
-  description: 'Toefl Pal is a reliable TOEFL simulation platform',
+  title: 'TOEFL PAL - Real TOEFL Simulation',
+  description: 'TOEFL PAL is a reliable TOEFL simulation platform',
 };
 
 export default function RootLayout({ children }: { children: any }) {
@@ -42,28 +39,12 @@ export default function RootLayout({ children }: { children: any }) {
       // className={`${titleFont.className} ${font.className}`}
       >
         <ClientProviders>
-          <MantineProvider
-            theme={{
-              ...theme,
-              fontFamily: font.style.fontFamily,
-              headings: {
-                ...theme?.headings,
-                fontFamily: titleFont.style.fontFamily,
-              },
-            }}
+          <MantineProviders
+            fontFamily={font.style.fontFamily}
+            headingFontFamily={headingFont.style.fontFamily}
           >
-            <Notifications position="top-center" autoClose={5000} />
-            <ModalsProvider
-              // modals={{
-              //   context: ContextModal,
-              // }}
-              modalProps={{
-                centered: true,
-              }}
-            >
-              {children}
-            </ModalsProvider>
-          </MantineProvider>
+            {children}
+          </MantineProviders>
         </ClientProviders>
       </body>
     </html>

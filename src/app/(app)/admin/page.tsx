@@ -5,8 +5,7 @@ import React from 'react';
 
 import { ToeflList } from '@/features/simulation/ToeflList';
 
-type Props = {};
-export default function AllSimulationPage(props: Props) {
+export default function AdminSimulationPage() {
   return (
     <Stack>
       <Title fw={600} order={1} fz="h2">

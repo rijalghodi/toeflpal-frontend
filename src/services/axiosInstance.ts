@@ -3,7 +3,7 @@ import Cookies from 'js-cookie';
 
 // import { refreshToken } from "./auth";
 
-export const client = axios.create({
+export const axiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
   headers: {
     'Content-type': 'application/json',
@@ -14,10 +14,10 @@ export const client = axios.create({
 // let refreshSubscribers = [];
 
 // Add an interceptor to include JWT token from cookie in headers
-client.interceptors.request.use(
+axiosInstance.interceptors.request.use(
   (config) => {
     // Retrieve token from cookie
-    const token = Cookies.get('access_token');
+    const token = Cookies.get('accessToken');
 
     // If token exists, add it to the request headers
     if (token) {

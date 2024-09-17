@@ -1,33 +1,23 @@
 'use client';
 
-import { Anchor, Group, Paper, Stack, Text, Title } from '@mantine/core';
-import Image from 'next/image';
+import { Anchor, Stack, Text, Title } from '@mantine/core';
 import Link from 'next/link';
 import React from 'react';
 
+import { LogoAndText } from '@/elements/brand/LogoAndText';
 import { routes } from '@/utils/constant/routes';
-import logo from '~/logo.png';
 
-import classes from '../authStyles.module.css';
 import { LoginForm } from './LoginForm';
 
 export function LoginCard() {
   return (
     // <Paper classNames={{ root: classes['auth-card'] }}>
     <Stack align="stretch" w="100%" gap="lg" maw={400}>
-      <Stack gap={8} align="center">
-        <Group gap="xs" mb="md">
-          <Image src={logo} alt="Logo" height={40} width={40} />
-          <Text fw={800} fz="h4" ff="heading" c="indigo">
-            TOEFL PAL
-          </Text>
-        </Group>
-        <Title order={1} fz="h2" fw="600" ta="center">
-          Welcome back!
+      <Stack gap="xl" align="center">
+        <LogoAndText size="xs" />
+        <Title order={1} fz="h2" fw="600" ta="center" mb="md">
+          Login to Your Account
         </Title>
-        <Text c="dimmed" ta="center">
-          Login to your account
-        </Text>
       </Stack>
       {/* <GoogleLoginButton /> */}
       <Stack gap={8}>
@@ -46,7 +36,7 @@ export function LoginCard() {
             Register here
           </Anchor>
         </Text>
-        <Anchor fz="sm" href="/" component={Link} ta="center">
+        <Anchor fz="sm" href={routes.home} component={Link} ta="center">
           Back to home
         </Anchor>
       </Stack>

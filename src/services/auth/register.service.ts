@@ -1,6 +1,6 @@
 import { GResponse } from '@/types';
 
-import { client } from '../client';
+import { axiosInstance } from '../axiosInstance';
 
 type RegisterRequest = {
   email: string;
@@ -12,6 +12,9 @@ type RegisterResponse = GResponse<{
 }>;
 
 export const register = async (req: RegisterRequest) => {
-  const response = await client.post<RegisterResponse>('/auth/register', req);
+  const response = await axiosInstance.post<RegisterResponse>(
+    '/auth/register',
+    req,
+  );
   return response.data;
 };

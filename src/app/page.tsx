@@ -22,8 +22,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
+import { LogoAndText } from '@/elements/brand/LogoAndText';
+import { routes } from '@/utils/constant/routes';
 import hero from '~/hero.png';
-import logo from '~/logo.png';
 
 const features = [
   {
@@ -35,7 +36,7 @@ const features = [
     desc: 'TOEFL lessons',
   },
   {
-    title: '1000  +',
+    title: '1000+',
     desc: 'Growing users',
   },
 ];
@@ -43,15 +44,15 @@ const features = [
 const navs = [
   {
     title: 'Simulation',
-    href: '/app/simulation',
+    href: routes.toeflList,
   },
   {
     title: 'Practice',
-    href: '/app/practice',
+    href: routes.practiceList,
   },
   {
     title: 'Lessons',
-    href: '/app/lessons',
+    href: routes.lessonList,
   },
 ];
 
@@ -105,12 +106,9 @@ export default function Home() {
           pl="md"
           pr="md"
         >
-          <Group gap="xs">
-            <Image src={logo} alt="Logo" height={50} width={50} />
-            <Text fw={800} fz="h4" ff="heading" c="indigo.5">
-              TOEFL PAL
-            </Text>
-          </Group>
+          <Link href={routes.home}>
+            <LogoAndText size="sm" />
+          </Link>
           <Group align="center" gap="xl" component="nav" visibleFrom="sm">
             {navs.map((item, i) => (
               <Anchor
@@ -218,9 +216,8 @@ export default function Home() {
             <Box maw={700} mx="auto" pos="relative">
               <Text
                 fz="h2"
-                fw={700}
+                fw={600}
                 component="blockquote"
-                c="dark.5"
                 pos="relative"
                 ml={12}
                 mt={32}

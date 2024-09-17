@@ -1,22 +1,14 @@
 'use client';
 
-import {
-  ActionIcon,
-  AppShell,
-  Avatar,
-  Container,
-  Group,
-  NavLink,
-  Stack,
-  Text,
-} from '@mantine/core';
+import { ActionIcon, AppShell, Avatar, Container, Group } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { IconMenu3 } from '@tabler/icons-react';
-import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 
-import logo from '~/logo.png';
+import { LogoAndText } from '@/elements/brand/LogoAndText';
+import { Navbar } from '@/features/layout/Navbar';
+import { routes } from '@/utils/constant/routes';
 
 type Props = {
   children: React.ReactNode;
@@ -34,7 +26,8 @@ export default function AppLayout({ children }: Props) {
         collapsed: { desktop: opened, mobile: !opened },
       }}
       withBorder={false}
-      padding="md"
+      px={{ base: 'md', xs: 'xl' }}
+      py="xs"
     >
       <AppShell.Header bg="rgba(0, 0, 0, 0)">
         <Group
@@ -54,12 +47,9 @@ export default function AppLayout({ children }: Props) {
             >
               <IconMenu3 />
             </ActionIcon>
-            <Group gap="md">
-              <Image src={logo} alt="Logo" height={40} width={40} />
-              <Text fw={500} fz="h3" ff="heading">
-                Toefl Pal
-              </Text>
-            </Group>
+            <Link href={routes.home}>
+              <LogoAndText size="xs" />
+            </Link>
           </Group>
 
           <Group gap="md" visibleFrom="xs">
@@ -69,7 +59,9 @@ export default function AppLayout({ children }: Props) {
       </AppShell.Header>
 
       <AppShell.Main>
-        <Container maw={1000}>{children}</Container>
+        <Container maw={1000} px={0} py={0}>
+          {children}
+        </Container>
       </AppShell.Main>
       <AppShell.Navbar
         py="md"
@@ -77,17 +69,11 @@ export default function AppLayout({ children }: Props) {
         styles={{
           navbar: {
             borderTopRightRadius: 16,
-            // borderBottomRightRadius: 16,
             boxShadow: '0px 4px 12px 0px rgba(0, 0, 0, 0.1)',
           },
         }}
       >
-        <Stack gap={0}>
-          <NavLink label="Dashboard" component={Link} href="/app/dashboard" />
-          <NavLink label="Simulation" component={Link} href="/app/simulation" />
-          <NavLink label="Admin" component={Link} href="/app/admin" />
-          {/* <NavLink label="Practice"/> */}
-        </Stack>
+        <Navbar />
       </AppShell.Navbar>
     </AppShell>
   );

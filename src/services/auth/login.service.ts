@@ -1,6 +1,6 @@
 import { GResponse } from '@/types';
 
-import { client } from '../client';
+import { axiosInstance } from '../axiosInstance';
 
 type LoginRequest = {
   email: string;
@@ -18,6 +18,6 @@ type LoginResponse = GResponse<{
 }>;
 
 export const login = async (req: LoginRequest): Promise<LoginResponse> => {
-  const response = await client.post<LoginResponse>('/auth/login', req);
+  const response = await axiosInstance.post<LoginResponse>('/auth/login', req);
   return response.data;
 };
