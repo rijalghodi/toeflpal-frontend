@@ -2,7 +2,7 @@ import { GResponse } from '@/types';
 
 import { axiosInstance } from '../axiosInstance';
 
-type CreateToeflRequest = {
+type ToeflCreateRequest = {
   name: string;
   description?: string;
   allowReview?: boolean;
@@ -10,13 +10,13 @@ type CreateToeflRequest = {
   closing?: string;
 };
 
-type CreateToeflResponse = GResponse<{
+type ToeflCreateResponse = GResponse<{
   id: string;
 }>;
 
-export const createToefl = async (
-  req: CreateToeflRequest,
-): Promise<CreateToeflResponse> => {
-  const response = await axiosInstance.post<CreateToeflResponse>('/toefl', req);
+export const toeflCreate = async (
+  req: ToeflCreateRequest,
+): Promise<ToeflCreateResponse> => {
+  const response = await axiosInstance.post<ToeflCreateResponse>('/toefl', req);
   return response.data;
 };

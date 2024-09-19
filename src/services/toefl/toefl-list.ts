@@ -2,11 +2,11 @@ import { GResponse } from '@/types';
 
 import { axiosInstance } from '../axiosInstance';
 
-type ListToeflRequest = {
+type ToeflListRequest = {
   published?: boolean | null | string; // 'true' or 'false'
 };
 
-type ListToeflResponse = GResponse<
+type ToeflListResponse = GResponse<
   {
     id: string;
     name: string;
@@ -18,10 +18,10 @@ type ListToeflResponse = GResponse<
   }[]
 >;
 
-export const listToefl = async ({
+export const toeflList = async ({
   published,
-}: ListToeflRequest): Promise<ListToeflResponse> => {
-  const response = await axiosInstance.get<ListToeflResponse>('/toefl', {
+}: ToeflListRequest): Promise<ToeflListResponse> => {
+  const response = await axiosInstance.get<ToeflListResponse>('/toefl', {
     params: { published },
   });
   return response.data;

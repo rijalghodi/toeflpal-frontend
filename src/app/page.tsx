@@ -39,6 +39,10 @@ const features = [
     title: '1000+',
     desc: 'Growing users',
   },
+  {
+    title: '100%',
+    desc: 'Free access',
+  },
 ];
 
 const navs = [
@@ -199,7 +203,7 @@ export default function Home() {
                 wrap="wrap"
               >
                 {features.map((feature, i) => (
-                  <Stack align="center" gap="xs" key={i} flex={1} miw={200}>
+                  <Stack align="center" gap={4} key={i} flex={1} miw={200}>
                     <Title size="h2" mt="xs" ta="center" ff="text">
                       {feature.title}
                     </Title>

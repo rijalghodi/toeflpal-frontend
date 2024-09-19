@@ -4,8 +4,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 
-import { createToefl } from '@/services/toefl/create-toefl';
-import { listToefl } from '@/services/toefl/list-toefl';
+import { toeflCreate, toeflList } from '@/services';
 import { routes } from '@/utils/constant/routes';
 
 import { AdminToeflList } from '../presentations/AdminToeflList';
@@ -19,18 +18,18 @@ export function AdminToeflListCotainer({ expectedHeight }: Props) {
   const [published, setPublished] = useState<string | null>('');
 
   const { data: toefls, isLoading } = useQuery({
-    queryKey: ['admin-toefl-list', published],
-    queryFn: () => listToefl({ published }),
+    queryKey: ['toefl-list', published],
+    queryFn: () => toeflList({ published }),
   });
 
   // Create TOEFL
   const { isPending: loadingCreate, mutateAsync: createToeflMutate } =
     useMutation({
       mutationKey: ['create-toefl'],
-      mutationFn: createToefl,
+      mutationFn: toeflCreate,
       onSuccess: (data) => {
         push(routes.adminToeflDetail(data.data.id));
-        q.invalidateQueries({ queryKey: ['admin-toefl-list', published] });
+        q.invalidateQueries({ queryKey: ['toefl-list', published] });
       },
     });
 
@@ -67,7 +66,7 @@ export function AdminToeflListCotainer({ expectedHeight }: Props) {
         loading={isLoading}
         expectedHeight={expectedHeight ?? 400}
         data={toefls?.data.map(({ id, name, premium, publishedAt }) => ({
-          href: `/toefl/${id}`,
+          href: `/admin/toefl/${id}`,
           name,
           premium,
           published: !!publishedAt,

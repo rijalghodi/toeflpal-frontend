@@ -19,7 +19,7 @@ export default function AppLayout({ children }: Props) {
 
   return (
     <AppShell
-      header={{ height: { base: 40, xs: 60 }, offset: true }}
+      header={{ height: { base: 40, xs: 54 }, offset: true }}
       navbar={{
         width: 200,
         breakpoint: 'sm',
@@ -27,7 +27,6 @@ export default function AppLayout({ children }: Props) {
       }}
       withBorder={false}
       px={{ base: 'md', xs: 'xl' }}
-      py="xs"
     >
       <AppShell.Header bg="rgba(0, 0, 0, 0)">
         <Group
@@ -59,7 +58,7 @@ export default function AppLayout({ children }: Props) {
       </AppShell.Header>
 
       <AppShell.Main>
-        <Container maw={1000} px={0} py={0}>
+        <Container maw={1000} px={0} py="xs">
           {children}
         </Container>
       </AppShell.Main>

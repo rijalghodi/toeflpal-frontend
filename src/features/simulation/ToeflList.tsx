@@ -5,7 +5,7 @@ import Link from 'next/link';
 import React from 'react';
 
 import { LoadingState } from '@/elements/feedbacks/LoadingState';
-import { listToefl } from '@/services/toefl/list-toefl';
+import { toeflList } from '@/services';
 import { routes } from '@/utils/constant/routes';
 
 type Props = {
@@ -14,7 +14,7 @@ type Props = {
 export function ToeflList({ expectedHeight }: Props) {
   const { data, isPending } = useQuery({
     queryKey: ['toefl-list'],
-    queryFn: () => listToefl({ published: true }),
+    queryFn: () => toeflList({ published: true }),
   });
 
   if (isPending) {
