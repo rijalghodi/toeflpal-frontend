@@ -9,7 +9,7 @@ const userPath = ['/toefl', '/lesson', '/practice', '/dashboard'];
 
 export async function middleware(request: NextRequest) {
   const loginPage = new URL(routes.auth.login, request.url);
-  const dashboardPage = new URL(routes.dashboard, request.url);
+  const homePage = new URL(routes.home, request.url);
   const superadminDashboard = new URL(routes.adminToeflList, request.url);
 
   const { pathname } = request.nextUrl;
@@ -62,7 +62,7 @@ export async function middleware(request: NextRequest) {
 
     return NextResponse.next();
   } catch {
-    return NextResponse.redirect(`${dashboardPage}?callback=${pathname}`);
+    return NextResponse.redirect(`${homePage}`);
   }
 }
 

@@ -3,7 +3,7 @@ import { GResponse } from '@/types';
 import { axiosInstance } from '../axiosInstance';
 
 type ListToeflRequest = {
-  published?: boolean;
+  published?: boolean | null | string; // 'true' or 'false'
 };
 
 type ListToeflResponse = GResponse<
@@ -14,14 +14,15 @@ type ListToeflResponse = GResponse<
     premium: boolean;
     instruction?: string;
     closing?: string;
+    publishedAt?: string;
   }[]
 >;
 
-export const listToefl = async (
-  req: ListToeflRequest,
-): Promise<ListToeflResponse> => {
+export const listToefl = async ({
+  published,
+}: ListToeflRequest): Promise<ListToeflResponse> => {
   const response = await axiosInstance.get<ListToeflResponse>('/toefl', {
-    params: { published: req.published },
+    params: { published },
   });
   return response.data;
 };

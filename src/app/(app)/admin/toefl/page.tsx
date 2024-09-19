@@ -1,9 +1,9 @@
 'use client';
 
 import { Stack, Title } from '@mantine/core';
-import React from 'react';
+import React, { Suspense } from 'react';
 
-import { AdminToeflList } from '@/features/admin/AdminToeflList';
+import { AdminToeflListCotainer } from '@/features/admin/containers/AdminToeflListContainer';
 
 export default function AdminSimulationListPage() {
   return (
@@ -11,7 +11,9 @@ export default function AdminSimulationListPage() {
       <Title fw={600} order={1} fz="h3">
         Manage TOEFL Simulation
       </Title>
-      <AdminToeflList />
+      <Suspense>
+        <AdminToeflListCotainer />
+      </Suspense>
     </Stack>
   );
 }
