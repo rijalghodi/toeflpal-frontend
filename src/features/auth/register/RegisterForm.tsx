@@ -3,6 +3,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button, PasswordInput, Stack, TextInput } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
+import { IconLock, IconMail } from '@tabler/icons-react';
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next-nprogress-bar';
 import React from 'react';
@@ -52,11 +53,13 @@ export function RegisterForm() {
           type="email"
           placeholder="email@example.com"
           label="Email"
+          leftSection={<IconMail size={16} />}
           {...register('email')}
         />
         <PasswordInput
           placeholder="*****"
           label="Password"
+          leftSection={<IconLock size={16} />}
           {...register('password')}
         />
         <Button type="submit" loading={isPending} size="md">

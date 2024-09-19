@@ -4,7 +4,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 
-import { toeflCreate, toeflList } from '@/services';
+import { toeflCreate, toeflList, toeflListKey } from '@/services';
 import { routes } from '@/utils/constant/routes';
 
 import { AdminToeflList } from '../presentations/AdminToeflList';
@@ -18,7 +18,7 @@ export function AdminToeflListCotainer({ expectedHeight }: Props) {
   const [published, setPublished] = useState<string | null>('');
 
   const { data: toefls, isLoading } = useQuery({
-    queryKey: ['toefl-list', published],
+    queryKey: toeflListKey({ published }),
     queryFn: () => toeflList({ published }),
   });
 
@@ -29,7 +29,7 @@ export function AdminToeflListCotainer({ expectedHeight }: Props) {
       mutationFn: toeflCreate,
       onSuccess: (data) => {
         push(routes.adminToeflDetail(data.data.id));
-        q.invalidateQueries({ queryKey: ['toefl-list', published] });
+        q.invalidateQueries({ queryKey: toeflListKey({ published }) });
       },
     });
 

@@ -17,7 +17,7 @@ export function ToeflUpdateSectionItem({ toeflId }: Props) {
     enabled: !!toeflId,
   });
 
-  const updatable = data?.data.active;
+  const active = data?.data.active;
 
   const {} = useMutation({});
 
@@ -25,12 +25,12 @@ export function ToeflUpdateSectionItem({ toeflId }: Props) {
     <SectionItem
       title="Update"
       subtitle={
-        updatable
-          ? 'This test has newer version than published ones'
-          : 'This test is up to date'
+        active
+          ? 'This test is up to date'
+          : 'This test has newer version than published ones'
       }
       rightSection={
-        updatable ? (
+        active ? null : (
           <Group>
             <Button color="red" variant="light" disabled={isLoading} size="xs">
               Revert
@@ -39,7 +39,7 @@ export function ToeflUpdateSectionItem({ toeflId }: Props) {
               Push
             </Button>
           </Group>
-        ) : null
+        )
       }
     />
   );

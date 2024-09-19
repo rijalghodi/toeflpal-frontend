@@ -17,3 +17,5 @@ export const toeflGet = async ({
   );
   return response.data;
 };
+
+export const toeflGetKey = (req: ToeflGetRequest) => ['toefl-get', req.toeflId];

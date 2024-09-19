@@ -26,3 +26,8 @@ export const toeflList = async ({
   });
   return response.data;
 };
+
+export const toeflListKey = (req: ToeflListRequest) => [
+  'toefl-list',
+  req.published,
+];

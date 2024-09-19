@@ -29,6 +29,7 @@
     "axios": "^1.7.7",
     "chroma-js": "^3.1.1",
     "js-cookie": "^3.0.5",
+    "lodash": "^4.17.21",
     "next": "14.2.4",
     "next-nprogress-bar": "^2.3.13",
     "react": "18.3.1",
@@ -40,6 +41,7 @@
   "devDependencies": {
     "@tanstack/react-query-devtools": "^5.55.0",
     "@types/js-cookie": "^3.0.6",
+    "@types/lodash": "^4",
     "@types/node": "20.14.8",
     "@types/react": "18.3.3",
     "@types/react-dom": "18.3.0",

@@ -28,7 +28,7 @@ export function MantineProviders({
         },
       }}
     >
-      <Notifications position="top-center" autoClose={5000} />
+      <Notifications position="bottom-center" autoClose={5000} />
       <ModalsProvider
         // modals={{
         //   context: ContextModal,

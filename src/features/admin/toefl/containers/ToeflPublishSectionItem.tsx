@@ -2,7 +2,7 @@ import { Button } from '@mantine/core';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import React from 'react';
 
-import { toeflGet } from '@/services';
+import { toeflGet, toeflGetKey } from '@/services';
 
 import { SectionItem } from '../presentations/SectionItem';
 
@@ -12,7 +12,7 @@ type Props = {
 export function ToeflPublishSectionItem({ toeflId }: Props) {
   // Read Latest Version
   const { data, isLoading } = useQuery({
-    queryKey: ['toefl-version-latest-get', toeflId],
+    queryKey: toeflGetKey({ toeflId: toeflId as string }),
     queryFn: () => toeflGet({ toeflId: toeflId as string }),
     enabled: !!toeflId,
   });

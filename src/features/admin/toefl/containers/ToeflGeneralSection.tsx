@@ -2,14 +2,19 @@ import { Button, Group, Paper, Stack, Text, Title } from '@mantine/core';
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 
-import { toeflGet } from '@/services';
+import { useDrawer } from '@/contexts';
+import { toeflGet, toeflGetKey } from '@/services';
+
+import { ToeflGeneralUpdate } from './ToeflGeneralUpdate';
 
 type Props = {
   toeflId: string;
 };
 export function ToeflGeneralSection({ toeflId }: Props) {
+  const { open, close } = useDrawer();
+
   const { data, isLoading } = useQuery({
-    queryKey: ['toefl-get', toeflId],
+    queryKey: toeflGetKey({ toeflId: toeflId as string }),
     queryFn: () => toeflGet({ toeflId: toeflId as string }),
     enabled: !!toeflId,
   });
@@ -27,6 +32,21 @@ export function ToeflGeneralSection({ toeflId }: Props) {
     },
   ];
 
+  const handleUpdateToeflGeneral = () => {
+    open({
+      title: 'Change TOEFL Information',
+      content: (
+        <ToeflGeneralUpdate
+          toeflId={toeflId}
+          initValues={{ description: toefl?.description, name: toefl?.name }}
+          onSuccess={() => {
+            close();
+          }}
+        />
+      ),
+    });
+  };
+
   return (
     <Paper withBorder p="md" radius="md">
       <Group align="flex-start" justify="space-between" w="100%">
@@ -37,8 +57,8 @@ export function ToeflGeneralSection({ toeflId }: Props) {
             </Title>
           </Group>
           <Stack gap={12}>
-            {list.map(({ label, value }) => (
-              <Group w="100%" align="flex-start">
+            {list.map(({ label, value }, i) => (
+              <Group w="100%" align="flex-start" key={i}>
                 <Text flex={1} miw={100} size="sm">
                   {label}
                 </Text>
@@ -49,7 +69,12 @@ export function ToeflGeneralSection({ toeflId }: Props) {
             ))}
           </Stack>
         </Stack>
-        <Button variant="default" size="xs" disabled={isLoading}>
+        <Button
+          variant="default"
+          size="xs"
+          disabled={isLoading}
+          onClick={handleUpdateToeflGeneral}
+        >
           Change
         </Button>
       </Group>

@@ -3,7 +3,7 @@ import { IconCrown } from '@tabler/icons-react';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import React from 'react';
 
-import { toeflGet } from '@/services';
+import { toeflGet, toeflGetKey } from '@/services';
 
 import { SectionItem } from '../presentations/SectionItem';
 
@@ -13,7 +13,7 @@ type Props = {
 export function ToeflPremiumSectionItem({ toeflId }: Props) {
   // Read Latest Version
   const { data, isLoading } = useQuery({
-    queryKey: ['toefl-version-latest-get', toeflId],
+    queryKey: toeflGetKey({ toeflId: toeflId as string }),
     queryFn: () => toeflGet({ toeflId: toeflId as string }),
     enabled: !!toeflId,
   });
@@ -26,9 +26,13 @@ export function ToeflPremiumSectionItem({ toeflId }: Props) {
   return (
     <SectionItem
       title="Premium"
-      subtitle={premium ? 'This test is premium' : 'This test is premium'}
+      subtitle={premium ? 'This test is premium' : 'This test is free'}
       rightSection={
         premium ? (
+          <Button variant="default" disabled={isLoading} size="xs">
+            Make Free
+          </Button>
+        ) : (
           <Button
             variant="filled"
             color="yellow.7"
@@ -37,10 +41,6 @@ export function ToeflPremiumSectionItem({ toeflId }: Props) {
             leftSection={<IconCrown size={16} />}
           >
             Make Premium
-          </Button>
-        ) : (
-          <Button variant="default" disabled={isLoading} size="xs">
-            Make Free
           </Button>
         )
       }
