@@ -15,7 +15,7 @@ export function TestSection({ name, formId, questionNum, duration }: Props) {
   const { push } = useRouter();
 
   const handleChangeTest = () => {
-    push(routes.adminFormUpdate(formId));
+    push(routes.formEditor(formId));
   };
 
   return (

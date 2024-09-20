@@ -36,7 +36,7 @@ export function AdminToeflList({ loading, data, expectedHeight }: Props) {
           className={cls.hovered}
         >
           <Group justify="space-between" wrap="nowrap">
-            <Text fw={500}>{toefl.name}</Text>
+            <Text fw={400}>{toefl.name}</Text>
             <Group>
               {!toefl.published && (
                 <Badge variant="light" tt="capitalize" color="gray">

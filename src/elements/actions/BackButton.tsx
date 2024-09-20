@@ -14,6 +14,7 @@ export function BackButton({ href }: Props) {
       label="Kembali"
       leftSection={<IconArrowLeft size={16} />}
       py={4}
+      w="min-content"
     />
   );
 }

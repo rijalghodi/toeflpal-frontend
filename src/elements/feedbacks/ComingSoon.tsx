@@ -1,13 +1,18 @@
-import { Center, CenterProps, MantineSize, Text } from '@mantine/core';
+import { Center, CenterProps, MantineSize, Stack, Text } from '@mantine/core';
 import React from 'react';
+
+import { Logo } from '../brand/Logo';
 
 type Props = CenterProps & { loaderSize?: MantineSize };
 export function ComingSoon({ h = 300, w = '100%', ...cntrProps }: Props) {
   return (
     <Center {...cntrProps} h={h} w={w}>
-      <Text fz="h3" fw={600}>
-        Coming Soon
-      </Text>
+      <Stack align="center" gap="xs">
+        <Logo size="md" />
+        <Text fz="h2" fw={600} ta="center">
+          Coming Soon
+        </Text>
+      </Stack>
     </Center>
   );
 }

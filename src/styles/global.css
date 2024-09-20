@@ -16,3 +16,27 @@ iconify-icon {
   width: 1em;
   height: 1em;
 }
+
+/* --- React Modern Audio Player --- */
+
+--rm-audio-player-interface-container: red !important;
+--rm-audio-player-volume-background: red !important;
+--rm-audio-player-volume-panel-background: red !important;
+--rm-audio-player-volume-panel-border: var(--mantine-color-default) !important;
+--rm-audio-player-volume-thumb: var(--mantine-color-dimmed);
+--rm-audio-player-volume-fill: rgba(0, 0, 0, 0.5);
+--rm-audio-player-volume-track: var(--mantine-color-dimmed);
+--rm-audio-player-track-current-time: var(--mantine-primary-color-filled);
+--rm-audio-player-track-duration: var(--mantine-color-text);
+--rm-audio-player-progress-bar: var(--mantine-primary-color-filled);
+--rm-audio-player-progress-bar-background: var(--mantine-color-text);
+--rm-audio-player-waveform-cursor: var(--mantine-color-text);
+--rm-audio-player-waveform-background: var(--mantine-color-text);
+--rm-audio-player-waveform-bar: var(--mantine-color-text);
+--rm-audio-player-sortable-list: var(--mantine-color-text);
+--rm-audio-player-sortable-list-button-active: var(
+  --mantine-primary-color-filled
+);
+--rm-audio-player-selected-list-item-background: var(
+  --spectrum-global-color-gray-500
+);
