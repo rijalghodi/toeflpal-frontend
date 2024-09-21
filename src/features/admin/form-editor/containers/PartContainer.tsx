@@ -1,6 +1,12 @@
+import { Text } from '@mantine/core';
+import { modals } from '@mantine/modals';
+import { notifications } from '@mantine/notifications';
+import { IconCheck, IconX } from '@tabler/icons-react';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import React from 'react';
 
 import { useDrawer } from '@/contexts';
+import { partDelete, partListKey } from '@/services';
 
 import { PartWrapper } from '../presentations/PartWrapper';
 import { PartCreate } from './PartCreate';
@@ -27,6 +33,7 @@ export function PartContainer({
   closingAudioUrl,
 }: Props) {
   const { open: openDrawer, close: closeDrawer } = useDrawer();
+  const q = useQueryClient();
 
   // Get questions
 
@@ -59,12 +66,64 @@ export function PartContainer({
     });
   };
 
+  const { mutateAsync: deletePart } = useMutation({
+    mutationFn: partDelete,
+    onSuccess: () => {
+      q.refetchQueries({ queryKey: partListKey({ formId }) });
+      notifications.update({
+        message: 'Success',
+        id: 'part-delete',
+        color: 'green',
+        icon: <IconCheck size={16} />,
+        autoClose: 3000,
+        loading: false,
+        withCloseButton: true,
+      });
+    },
+    onError: () => {
+      notifications.update({
+        message: 'Fail',
+        id: 'part-delete',
+        color: 'red',
+        autoClose: 5000,
+        icon: <IconX size={16} />,
+        loading: false,
+        withCloseButton: true,
+      });
+    },
+  });
+
+  const handleDeletePart = () => {
+    modals.openConfirmModal({
+      title: 'Delete Part Confirmation',
+      children: (
+        <Text size="sm">
+          This will delete the part named '{name}', along with its associated
+          questions and answer keys.
+        </Text>
+      ),
+      labels: { confirm: 'Confirm', cancel: 'Cancel' },
+      confirmProps: { color: 'red' },
+      onConfirm: () => {
+        notifications.show({
+          message: 'Loading...',
+          id: 'part-delete',
+          loading: true,
+          autoClose: false,
+          withCloseButton: false,
+        });
+        deletePart({ formId, partId });
+      },
+    });
+  };
+
   return (
     <PartWrapper
       name={name}
       order={order}
       onAddPartBelow={handleAddPartBelow}
       onEditPart={handleEditPart}
+      onDeletePart={handleDeletePart}
     >
       Questions
     </PartWrapper>

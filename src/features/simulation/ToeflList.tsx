@@ -33,7 +33,7 @@ export function ToeflList({ expectedHeight }: Props) {
             href={routes.toeflList}
           >
             <Group justify="space-between">
-              <Text>{toefl.name}</Text>
+              <Text fz="sm">{toefl.name}</Text>
               <Group>
                 <Badge variant="light" tt="capitalize">
                   Score: 500

@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { vanillaFetch } from './services/vanillaFetch';
 import { routes } from './utils/constant/routes';
 
-const adminPath = ['/admin'];
+const adminPath = ['/admin', '/form'];
 
 const userPath = ['/toefl', '/lesson', '/practice', '/dashboard'];
 
