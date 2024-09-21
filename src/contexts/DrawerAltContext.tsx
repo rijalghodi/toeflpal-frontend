@@ -7,7 +7,7 @@ type OpenProps = {
   content?: ReactNode;
 } & Omit<DrawerProps, 'opened' | 'onClose' | 'content'>;
 
-interface DrawerContextType {
+interface DrawerAltContextType {
   opened: boolean;
   open: (props: OpenProps) => void;
   close: () => void;
@@ -15,27 +15,29 @@ interface DrawerContextType {
 }
 
 // Create the context
-const DrawerContext = createContext<DrawerContextType | undefined>(undefined);
+const DrawerAltContext = createContext<DrawerAltContextType | undefined>(
+  undefined,
+);
 
 // Create a provider component
-export const DrawerProvider: React.FC<{ children: React.ReactNode }> = ({
+export const DrawerAltProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [opened, setOpened] = useState(false);
   const [content, setContent] = useState<ReactNode>(null);
-  const [drawerProps, setDrawerProps] =
+  const [drawerProps, setDrawerAltProps] =
     useState<Omit<DrawerProps, 'opened' | 'onClose'>>();
 
   const open = ({ content: newContet, ...drawerProps }: OpenProps) => {
     setContent(newContet || null);
     setOpened(true);
-    setDrawerProps(drawerProps);
+    setDrawerAltProps(drawerProps);
   };
 
   const close = () => setOpened(false);
 
   return (
-    <DrawerContext.Provider value={{ opened, open, close, content }}>
+    <DrawerAltContext.Provider value={{ opened, open, close, content }}>
       {children}
       <Drawer
         opened={opened}
@@ -43,27 +45,31 @@ export const DrawerProvider: React.FC<{ children: React.ReactNode }> = ({
         size="md"
         position="right"
         overlayProps={{
-          opacity: 0.3,
+          opacity: 0.4,
+          color: 'white',
+          bg: 'white',
         }}
+        zIndex={200}
         styles={{
           title: {
-            fontWeight: 500,
-            fontSize: 'md',
+            fontWeight: 700,
+            fontSize: 12,
+            textTransform: 'uppercase',
           },
         }}
         {...drawerProps}
       >
         {content}
       </Drawer>
-    </DrawerContext.Provider>
+    </DrawerAltContext.Provider>
   );
 };
 
 // Custom hook to use the drawer context
-export const useDrawer = () => {
-  const context = useContext(DrawerContext);
+export const useDrawerAlt = () => {
+  const context = useContext(DrawerAltContext);
   if (context === undefined) {
-    throw new Error('useDrawer must be used within a DrawerProvider');
+    throw new Error('useDrawerAlt must be used within a DrawerAltProvider');
   }
   return context;
 };

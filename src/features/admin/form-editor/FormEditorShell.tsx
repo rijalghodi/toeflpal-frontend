@@ -17,18 +17,11 @@ import {
 import { useParams } from 'next/navigation';
 import React from 'react';
 
-import { useAudioPlayer } from '@/contexts';
-
 import { FormEditorMain } from './FormEditorMain';
-
-type Props = {
-  children: React.ReactNode;
-};
 
 export function FormEditorShell() {
   const [opened, { toggle }] = useDisclosure();
   const { formId } = useParams();
-  const { open } = useAudioPlayer();
 
   return (
     <AppShell

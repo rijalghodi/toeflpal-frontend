@@ -1,2 +1,4 @@
 export * from './AudioPlayerContext';
-export * from './DrawerContex';
+export * from './DrawerAltContext';
+export * from './DrawerContext';
+export * from './DrawersContext';

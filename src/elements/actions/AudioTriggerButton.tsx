@@ -9,7 +9,7 @@ type Props = ButtonProps & {
   title?: string;
 };
 export function AudioTriggerButton({
-  size = 'xs',
+  size = 'compact-xs',
   src,
   title,
   disabled,
@@ -29,8 +29,10 @@ export function AudioTriggerButton({
     <Button
       size={size}
       onClick={handleOpenAudio}
-      leftSection={<IconHeadphones size={16} />}
+      leftSection={<IconHeadphones size={12} />}
       disabled={!src || disabled}
+      color="dark"
+      variant="light"
       {...btnProps}
     >
       Play

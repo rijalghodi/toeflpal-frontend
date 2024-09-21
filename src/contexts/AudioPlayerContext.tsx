@@ -7,7 +7,7 @@ import AudioPlayer from 'react-h5-audio-player';
 type AudioPlayerProps = {
   size?: number;
   src: string;
-  title?: string;
+  title?: React.ReactNode;
 };
 
 type OpenProps = AudioPlayerProps;
@@ -75,6 +75,8 @@ export const AudioPlayerProvider: React.FC<{ children: React.ReactNode }> = ({
               showDownloadProgress
               preload="metadata"
               ref={audioRef}
+              showJumpControls={false}
+              showSkipControls={false}
               style={{
                 border: 'none !important',
                 borderWidth: 0,
@@ -85,50 +87,6 @@ export const AudioPlayerProvider: React.FC<{ children: React.ReactNode }> = ({
           </Stack>
         </Paper>
       </Portal>
-      {/* <Dialog
-        opened={opened}
-        position={{ bottom: 20, right: 20 }}
-        style={{
-          transform: 'translateX(-50%)',
-        }}
-        styles={{
-          root: {
-            transform: 'translateX(-50%)',
-          },
-        }}
-      >
-        <Stack mx="audio" align="center">
-          <Text ta="center">{audioPlayerProps?.title}</Text>
-          <AudioPlayer1
-            activeUI={{
-              playButton: true,
-              prevNnext: true,
-              progress: 'bar',
-              volume: true,
-              volumeSlider: true,
-              trackTime: true,
-              trackInfo: true,
-            }}
-            playList={[
-              {
-                name: 'name',
-                writer: 'writer',
-                img: 'image.jpg',
-                src: audioPlayerProps?.src ?? 'src',
-                id: 1,
-              },
-            ]}
-          />
-          <AudioPlayer
-            {...audioPlayerProps}
-            style={{
-              border: 'none !important',
-              borderWidth: 0,
-              //   backgroundColor: 'red',
-            }}
-          />
-        </Stack>
-      </Dialog> */}
     </AudioPlayerContext.Provider>
   );
 };

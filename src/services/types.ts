@@ -1,9 +1,15 @@
+export enum SkillType {
+  Listening = 'listening',
+  Grammar = 'grammar',
+  Reading = 'reading',
+}
+
 export type Form = {
   id: string;
   name: string;
   duration: number | null;
   allowReview: boolean | null;
-  testType: string;
+  skillType: SkillType;
   instruction: string | null;
   instructionAudio: File | null;
   closing: string | null;

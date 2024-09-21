@@ -1,27 +1,28 @@
 import { Button, ButtonProps } from '@mantine/core';
-import { IconHeadphones } from '@tabler/icons-react';
+import { IconFile } from '@tabler/icons-react';
 import DOMPurify from 'dompurify';
 import React from 'react';
 
-import { useDrawer } from '@/contexts';
+import { useDrawerAlt } from '@/contexts';
 
 type Props = ButtonProps & {
   content?: string;
   title?: string;
 };
 export function ReadTriggerButton({
-  size = 'xs',
+  size = 'compact-xs',
   content,
   title,
   disabled,
   ...btnProps
 }: Props) {
-  const { open } = useDrawer();
+  const { open } = useDrawerAlt();
   const handleOpenRead = () => {
     if (content) {
       const safeHtml = DOMPurify.sanitize(content);
       open({
         title,
+        size: 'lg',
         content: (
           <div
             dangerouslySetInnerHTML={{
@@ -37,11 +38,13 @@ export function ReadTriggerButton({
     <Button
       size={size}
       onClick={handleOpenRead}
-      leftSection={<IconHeadphones size={16} />}
+      leftSection={<IconFile size={12} />}
       disabled={!content || disabled}
+      color="dark"
+      variant="light"
       {...btnProps}
     >
-      Play
+      Read
     </Button>
   );
 }

@@ -2,81 +2,81 @@
 import { z } from 'zod';
 
 export const zString = z
-  .string({ invalid_type_error: 'Harus di isi' })
-  .min(1, { message: 'Harus diisi' });
+  .string({ invalid_type_error: 'Required' })
+  .min(1, { message: 'Required' });
 export const zStringOptional = z.string().optional();
 
 export const zSelectInput = zString.nullable().refine((val) => val, {
-  message: 'Harus diisi',
+  message: 'Required',
 });
 
 export const zArrayOfString = z.string().array();
 
 export const zNumber = z.number({
-  required_error: 'Harus diisi',
-  invalid_type_error: 'Harus diisi',
+  required_error: 'Required',
+  invalid_type_error: 'Required',
 });
 
 export const zNumberOptional = z.number().or(z.literal(''));
 
 export const zStringNumber = z
   .string()
-  .min(1, { message: 'Harus diisi' })
+  .min(1, { message: 'Required' })
   .refine((value) => /^[0-9.]+$/.test(value), {
-    message: 'Input hanya boleh berisi angka',
+    message: 'Must be a number',
   });
 
 export const zStringNumberOptional = z
   .string()
   .refine((value) => /^[0-9.]+$/.test(value), {
-    message: 'Input hanya boleh berisi angka',
+    message: 'Must be a number',
   })
   .or(z.literal(''));
 
 export const zPassword = z
   .string()
-  .min(8, { message: 'Kata sandi minimal 8 karakter' })
+  .min(8, { message: 'Min 8 characters' })
   .regex(/^(?=.*[A-Z])(?=.*[0-9])[A-Za-z0-9]*$/, {
-    message: 'Harus terdiri dari kombinasi huruf besar, huruf kecil, dan angka',
+    message: 'Must be a combination between capital, non-capital, and number',
   });
 
 export const zTime = z
   .string()
   .regex(/^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/, {
-    message: 'Format salah',
+    message: 'Wrong format',
   })
   .or(z.literal(''));
 
 export const zEmail = z
   .string()
-  .min(1, { message: 'Harus diisi' })
-  .email({ message: 'Format email salah' });
+  .min(1, { message: 'Required' })
+  .email({ message: 'Wrong email format' });
 
 export const zEmailOptional = z
   .string()
-  .email({ message: 'Format email salah' })
+  .email({ message: 'Wrong email format' })
   .or(z.literal(''));
 
 export const zDate = z.date({
-  required_error: 'Harus diisi',
-  invalid_type_error: 'Harus diisi / Format tanggal salah',
+  required_error: 'Required',
+  invalid_type_error: 'Required / Format tanggal salah',
 });
 
 export const zDateOptional = z
   .date({
-    required_error: 'Harus diisi',
-    invalid_type_error: 'Harus diisi / Format tanggal salah',
+    required_error: 'Required',
+    invalid_type_error: 'Required / Format tanggal salah',
   })
   .optional()
   .nullable();
 
 export const zFileRequired = z
   .custom<File>()
-  .refine((file) => file, { message: 'Harus diisi' });
+  .refine((file) => file, { message: 'Required' });
 
 export const zImageRequired = z
   .custom<File>()
-  .refine((file) => file, { message: 'Harus diisi' })
+  .refine((file) => file, { message: 'Required' })
   .refine(
     (file) =>
       file &&
@@ -100,8 +100,7 @@ export const zImageOptional = z
       message: 'File harus Foto',
     },
   )
-  .or(z.literal(null))
-  .optional();
+  .or(z.literal(null));
 
 export const zImageArrayOptional = z
   .custom<File>()
@@ -124,15 +123,12 @@ export const zPdfArrayOptional = z
   })
   .array();
 
-// export const zImageOrPDFArrayOptional = z
-//   .custom<File>()
-//   .refine(
-//     (file) =>
-//       file && [...PDF_MIME_TYPE, ...IMAGE_MIME_TYPE].includes(file.type as any),
-//     {
-//       message: "Format file tidak sesuai",
-//     }
-//   )
-//   .array();
+export const zAudioOptional = z
+  .custom<File>()
+  .refine((file) => file && file.type.startsWith('audio'), {
+    message: 'Must be audio file',
+  })
+  .or(z.literal(null))
+  .optional();
 
 export const zBoolean = z.boolean();

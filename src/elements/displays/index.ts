@@ -1,1 +1,2 @@
-export * from './KeyValuePairs';
+export * from './AudioPlayer';
+export * from './LabelValuePairs';
