@@ -11,9 +11,9 @@ export type Form = {
   allowReview: boolean | null;
   skillType: SkillType;
   instruction: string | null;
-  instructionAudio: File | null;
+  instructionAudio: Storage | null;
   closing: string | null;
-  closingAudio: File | null;
+  closingAudio: Storage | null;
 };
 
 export type Toefl = {
@@ -26,7 +26,7 @@ export type Toefl = {
   publishedAt?: string;
 };
 
-export type File = {
+export type Storage = {
   id: string;
   url: string;
   filename?: string;

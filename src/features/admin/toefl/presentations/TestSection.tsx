@@ -35,7 +35,7 @@ export function TestSection({ name, formId, questionNum, duration }: Props) {
             )}
             {duration && (
               <Text c="dimmed" fz="sm">
-                {Math.floor(duration / 60)} minutes
+                {Math.floor(duration)} minutes
               </Text>
             )}
           </Group>

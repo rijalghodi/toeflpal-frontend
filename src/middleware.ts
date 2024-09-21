@@ -11,6 +11,7 @@ export async function middleware(request: NextRequest) {
   const loginPage = new URL(routes.auth.login, request.url);
   const homePage = new URL(routes.home, request.url);
   const superadminDashboard = new URL(routes.adminToeflList, request.url);
+  const dashboardPage = new URL(routes.dashboard, request.url);
 
   const { pathname } = request.nextUrl;
   const accessToken = request.cookies.get('accessToken')?.value;
@@ -37,7 +38,10 @@ export async function middleware(request: NextRequest) {
 
     // ------ If user has been logged in, redirect to dashboard ----
     if (isAuthPage && roles) {
-      return NextResponse.redirect(loginPage);
+      if (roles.includes('superadmin')) {
+        return NextResponse.redirect(superadminDashboard);
+      }
+      return NextResponse.redirect(dashboardPage);
     }
 
     // --- User page permissions ---

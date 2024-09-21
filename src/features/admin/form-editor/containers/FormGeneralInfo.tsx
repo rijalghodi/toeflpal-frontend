@@ -83,7 +83,7 @@ export function FormGeneralInfo({ formId }: Props) {
                 ),
               },
               {
-                label: 'Instruction Audio',
+                label: '',
                 value: data?.data.instructionAudio?.url && (
                   <AudioPlayer
                     src={data?.data.instructionAudio?.url}
@@ -103,7 +103,7 @@ export function FormGeneralInfo({ formId }: Props) {
                 ),
               },
               {
-                label: 'Closing Audio',
+                label: '',
                 value: data?.data.closingAudio?.url && (
                   <AudioPlayer
                     src={data?.data.closingAudio?.url}

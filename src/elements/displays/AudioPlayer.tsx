@@ -8,6 +8,7 @@ import {
   Text,
 } from '@mantine/core';
 import {
+  IconHeadphonesOff,
   IconPlayerPause,
   IconPlayerPlay,
   IconVolume,
@@ -82,8 +83,11 @@ export const AudioPlayer = forwardRef<AudioPlayerRef, AudioPlayerProps>(
             onClick={togglePlayPause}
             variant={isPlaying ? 'light' : 'subtle'}
             color="dark"
+            disabled={!src}
           >
-            {isPlaying ? (
+            {!src ? (
+              <IconHeadphonesOff size={16} />
+            ) : isPlaying ? (
               <IconPlayerPause size={16} />
             ) : (
               <IconPlayerPlay size={16} />
@@ -104,8 +108,9 @@ export const AudioPlayer = forwardRef<AudioPlayerRef, AudioPlayerProps>(
             </Group>
           )}
           <Slider
+            disabled={!src}
             flex={1}
-            color="gray"
+            color="dark"
             size="sm"
             value={currentTime}
             min={0}

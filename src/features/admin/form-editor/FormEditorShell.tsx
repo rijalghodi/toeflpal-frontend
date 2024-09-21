@@ -14,6 +14,7 @@ import {
   IconMenu3,
   IconPlayerPlay,
 } from '@tabler/icons-react';
+import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import React from 'react';
 
@@ -50,6 +51,8 @@ export function FormEditorShell() {
               size="lg"
               variant="subtle"
               title="Back to Previous Page"
+              component={Link}
+              href="/admin/toefl"
             >
               <IconChevronLeft size={16} />
             </ActionIcon>
