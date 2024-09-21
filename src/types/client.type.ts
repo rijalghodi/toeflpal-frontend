@@ -9,22 +9,20 @@ export type GResponse<T> = CResponse<{ data: T }>;
 // G means Global
 
 export type MResponse<T> = GResponse<T> & {
-  meta: {
-    current_page: number;
-    from: number; // the index of first element of current page
-    last_page: number; // total page
-    per_page: number; // page size
-    to: number; // last index of element in current page
-    total: number; // total number of elements
+  pagination: {
+    page: number;
+    totalPage: number;
+    pageSize: number;
+    totalData: number;
   };
 };
 
 export type MRequest<SortByValue = string> = {
   page?: number;
-  per_page?: number;
+  limit?: number;
   search?: string;
-  sort_by?: SortByValue;
-  sort_dir?: SortDir;
+  sort?: SortByValue;
+  order?: SortDir;
 };
 
 export type ValidationError = {

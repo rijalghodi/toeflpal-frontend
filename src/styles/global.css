@@ -1,3 +1,5 @@
+@layer mantine, mantine-datatable;
+
 a:hover,
 a:active {
   text-decoration: none;

@@ -1,11 +1,13 @@
 import {
   ActionIcon,
   Group,
+  MantineSize,
   Paper,
   PaperProps,
   Popover,
   Slider,
   Text,
+  useMantineTheme,
 } from '@mantine/core';
 import {
   IconHeadphonesOff,
@@ -22,10 +24,12 @@ import React, {
 } from 'react';
 
 type AudioPlayerProps = {
-  src: string;
+  src?: string;
   withTimer?: boolean;
   autoPlay?: boolean;
-} & PaperProps;
+  size?: MantineSize;
+  timerSeparated?: boolean;
+} & Omit<PaperProps, 'size'>;
 
 export interface AudioPlayerRef {
   play: () => void;
@@ -33,7 +37,19 @@ export interface AudioPlayerRef {
 }
 
 export const AudioPlayer = forwardRef<AudioPlayerRef, AudioPlayerProps>(
-  ({ src, withTimer = false, autoPlay = false, ...paperProps }, ref) => {
+  (
+    {
+      src,
+      withTimer = false,
+      autoPlay = false,
+      size = 'sm',
+      timerSeparated,
+      ...paperProps
+    },
+    ref,
+  ) => {
+    const { fontSizes } = useMantineTheme();
+
     const audioRef = useRef<HTMLAudioElement | null>(null);
     const [isPlaying, setIsPlaying] = useState(false);
     const [currentTime, setCurrentTime] = useState(0);
@@ -68,7 +84,7 @@ export const AudioPlayer = forwardRef<AudioPlayerRef, AudioPlayerProps>(
     };
 
     return (
-      <Paper {...paperProps}>
+      <Paper withBorder={false} shadow="none" {...paperProps}>
         <Group wrap="nowrap" gap="xs">
           <audio
             ref={audioRef}
@@ -86,32 +102,38 @@ export const AudioPlayer = forwardRef<AudioPlayerRef, AudioPlayerProps>(
             disabled={!src}
           >
             {!src ? (
-              <IconHeadphonesOff size={16} />
+              <IconHeadphonesOff size={fontSizes[size]} />
             ) : isPlaying ? (
-              <IconPlayerPause size={16} />
+              <IconPlayerPause size={fontSizes[size]} />
             ) : (
-              <IconPlayerPlay size={16} />
+              <IconPlayerPlay size={fontSizes[size]} />
             )}
           </ActionIcon>
-          {withTimer && (
-            <Group gap={4} w={74} justify="center" wrap="nowrap">
-              <Text fz="xs">
+          {withTimer && !timerSeparated && (
+            <Group gap={4} justify="center" wrap="nowrap">
+              <Text fz="xs" w={32} ta="center">
                 {Math.floor(currentTime / 60)}:
                 {('0' + Math.floor(currentTime % 60)).slice(-2)}
               </Text>
 
               <Text fz="xs">/</Text>
-              <Text fz="xs">
+              <Text fz="xs" w={32}>
                 {Math.floor(duration / 60)}:
                 {('0' + Math.floor(duration % 60)).slice(-2)}
               </Text>
             </Group>
           )}
+          {withTimer && timerSeparated && (
+            <Text fz="xs" w={32} ta="center">
+              {Math.floor(currentTime / 60)}:
+              {('0' + Math.floor(currentTime % 60)).slice(-2)}
+            </Text>
+          )}
           <Slider
             disabled={!src}
             flex={1}
             color="dark"
-            size="sm"
+            size={size}
             value={currentTime}
             min={0}
             max={duration}
@@ -123,17 +145,23 @@ export const AudioPlayer = forwardRef<AudioPlayerRef, AudioPlayerProps>(
               }
             }}
           />
+          {withTimer && timerSeparated && (
+            <Text fz="xs" w={32} ta="center">
+              {Math.floor(duration / 60)}:
+              {('0' + Math.floor(duration % 60)).slice(-2)}
+            </Text>
+          )}
 
           <Popover shadow="xs" position="bottom-end" offset={2}>
             <Popover.Target>
               <ActionIcon variant="subtle" color="dark">
-                <IconVolume size={16} />
+                <IconVolume size={fontSizes[size]} />
               </ActionIcon>
             </Popover.Target>
             <Popover.Dropdown>
               <Slider
                 size="sm"
-                miw={100}
+                miw={32}
                 value={volume * 100}
                 min={0}
                 max={100}

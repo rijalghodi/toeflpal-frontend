@@ -1,6 +1,7 @@
 import '@mantine/core/styles.css';
 import '@mantine/notifications/styles.css';
 import '@mantine/tiptap/styles.css';
+import 'mantine-datatable/styles.layer.css';
 import 'react-h5-audio-player/lib/styles.css';
 import '@/styles/global.css';
 

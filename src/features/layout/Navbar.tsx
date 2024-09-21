@@ -3,6 +3,7 @@
 import { NavLink, Stack } from '@mantine/core';
 import {
   IconBolt,
+  IconBookmark,
   IconBrandSpeedtest,
   IconPlayerPlay,
   IconSchool,
@@ -48,6 +49,11 @@ const superAdminNavs = [
     label: 'Practice',
     href: routes.adminPracticeList,
     icon: <IconBolt size={16} />,
+  },
+  {
+    label: 'References',
+    href: routes.adminReferenceList,
+    icon: <IconBookmark size={16} />,
   },
   {
     label: 'Lesson',

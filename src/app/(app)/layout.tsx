@@ -58,7 +58,7 @@ export default function AppLayout({ children }: Props) {
       </AppShell.Header>
 
       <AppShell.Main>
-        <Container maw={1000} px={0} pt="xs" pb="xl">
+        <Container maw={992} px={0} pt="xs" pb="xl">
           {children}
         </Container>
       </AppShell.Main>

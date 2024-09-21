@@ -1,8 +1,10 @@
 'use client';
 
-import { CloseButton, Paper, Portal, Stack } from '@mantine/core';
+import { CloseButton, Paper, Portal, Stack, Text } from '@mantine/core';
 import React, { createContext, useContext, useRef, useState } from 'react';
-import AudioPlayer from 'react-h5-audio-player';
+
+// import AudioPlayer from 'react-h5-audio-player';
+import { AudioPlayer, AudioPlayerRef } from '@/elements';
 
 type AudioPlayerProps = {
   size?: number;
@@ -37,7 +39,7 @@ export const AudioPlayerProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const close = () => setOpened(false);
 
-  const audioRef = useRef<null | AudioPlayer>(null);
+  const audioRef = useRef<null | AudioPlayerRef>(null);
 
   return (
     <AudioPlayerContext.Provider value={{ opened, open, close }}>
@@ -45,7 +47,7 @@ export const AudioPlayerProvider: React.FC<{ children: React.ReactNode }> = ({
       <Portal>
         <Paper
           pos="fixed"
-          bottom={{ base: 1, sm: 12 }}
+          bottom={{ base: opened ? 1 : '-100%', sm: opened ? 12 : '-100%' }}
           left="50%"
           miw={300}
           maw={600}
@@ -54,35 +56,41 @@ export const AudioPlayerProvider: React.FC<{ children: React.ReactNode }> = ({
           shadow="sm"
           style={{
             transform: 'translateX(-50%)',
-            display: opened ? 'block' : 'none',
+            // display: opened ? 'block' : 'none',
             zIndex: 10000,
+            transition: 'bottom 0.3s ease',
           }}
           p="sm"
         >
+          <Text fz="sm" mb="xs">
+            {audioPlayerProps?.title}
+          </Text>
           <CloseButton
             pos="absolute"
             right={12}
             top={12}
             onClick={() => {
               close();
-              audioRef.current?.audio.current?.pause();
+              audioRef.current?.pause();
             }}
           />
-          <Stack mx="auto" align="center" gap={8}>
+          <Stack mx="auto" align="center" gap={8} w="100%">
             <AudioPlayer
-              {...audioPlayerProps}
-              header={audioPlayerProps?.title}
-              showDownloadProgress
-              preload="metadata"
               ref={audioRef}
-              showJumpControls={false}
-              showSkipControls={false}
-              style={{
-                border: 'none !important',
-                borderWidth: 0,
-                borderRadius: 8,
-                boxShadow: 'none',
-              }}
+              size={'md' as any}
+              withTimer
+              timerSeparated
+              {...audioPlayerProps}
+              w="100%"
+              // header={audioPlayerProps?.title}
+              // showDownloadProgress
+              // preload="metadata"
+              // style={{
+              //   border: 'none !important',
+              //   borderWidth: 0,
+              //   borderRadius: 8,
+              //   boxShadow: 'none',
+              // }}
             />
           </Stack>
         </Paper>

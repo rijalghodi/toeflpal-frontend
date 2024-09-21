@@ -7,18 +7,26 @@ import React, { useState } from 'react';
 type Props = {
   placeholder?: string;
   onSearch?: (searchTerm: string) => void;
+  value?: string;
   size?: MantineSize;
   radius?: MantineRadius;
+  width?: number | string;
+  miw?: number | string;
 };
 export function SearchBar({
   placeholder,
   onSearch,
+  value,
   size = 'md',
   radius = 'md',
+  width,
+  miw,
 }: Props) {
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState(value ?? '');
   return (
     <TextInput
+      width={width}
+      miw={miw}
       radius={radius}
       size={size}
       value={searchTerm}
@@ -49,7 +57,7 @@ export function SearchBar({
         'aria-label': 'Jalankan Pencarian',
       }}
       leftSection={<IconSearch size={18} />}
-      leftSectionWidth={48}
+      leftSectionWidth={36}
       placeholder={placeholder ?? 'Cari'}
     />
   );
