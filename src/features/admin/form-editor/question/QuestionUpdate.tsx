@@ -148,13 +148,8 @@ export function QuestionUpdate({
         p="xs"
       >
         <Group justify="flex-end" w="100%">
-          <Button
-            type="button"
-            loading={isPending}
-            disabled={!isDirty}
-            onClick={onClose}
-          >
-            Save
+          <Button type="button" loading={isPending} onClick={onClose}>
+            {isPending ? 'Saving' : 'Finish'}
           </Button>
         </Group>
       </Paper>

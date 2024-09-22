@@ -16,7 +16,7 @@ import { RichTextEditor } from './RichTextEditor';
 
 type Props = {
   value?: string;
-  onChange: (content: string) => void;
+  onChange?: (content: string) => void;
   placeholder?: string;
 } & InputWrapperProps;
 

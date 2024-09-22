@@ -28,7 +28,10 @@ export function AudioTriggerButton({
   return (
     <Button
       size={size}
-      onClick={handleOpenAudio}
+      onClick={(e) => {
+        e.stopPropagation();
+        handleOpenAudio();
+      }}
       leftSection={<IconHeadphones size={12} />}
       disabled={!src || disabled}
       color="dark"

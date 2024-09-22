@@ -154,7 +154,10 @@ export function QuestionList({ formId, partId, lastOrder }: Props) {
         no: (lastOrder ?? 0) + item.order,
         text: item.text,
         audio: item.audio?.url ? (
-          <AudioTriggerButton src={item.audio.url} />
+          <AudioTriggerButton
+            src={item.audio.url}
+            title={`Question ${item.order}`}
+          />
         ) : (
           '-'
         ),

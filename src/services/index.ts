@@ -6,3 +6,4 @@ export * from './part';
 export * from './question';
 export * from './reference';
 export * from './toefl';
+export * from './key';

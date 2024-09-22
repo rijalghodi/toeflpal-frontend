@@ -63,7 +63,7 @@ export const AudioPlayerProvider: React.FC<{ children: React.ReactNode }> = ({
           p="sm"
         >
           <Text fz="sm" mb="xs">
-            {audioPlayerProps?.title}
+            {audioPlayerProps?.title ?? 'No Title '}
           </Text>
           <CloseButton
             pos="absolute"
@@ -83,15 +83,6 @@ export const AudioPlayerProvider: React.FC<{ children: React.ReactNode }> = ({
               autoPlay
               {...audioPlayerProps}
               w="100%"
-              // header={audioPlayerProps?.title}
-              // showDownloadProgress
-              // preload="metadata"
-              // style={{
-              //   border: 'none !important',
-              //   borderWidth: 0,
-              //   borderRadius: 8,
-              //   boxShadow: 'none',
-              // }}
             />
           </Stack>
         </Paper>

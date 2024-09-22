@@ -1,4 +1,4 @@
-import { CloseButton, Group, Loader, TextInput } from '@mantine/core';
+import { CloseButton, Group, Text, TextInput } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
 import { IconX } from '@tabler/icons-react';
 import { useMutation } from '@tanstack/react-query';
@@ -74,7 +74,13 @@ export function OptionItem({
         placeholder="Type here"
         onChange={(e) => setText(e.target.value)}
         flex={1}
-        rightSection={isPending ? <Loader size="xs" variant="oval" /> : null}
+        rightSection={
+          isPending ? (
+            <Text fz="xs" c="gray">
+              Saving...
+            </Text>
+          ) : null
+        }
       />
       <CloseButton onClick={async () => await deleteOption({ optionId })} />
     </Group>

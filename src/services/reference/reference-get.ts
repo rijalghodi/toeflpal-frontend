@@ -24,6 +24,6 @@ export const referenceGet = async ({
 };
 
 export const referenceGetKey = (req: ReferenceGetRequest) => [
-  'reference-list',
+  'reference-get',
   req.referenceId,
 ];

@@ -1,12 +1,30 @@
-import { Button, CheckIcon, Group, Radio, Stack } from '@mantine/core';
+import {
+  Button,
+  CheckIcon,
+  Group,
+  Loader,
+  Radio,
+  Stack,
+  Text,
+} from '@mantine/core';
 import { notifications } from '@mantine/notifications';
 import { IconPlus, IconX } from '@tabler/icons-react';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import React from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
-import { optionCreate, optionList, optionListKey } from '@/services';
+import {
+  keyGet,
+  keyGetKey,
+  keyUpdate,
+  optionCreate,
+  optionList,
+  optionListKey,
+} from '@/services';
 
 import { OptionItem } from './OptionItem';
+import { RichTextEditorInput } from '@/elements';
+import { debounce } from 'lodash';
+import { useDebouncedState, useDebouncedValue } from '@mantine/hooks';
 
 type Props = {
   questionId: string;
@@ -34,9 +52,45 @@ export function OptionList({ questionId }: Props) {
     },
   });
 
+  const { data: answerKey, refetch: refetchKey } = useQuery({
+    queryKey: keyGetKey({ questionId }),
+    queryFn: () => keyGet({ questionId }),
+  });
+
+  const { mutate: updateKey, isPending } = useMutation({
+    mutationFn: keyUpdate,
+    onSuccess: () => {
+      refetchKey();
+    },
+    onError: () => {
+      notifications.show({
+        message: 'Fail',
+        color: 'red',
+        icon: <IconX size={16} />,
+        autoClose: 3000,
+      });
+    },
+  });
+
+  const [explanation, setExplanation] = useState(answerKey?.data.explanation);
+  const [debExplanation, cancelDebExplanation] = useDebouncedValue(
+    explanation,
+    2000,
+  );
+
+  useEffect(() => {
+    updateKey({ questionId, explanation: debExplanation });
+    return () => {
+      cancelDebExplanation();
+    };
+  }, [debExplanation]); // eslint-disable-line
+
   return (
     <Stack gap="md">
-      <Radio.Group>
+      <Radio.Group
+        value={answerKey?.data.optionId}
+        onChange={(value) => updateKey({ optionId: value, questionId })}
+      >
         <Stack gap="xs">
           {options?.data.map(({ id, text }, idx) => (
             <Group w="100%" align="flex-start" key={idx}>
@@ -69,6 +123,16 @@ export function OptionList({ questionId }: Props) {
           Option
         </Button>
       </Group>
+      <RichTextEditorInput
+        label="Explanation"
+        value={answerKey?.data.explanation}
+        onChange={(val) => setExplanation(String(val))}
+      />
+      {isPending && (
+        <Text fz="xs" c="gray.3">
+          Saving...
+        </Text>
+      )}
     </Stack>
   );
 }
