@@ -3,13 +3,14 @@
 import { Drawer, DrawerProps } from '@mantine/core';
 import React, { createContext, ReactNode, useContext, useState } from 'react';
 
-type OpenProps = {
+type DrawerAltProps = {
   content?: ReactNode;
+  onClose?: () => void;
 } & Omit<DrawerProps, 'opened' | 'onClose' | 'content'>;
 
 interface DrawerAltContextType {
   opened: boolean;
-  open: (props: OpenProps) => void;
+  open: (props: DrawerAltProps) => void;
   close: () => void;
   content: ReactNode;
 }
@@ -25,10 +26,10 @@ export const DrawerAltProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const [opened, setOpened] = useState(false);
   const [content, setContent] = useState<ReactNode>(null);
-  const [drawerProps, setDrawerAltProps] =
-    useState<Omit<DrawerProps, 'opened' | 'onClose'>>();
+  const [drawerAltProps, setDrawerAltProps] =
+    useState<Omit<DrawerAltProps, 'content'>>();
 
-  const open = ({ content: newContet, ...drawerProps }: OpenProps) => {
+  const open = ({ content: newContet, ...drawerProps }: DrawerAltProps) => {
     setContent(newContet || null);
     setOpened(true);
     setDrawerAltProps(drawerProps);
@@ -41,7 +42,6 @@ export const DrawerAltProvider: React.FC<{ children: React.ReactNode }> = ({
       {children}
       <Drawer
         opened={opened}
-        onClose={close}
         size="md"
         position="right"
         overlayProps={{
@@ -57,7 +57,11 @@ export const DrawerAltProvider: React.FC<{ children: React.ReactNode }> = ({
             textTransform: 'uppercase',
           },
         }}
-        {...drawerProps}
+        {...drawerAltProps}
+        onClose={() => {
+          drawerAltProps?.onClose?.();
+          close();
+        }}
       >
         {content}
       </Drawer>

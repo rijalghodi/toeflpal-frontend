@@ -74,7 +74,7 @@ export function PartWrapper({
               color="dark"
               onClick={onAddQuestion}
             >
-              Add Question
+              Question
             </Button>
             <Menu shadow="xs" withArrow position="bottom-end">
               <Menu.Target>

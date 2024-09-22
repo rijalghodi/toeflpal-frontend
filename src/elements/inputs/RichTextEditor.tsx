@@ -1,3 +1,4 @@
+import { ScrollArea } from '@mantine/core';
 import { Link, RichTextEditor as MantineRichTextEditor } from '@mantine/tiptap';
 import Highlight from '@tiptap/extension-highlight';
 import Placeholder from '@tiptap/extension-placeholder';
@@ -10,27 +11,36 @@ export interface RichTextEditorProps {
   onContentChange?: (content: string) => void;
   initialContent?: string;
   ref?: any;
+  mah?: number | string;
+  minimalist?: boolean;
+  version?: number; // change this to refresh the editor
 }
 
 export function RichTextEditor({
   initialContent,
   onContentChange,
   ref,
+  mah,
+  minimalist = false,
+  version,
 }: RichTextEditorProps) {
-  const editor = useEditor({
-    extensions: [
-      StarterKit,
-      Placeholder.configure({ placeholder: 'This is placeholder' }),
-      Underline,
-      Link,
-      Highlight,
-      TextAlign.configure({ types: ['heading', 'paragraph'] }),
-    ],
-    content: initialContent,
-    onUpdate(v) {
-      onContentChange?.(v.editor.getHTML());
+  const editor = useEditor(
+    {
+      extensions: [
+        StarterKit,
+        Placeholder.configure({ placeholder: 'Type here' }),
+        Underline,
+        Link,
+        Highlight,
+        TextAlign.configure({ types: ['heading', 'paragraph'] }),
+      ],
+      content: initialContent,
+      onUpdate(v) {
+        onContentChange?.(v.editor.getHTML());
+      },
     },
-  });
+    [version],
+  );
 
   return (
     <MantineRichTextEditor editor={editor} ref={ref}>
@@ -39,17 +49,22 @@ export function RichTextEditor({
           <MantineRichTextEditor.Bold />
           <MantineRichTextEditor.Italic />
           <MantineRichTextEditor.Underline />
-          <MantineRichTextEditor.ClearFormatting />
-          <MantineRichTextEditor.Highlight />
+          {!minimalist && (
+            <>
+              <MantineRichTextEditor.ClearFormatting />
+              <MantineRichTextEditor.Highlight />
+            </>
+          )}
         </MantineRichTextEditor.ControlsGroup>
 
         <MantineRichTextEditor.ControlsGroup>
           <MantineRichTextEditor.H1 />
-          <MantineRichTextEditor.H2 />
-          <MantineRichTextEditor.H3 />
-        </MantineRichTextEditor.ControlsGroup>
-
-        <MantineRichTextEditor.ControlsGroup>
+          {!minimalist && (
+            <>
+              <MantineRichTextEditor.H2 />
+              <MantineRichTextEditor.H3 />
+            </>
+          )}
           <MantineRichTextEditor.BulletList />
           <MantineRichTextEditor.OrderedList />
         </MantineRichTextEditor.ControlsGroup>
@@ -57,17 +72,23 @@ export function RichTextEditor({
         <MantineRichTextEditor.ControlsGroup>
           <MantineRichTextEditor.AlignLeft />
           <MantineRichTextEditor.AlignCenter />
-          <MantineRichTextEditor.AlignJustify />
-          <MantineRichTextEditor.AlignRight />
+          {!minimalist && (
+            <>
+              <MantineRichTextEditor.AlignRight />
+              <MantineRichTextEditor.AlignJustify />
+            </>
+          )}
         </MantineRichTextEditor.ControlsGroup>
 
-        <MantineRichTextEditor.ControlsGroup>
-          <MantineRichTextEditor.Undo />
-          <MantineRichTextEditor.Redo />
-        </MantineRichTextEditor.ControlsGroup>
+        {!minimalist && (
+          <MantineRichTextEditor.ControlsGroup>
+            <MantineRichTextEditor.Undo />
+            <MantineRichTextEditor.Redo />
+          </MantineRichTextEditor.ControlsGroup>
+        )}
       </MantineRichTextEditor.Toolbar>
 
-      <MantineRichTextEditor.Content />
+      <MantineRichTextEditor.Content mah={mah} style={{ overflow: 'scroll' }} />
     </MantineRichTextEditor>
   );
 }

@@ -3,6 +3,8 @@ import {
   createTheme,
   FileInput,
   Group,
+  Input,
+  InputWrapper,
   Loader,
   MantineProviderProps,
   Modal,
@@ -56,8 +58,8 @@ export const theme: MantineProviderProps['theme'] = createTheme({
     fontWeight: '600',
     // properties for individual headings, all of them are optional
     sizes: {
-      h1: { fontSize: '2.125rem' }, // 34px
-      h2: { fontSize: '1.625rem' }, // 26px
+      h1: { fontSize: '1.75rem' }, // 28px
+      h2: { fontSize: '1.5rem' }, // 24px
       h3: { fontSize: '1.375rem' }, // 22px
       h4: { fontSize: '1.125rem' }, // 18px
       h5: { fontSize: '1rem' }, // 16px
@@ -92,6 +94,11 @@ export const theme: MantineProviderProps['theme'] = createTheme({
   },
 
   components: {
+    InputWrapper: InputWrapper.extend({
+      classNames: {
+        label: classes.label,
+      },
+    }),
     TextInput: TextInput.extend({
       classNames: {
         label: classes.label,
