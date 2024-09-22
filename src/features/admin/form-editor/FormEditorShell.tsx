@@ -9,29 +9,25 @@ import {
   Title,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import {
-  IconChevronLeft,
-  IconMenu3,
-  IconPlayerPlay,
-} from '@tabler/icons-react';
-import Link from 'next/link';
-import { useParams } from 'next/navigation';
+import { IconChevronLeft, IconPlayerPlay } from '@tabler/icons-react';
+import { useParams, useRouter } from 'next/navigation';
 import React from 'react';
 
 import { FormEditorMain } from './FormEditorMain';
 
 export function FormEditorShell() {
+  const router = useRouter();
   const [opened, { toggle }] = useDisclosure();
   const { formId } = useParams();
 
   return (
     <AppShell
       header={{ height: { base: 40, xs: 54 }, offset: true }}
-      navbar={{
-        width: 200,
-        breakpoint: 'sm',
-        collapsed: { desktop: opened, mobile: !opened },
-      }}
+      // navbar={{
+      //   width: 200,
+      //   breakpoint: 'sm',
+      //   collapsed: { desktop: opened, mobile: !opened },
+      // }}
       withBorder={false}
       px={{ base: 'md', xs: 'xl' }}
     >
@@ -46,17 +42,16 @@ export function FormEditorShell() {
         >
           <Group gap="md">
             <ActionIcon
-              color="gray"
+              color="dark"
               radius="xl"
               size="lg"
               variant="subtle"
               title="Back to Previous Page"
-              component={Link}
-              href="/admin/toefl"
+              onClick={router.back}
             >
               <IconChevronLeft size={16} />
             </ActionIcon>
-            <ActionIcon
+            {/* <ActionIcon
               size="lg"
               onClick={toggle}
               variant="subtle"
@@ -64,7 +59,7 @@ export function FormEditorShell() {
               title="Map"
             >
               <IconMenu3 />
-            </ActionIcon>
+            </ActionIcon> */}
             <Title order={1} fz="md" fw={600}>
               Form Editor
             </Title>
@@ -82,7 +77,7 @@ export function FormEditorShell() {
           <FormEditorMain formId={formId as string} />
         </Container>
       </AppShell.Main>
-      <AppShell.Navbar
+      {/* <AppShell.Navbar
         py="md"
         px="sm"
         styles={{
@@ -93,7 +88,7 @@ export function FormEditorShell() {
         }}
       >
         Navbar
-      </AppShell.Navbar>
+      </AppShell.Navbar> */}
     </AppShell>
   );
 }

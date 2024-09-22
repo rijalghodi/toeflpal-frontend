@@ -2,7 +2,7 @@
 
 import { ActionIcon, Button, Group, Stack, TextInput } from '@mantine/core';
 import { useDebouncedValue } from '@mantine/hooks';
-import { IconEdit, IconPlus, IconSearch, IconTrash } from '@tabler/icons-react';
+import { IconEdit, IconPlus, IconSearch } from '@tabler/icons-react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { DataTable } from 'mantine-datatable';
 import { useRouter } from 'next/navigation';
@@ -23,7 +23,7 @@ type Props = {
 export function ReferenceList({ expectedHeight }: Props) {
   const q = useQueryClient();
   const { push } = useRouter();
-  const { open, close } = useDrawer();
+  const { open: openDrawer, close: closeDrawer } = useDrawer();
   const [search, setSearch] = useState<string>('');
   const [page, setPage] = useState(1);
   const [searchDebounced] = useDebouncedValue(search, 400);
@@ -54,12 +54,12 @@ export function ReferenceList({ expectedHeight }: Props) {
   });
 
   const handleCreateReference = async () => {
-    open({
+    openDrawer({
       title: 'Create Reference',
       content: (
         <ReferenceCreate
           onSuccess={() => {
-            setPage(1)
+            setPage(1);
             setRecords([]);
             refetch();
             q.refetchQueries({
@@ -69,7 +69,7 @@ export function ReferenceList({ expectedHeight }: Props) {
                 limit: batchSize,
               }),
             });
-            close();
+            closeDrawer();
           }}
         />
       ),
@@ -77,7 +77,7 @@ export function ReferenceList({ expectedHeight }: Props) {
   };
 
   const handleUpdateReference = async (referenceId: string) => {
-    open({
+    openDrawer({
       title: 'Update Reference',
       content: (
         <ReferenceUpdate
@@ -91,7 +91,7 @@ export function ReferenceList({ expectedHeight }: Props) {
             q.invalidateQueries({
               queryKey: referenceListKey({ search: searchDebounced, page }),
             });
-            close();
+            closeDrawer();
           }}
         />
       ),
@@ -144,7 +144,7 @@ export function ReferenceList({ expectedHeight }: Props) {
           leftSection={<IconPlus size={16} />}
           onClick={handleCreateReference}
         >
-          Add Reference
+          Reference
         </Button>
       </Group>
       <DataTable

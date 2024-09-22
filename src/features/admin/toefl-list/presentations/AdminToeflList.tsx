@@ -26,7 +26,7 @@ export function AdminToeflList({ loading, data, expectedHeight }: Props) {
 
   return (
     <SimpleGrid cols={{ base: 1, xs: 2, md: 2 }}>
-      {data?.map((toefl) => (
+      {data?.map((toefl, idx) => (
         <Paper
           radius="md"
           withBorder
@@ -34,6 +34,7 @@ export function AdminToeflList({ loading, data, expectedHeight }: Props) {
           component={Link}
           href={toefl.href}
           className={cls.hovered}
+          key={idx}
         >
           <Group justify="space-between" wrap="nowrap">
             <Text fw={400} fz="sm">

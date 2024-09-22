@@ -1,6 +1,6 @@
 'use client';
 
-import { Drawer, DrawerProps } from '@mantine/core';
+import { Drawer, DrawerProps, Portal } from '@mantine/core';
 import React, { createContext, ReactNode, useContext, useState } from 'react';
 
 type OpenProps = {
@@ -37,25 +37,27 @@ export const DrawerProvider: React.FC<{ children: React.ReactNode }> = ({
   return (
     <DrawerContext.Provider value={{ opened, open, close, content }}>
       {children}
-      <Drawer
-        opened={opened}
-        onClose={close}
-        size="md"
-        position="right"
-        overlayProps={{
-          opacity: 0.2,
-        }}
-        styles={{
-          title: {
-            fontWeight: 700,
-            fontSize: 12,
-            textTransform: 'uppercase',
-          },
-        }}
-        {...drawerProps}
-      >
-        {content}
-      </Drawer>
+      <Portal>
+        <Drawer
+          opened={opened}
+          onClose={close}
+          size="md"
+          position="right"
+          overlayProps={{
+            opacity: 0.2,
+          }}
+          styles={{
+            title: {
+              fontWeight: 700,
+              fontSize: 12,
+              textTransform: 'uppercase',
+            },
+          }}
+          {...drawerProps}
+        >
+          {content}
+        </Drawer>
+      </Portal>
     </DrawerContext.Provider>
   );
 };

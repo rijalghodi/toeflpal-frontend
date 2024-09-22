@@ -1,4 +1,3 @@
-import { ScrollArea } from '@mantine/core';
 import { Link, RichTextEditor as MantineRichTextEditor } from '@mantine/tiptap';
 import Highlight from '@tiptap/extension-highlight';
 import Placeholder from '@tiptap/extension-placeholder';

@@ -152,7 +152,7 @@ export const AudioPlayer = forwardRef<AudioPlayerRef, AudioPlayerProps>(
             </Text>
           )}
 
-          <Popover shadow="xs" position="bottom-end" offset={2}>
+          <Popover shadow="xs" position="top-end" offset={2}>
             <Popover.Target>
               <ActionIcon variant="subtle" color="dark">
                 <IconVolume size={fontSizes[size]} />
@@ -168,6 +168,7 @@ export const AudioPlayer = forwardRef<AudioPlayerRef, AudioPlayerProps>(
                 onChange={(value) => setVolume(value / 100)}
                 color="dark"
                 label={null}
+                w={80}
               />
             </Popover.Dropdown>
           </Popover>

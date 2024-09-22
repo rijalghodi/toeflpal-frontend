@@ -3,7 +3,7 @@ import { IconFile } from '@tabler/icons-react';
 import DOMPurify from 'dompurify';
 import React from 'react';
 
-import { useDrawerAlt } from '@/contexts';
+import { useDrawerAlt2 } from '@/contexts';
 
 type Props = ButtonProps & {
   content?: string;
@@ -16,7 +16,7 @@ export function ReadTriggerButton({
   disabled,
   ...btnProps
 }: Props) {
-  const { open } = useDrawerAlt();
+  const { open } = useDrawerAlt2();
   const handleOpenRead = () => {
     if (content) {
       const safeHtml = DOMPurify.sanitize(content);

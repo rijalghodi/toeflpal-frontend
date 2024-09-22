@@ -12,8 +12,8 @@ import {
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import {
-  IconChevronCompactDown,
-  IconChevronCompactUp,
+  IconChevronDown,
+  IconChevronUp,
   IconDotsVertical,
   IconEdit,
   IconPlus,
@@ -41,7 +41,7 @@ export function PartWrapper({
   onEditPart,
   onDeletePart,
 }: Props) {
-  const [questionOpened, { toggle: toggleQuestios }] = useDisclosure(true);
+  const [questionOpened, { toggle: toggleQuestions }] = useDisclosure(true);
 
   return (
     <Box pos="relative" pt="xl">
@@ -67,6 +67,21 @@ export function PartWrapper({
           </Title>
 
           <Group justify="flex-end" gap={8}>
+            <ActionIcon
+              variant="subtle"
+              color="dark"
+              radius="xl"
+              size="lg"
+              title="Expand/Collapse"
+              onClick={toggleQuestions}
+            >
+              {questionOpened ? (
+                <IconChevronUp size={20} />
+              ) : (
+                <IconChevronDown size={20} />
+              )}
+            </ActionIcon>
+
             <Button
               leftSection={<IconPlus size={16} />}
               size="xs"
@@ -112,13 +127,15 @@ export function PartWrapper({
             </Menu>
           </Group>
         </Flex>
-        <Collapse in={questionOpened}>{children}</Collapse>
-        <Group w="100%" justify="center">
+        <Collapse in={questionOpened}>
+          <Box pb="sm">{children}</Box>
+        </Collapse>
+        {/* <Group w="100%" justify="center">
           <Button
             size="compact-sm"
             variant="subtle"
             color="gray"
-            onClick={toggleQuestios}
+            onClick={toggleQuestions}
             w={100}
           >
             {questionOpened ? (
@@ -127,7 +144,7 @@ export function PartWrapper({
               <IconChevronCompactDown size={20} />
             )}
           </Button>
-        </Group>
+        </Group> */}
       </Paper>
     </Box>
   );

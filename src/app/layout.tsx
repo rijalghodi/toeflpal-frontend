@@ -1,9 +1,10 @@
 import '@mantine/core/styles.css';
 import '@mantine/notifications/styles.css';
 import '@mantine/tiptap/styles.css';
+import '@mantine/core/styles.layer.css';
 import 'mantine-datatable/styles.layer.css';
-import 'react-h5-audio-player/lib/styles.css';
 import '@/styles/global.css';
+import 'react-h5-audio-player/lib/styles.css';
 
 import { ColorSchemeScript } from '@mantine/core';
 import { Inter } from 'next/font/google';
@@ -11,6 +12,7 @@ import React from 'react';
 
 import {
   AudioPlayerProvider,
+  DrawerAlt2Provider,
   DrawerAltProvider,
   DrawerProvider,
 } from '@/contexts';
@@ -52,9 +54,11 @@ export default function RootLayout({ children }: { children: any }) {
             headingFontFamily={headingFont.style.fontFamily}
           >
             <AudioPlayerProvider>
-              <DrawerAltProvider>
-                <DrawerProvider>{children}</DrawerProvider>
-              </DrawerAltProvider>
+              <DrawerAlt2Provider>
+                <DrawerAltProvider>
+                  <DrawerProvider>{children}</DrawerProvider>
+                </DrawerAltProvider>
+              </DrawerAlt2Provider>
             </AudioPlayerProvider>
           </MantineProviders>
         </ClientProviders>

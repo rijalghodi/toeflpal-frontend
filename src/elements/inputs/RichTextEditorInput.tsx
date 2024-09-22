@@ -6,15 +6,13 @@ import {
   InputWrapperProps,
   Paper,
   Stack,
-  Text,
 } from '@mantine/core';
-import DOMPurify from 'dompurify';
+import { IconArrowsMaximize } from '@tabler/icons-react';
 import React, { useState } from 'react';
 
-import { useDrawerAlt } from '@/contexts';
+import { useDrawerAlt2 } from '@/contexts';
 
 import { RichTextEditor } from './RichTextEditor';
-import { IconArrowsMaximize, IconMaximize } from '@tabler/icons-react';
 
 type Props = {
   value?: string;
@@ -31,7 +29,7 @@ export function RichTextEditorInput({
   ref,
   ...props
 }: Props) {
-  const { open, close } = useDrawerAlt();
+  const { open, close } = useDrawerAlt2();
   const [version, setVersion] = useState(0);
   // const firstContent = new DOMParser()
   //   .parseFromString(DOMPurify.sanitize(value || ''), 'text/html')
@@ -40,12 +38,16 @@ export function RichTextEditorInput({
   const handleOpenDrawerEditor = () => {
     open({
       title: props.label,
-      size: 'lg',
+      size: 'xl',
       zIndex: 1000,
       onClose: () => setVersion((v) => v + 1),
       content: (
         <Stack>
-          <RichTextEditor initialContent={value} onContentChange={onChange} />
+          <RichTextEditor
+            initialContent={value}
+            onContentChange={onChange}
+            mah="calc(100vh - 166px)"
+          />
           <Paper
             withBorder
             pos="absolute"
@@ -54,6 +56,7 @@ export function RichTextEditorInput({
             right={0}
             radius={0}
             p="xs"
+            py={4}
           >
             <Group justify="flex-end" w="100%">
               <Button

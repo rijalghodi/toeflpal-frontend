@@ -138,7 +138,6 @@ export const theme: MantineProviderProps['theme'] = createTheme({
       classNames: {
         label: classes.label,
         input: classes.input,
-        dropdown: classes.dropdown,
       },
     }),
     DatePickerInput: {

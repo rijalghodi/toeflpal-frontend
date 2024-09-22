@@ -1,7 +1,6 @@
 import { Stack, Title } from '@mantine/core';
 import React, { Suspense } from 'react';
 
-import { ReferenceList } from '@/features/admin/reference/ReferenceList';
 import { ReferencePaginated } from '@/features/admin/reference/ReferencePaginated';
 
 export default function ReferencePage() {
