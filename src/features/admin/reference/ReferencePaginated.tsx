@@ -15,43 +15,32 @@ import { referenceList, referenceListKey } from '@/services';
 import { ReferenceCreate } from './ReferenceCreate';
 import { ReferenceUpdate } from './ReferenceUpdate';
 
-const batchSize = 15;
+const PAGE_SIZE = 15;
 
-type Props = {
-  expectedHeight?: number | string;
-};
-export function ReferenceList({ expectedHeight }: Props) {
+export function ReferencePaginated() {
   const q = useQueryClient();
   const { push } = useRouter();
   const { open, close } = useDrawer();
   const [search, setSearch] = useState<string>('');
   const [page, setPage] = useState(1);
   const [searchDebounced] = useDebouncedValue(search, 400);
-  const prevDebounceSearchRef = useRef(searchDebounced);
-  const [records, setRecords] = useState<
-    {
-      no: number;
-      id: string;
-      name?: string;
-      audioUrl?: string;
-      text?: string;
-    }[]
-  >([]);
 
-  const {
-    data: references,
-    isLoading,
-    isFetching,
-    refetch,
-  } = useQuery({
+  const { data, isLoading, isFetching, refetch } = useQuery({
     queryKey: referenceListKey({
       search: searchDebounced ?? undefined,
       page,
-      limit: batchSize,
+      limit: PAGE_SIZE,
     }),
     queryFn: () =>
-      referenceList({ search: searchDebounced, page, limit: batchSize }),
+      referenceList({ search: searchDebounced, page, limit: PAGE_SIZE }),
   });
+
+  const references = data?.data;
+  const pagination = data?.pagination;
+
+  useEffect(() => {
+    setPage(1);
+  }, [searchDebounced]);
 
   const handleCreateReference = async () => {
     open({
@@ -59,16 +48,15 @@ export function ReferenceList({ expectedHeight }: Props) {
       content: (
         <ReferenceCreate
           onSuccess={() => {
-            setPage(1)
-            setRecords([]);
-            refetch();
-            q.refetchQueries({
+            q.invalidateQueries({
               queryKey: referenceListKey({
                 search: '',
                 page: 1,
-                limit: batchSize,
+                limit: PAGE_SIZE,
               }),
             });
+            setPage(1);
+            setSearch('');
             close();
           }}
         />
@@ -77,56 +65,25 @@ export function ReferenceList({ expectedHeight }: Props) {
   };
 
   const handleUpdateReference = async (referenceId: string) => {
+    const ref = references?.find((ref) => ref.id === referenceId);
     open({
       title: 'Update Reference',
       content: (
         <ReferenceUpdate
           referenceId={referenceId}
           initValues={{
-            name: records.find((ref) => ref.id === referenceId)?.name,
-            audioUrl: records.find((ref) => ref.id === referenceId)?.audioUrl,
-            text: records.find((ref) => ref.id === referenceId)?.text,
+            name: ref?.name,
+            audioUrl: ref?.audio?.url,
+            text: ref?.text,
           }}
           onSuccess={() => {
-            q.invalidateQueries({
-              queryKey: referenceListKey({ search: searchDebounced, page }),
-            });
+            refetch();
             close();
           }}
         />
       ),
     });
   };
-
-  // --- Infinite Scroll ---
-  const loadMoreRecords = () => {
-    if (records.length < (references?.pagination?.totalData ?? 0)) {
-      setPage((prevPage) => prevPage + 1);
-    }
-  };
-
-  useEffect(() => {
-    if (references?.data) {
-      setRecords((prevRecords) => [
-        ...prevRecords,
-        ...references.data?.map(({ audio, text, name, id }, idx) => ({
-          id,
-          name,
-          audio: audio?.url,
-          text,
-          no: (page - 1) * batchSize + idx + 1,
-        })),
-      ]);
-      prevDebounceSearchRef.current = searchDebounced;
-    }
-  }, [references, searchDebounced, page]);
-
-  useEffect(() => {
-    if (prevDebounceSearchRef.current !== searchDebounced) {
-      setRecords?.([]);
-      setPage(1);
-    }
-  }, [searchDebounced]);
 
   return (
     <Stack gap="md">
@@ -186,18 +143,21 @@ export function ReferenceList({ expectedHeight }: Props) {
             ),
           },
         ]}
-        records={records?.map((item, idx) => ({
+        records={references?.map((item, idx) => ({
           name: item.name,
-          audio: item.audioUrl ? (
-            <AudioTriggerButton src={item.audioUrl} title={item.name} />
+          audio: item.audio?.url ? (
+            <AudioTriggerButton src={item.audio?.url} title={item.name} />
           ) : null,
           text: item.text ? (
             <ReadTriggerButton content={item.text} title={item.name} />
           ) : null,
-          no: idx + 1,
+          no: ((pagination?.page ?? 1) - 1) * PAGE_SIZE + idx + 1,
           id: item.id,
         }))}
-        onScrollToBottom={loadMoreRecords}
+        totalRecords={pagination?.totalData}
+        recordsPerPage={PAGE_SIZE}
+        page={page}
+        onPageChange={(p) => setPage(p)}
       />
     </Stack>
   );

@@ -80,6 +80,7 @@ export const AudioPlayerProvider: React.FC<{ children: React.ReactNode }> = ({
               size={'md' as any}
               withTimer
               timerSeparated
+              autoPlay
               {...audioPlayerProps}
               w="100%"
               // header={audioPlayerProps?.title}
