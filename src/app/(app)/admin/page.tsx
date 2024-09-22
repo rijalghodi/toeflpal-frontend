@@ -3,7 +3,7 @@
 import { Stack, Title } from '@mantine/core';
 import React from 'react';
 
-import { ToeflList } from '@/features/simulation/ToeflList';
+import { ToeflList } from '@/features/toefl/ToeflList';
 
 export default function AdminSimulationPage() {
   return (
