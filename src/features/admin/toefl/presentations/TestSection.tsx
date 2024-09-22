@@ -23,7 +23,7 @@ export function TestSection({ name, formId, questionNum, duration }: Props) {
       <Group align="flex-start" justify="space-between" w="100%">
         <Stack gap={12}>
           <Group justify="space-between" wrap="wrap-reverse">
-            <Title order={2} fz="xs" fw="500" tt="uppercase">
+            <Title order={2} fz="xs" fw="700" tt="uppercase">
               {name}
             </Title>
           </Group>

@@ -130,7 +130,7 @@ export function ReferenceInput({ value, onChange, ...slcProps }: Props) {
         </ActionIcon>
       </Group>
 
-      <Paper>
+      <Paper visibleFrom="md">
         <Stack>
           <InputWrapper label="Reference Text">
             <Paper pos="relative">

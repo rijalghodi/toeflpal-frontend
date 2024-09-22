@@ -12,7 +12,7 @@ export function ToeflPublicationSection({ toeflId }: Props) {
   return (
     <Paper withBorder p="md" radius="md">
       <Stack>
-        <Title order={2} fz="xs" fw="500" tt="uppercase">
+        <Title order={2} fz="xs" fw="700" tt="uppercase">
           Publication
         </Title>
         <ToeflUpdateSectionItem toeflId={toeflId} />

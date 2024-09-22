@@ -79,7 +79,7 @@ export function QuestionList({ formId, partId, lastOrder }: Props) {
       children: (
         <Text size="sm">
           This will delete the question '
-          {truncate(name, { length: 20, omission: '...' })}', along with its
+          {truncate(name, { length: 50, omission: '...' })}', along with its
           associated options and answer key.
         </Text>
       ),

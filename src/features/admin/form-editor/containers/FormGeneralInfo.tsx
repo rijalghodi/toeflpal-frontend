@@ -47,7 +47,7 @@ export function FormGeneralInfo({ formId }: Props) {
       <Group align="flex-start" justify="space-between" w="100%">
         <Stack gap={12} flex={1}>
           <Group>
-            <Title order={2} fz="xs" fw={500} tt="uppercase" c="primary">
+            <Title order={2} fz="xs" fw={700} tt="uppercase">
               General Information
             </Title>
             <ActionIcon
@@ -65,6 +65,7 @@ export function FormGeneralInfo({ formId }: Props) {
             labelMinWidth={140}
             data={[
               { label: 'Name', value: data?.data.name },
+              { label: 'Skill', value: data?.data.skillType.toUpperCase() },
               {
                 label: 'Duration (minutes)',
                 value: data?.data.duration?.toString(),

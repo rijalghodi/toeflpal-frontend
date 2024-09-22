@@ -101,7 +101,7 @@ export function QuestionUpdate({
 
   return (
     <form>
-      <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="lg">
+      <SimpleGrid cols={{ base: 1, md: 2 }} spacing="lg">
         <Stack gap="md">
           <Controller
             name="referenceId"
