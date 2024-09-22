@@ -19,6 +19,7 @@ import {
 import classes from '@/styles/mantine.module.css';
 
 export const theme: MantineProviderProps['theme'] = createTheme({
+  cursorType: 'pointer',
   spacing: {
     xs: '8px',
     sm: '12px',

@@ -53,8 +53,8 @@ export function PartContainer({
             q.invalidateQueries({
               queryKey: questionListKey({ formId, partId }),
             });
-            closeDrawer();
           }}
+          onClose={closeDrawer}
         />
       ),
       size: '100vw',

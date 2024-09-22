@@ -8,7 +8,6 @@ import {
   Group,
   Title,
 } from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
 import { IconChevronLeft, IconPlayerPlay } from '@tabler/icons-react';
 import { useParams, useRouter } from 'next/navigation';
 import React from 'react';
@@ -17,7 +16,6 @@ import { FormEditorMain } from './FormEditorMain';
 
 export function FormEditorShell() {
   const router = useRouter();
-  const [opened, { toggle }] = useDisclosure();
   const { formId } = useParams();
 
   return (

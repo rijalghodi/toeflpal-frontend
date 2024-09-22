@@ -113,6 +113,7 @@ export function ReferenceInput({ value, onChange, ...slcProps }: Props) {
           searchable
           searchValue={search}
           onSearchChange={setSearch}
+          comboboxProps={{ shadow: 'xs' }}
           onChange={(val, opt) => {
             onChange?.(val, opt);
             handleChange(val);

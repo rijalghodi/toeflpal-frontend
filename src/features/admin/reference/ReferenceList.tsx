@@ -5,7 +5,6 @@ import { useDebouncedValue } from '@mantine/hooks';
 import { IconEdit, IconPlus, IconSearch } from '@tabler/icons-react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { DataTable } from 'mantine-datatable';
-import { useRouter } from 'next/navigation';
 import React, { useEffect, useRef, useState } from 'react';
 
 import { useDrawer } from '@/contexts';
@@ -17,12 +16,8 @@ import { ReferenceUpdate } from './ReferenceUpdate';
 
 const batchSize = 15;
 
-type Props = {
-  expectedHeight?: number | string;
-};
-export function ReferenceList({ expectedHeight }: Props) {
+export function ReferenceList() {
   const q = useQueryClient();
-  const { push } = useRouter();
   const { open: openDrawer, close: closeDrawer } = useDrawer();
   const [search, setSearch] = useState<string>('');
   const [page, setPage] = useState(1);

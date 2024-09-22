@@ -18,15 +18,12 @@ type Props = {
   value?: string;
   onChange: (content: string) => void;
   placeholder?: string;
-  ref?: any;
 } & InputWrapperProps;
 
 export function RichTextEditorInput({
   value,
   onChange,
-  placeholder,
   size = 'sm',
-  ref,
   ...props
 }: Props) {
   const { open, close } = useDrawerAlt2();

@@ -1,21 +1,27 @@
-import { ActionIcon, Group } from '@mantine/core';
-import { IconTrash } from '@tabler/icons-react';
-import { useQuery } from '@tanstack/react-query';
+import { ActionIcon, Group, Text } from '@mantine/core';
+import { modals } from '@mantine/modals';
+import { notifications } from '@mantine/notifications';
+import { IconTrash, IconX } from '@tabler/icons-react';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { truncate } from 'lodash';
 import { DataTable } from 'mantine-datatable';
 import React from 'react';
 
 import { useDrawer } from '@/contexts';
 import { AudioTriggerButton, LoadingState } from '@/elements';
 import { questionList, questionListKey } from '@/services';
+import { questionDelete } from '@/services/question/question-delete';
 
 import { QuestionUpdate } from './QuestionUpdate';
 
 type Props = {
   formId: string;
   partId: string;
+  lastOrder?: number;
 };
-export function QuestionList({ formId, partId }: Props) {
+export function QuestionList({ formId, partId, lastOrder }: Props) {
   const { open: openDrawer, close: closeDrawer } = useDrawer();
+
   const {
     data: questions,
     isLoading,
@@ -40,11 +46,55 @@ export function QuestionList({ formId, partId }: Props) {
           }}
           onSuccess={() => {
             refetch();
-            closeDrawer();
           }}
+          onClose={closeDrawer}
         />
       ),
       size: '100vw',
+    });
+  };
+
+  const { mutateAsync: deleteQuestion } = useMutation({
+    mutationFn: questionDelete,
+    onSuccess: () => {
+      refetch();
+      notifications.hide('question-delete');
+    },
+    onError: () => {
+      notifications.update({
+        message: 'Fail to delete question',
+        id: 'question-delete',
+        color: 'red',
+        icon: <IconX size={16} />,
+        autoClose: 3000,
+        withCloseButton: true,
+        loading: false,
+      });
+    },
+  });
+
+  const handleDelete = async (questionId: string, name?: string) => {
+    modals.openConfirmModal({
+      title: 'Delete Question',
+      children: (
+        <Text size="sm">
+          This will delete the question '
+          {truncate(name, { length: 20, omission: '...' })}', along with its
+          associated options and answer key.
+        </Text>
+      ),
+      labels: { confirm: 'Confirm', cancel: 'Cancel' },
+      confirmProps: { color: 'red' },
+      onConfirm: async () => {
+        notifications.show({
+          message: 'Loading...',
+          id: 'question-delete',
+          loading: true,
+          autoClose: false,
+          withCloseButton: false,
+        });
+        await deleteQuestion({ questionId });
+      },
     });
   };
 
@@ -85,11 +135,13 @@ export function QuestionList({ formId, partId }: Props) {
           render: (item) => (
             <Group gap={4} justify="center" wrap="nowrap">
               <ActionIcon
-                size="sm"
+                size="lg"
+                radius="xl"
                 variant="subtle"
-                color="red"
+                color="dark"
                 onClick={(e) => {
                   e.stopPropagation();
+                  handleDelete(item.id, item.text);
                 }}
               >
                 <IconTrash size={16} />
@@ -98,8 +150,8 @@ export function QuestionList({ formId, partId }: Props) {
           ),
         },
       ]}
-      records={questions?.data?.map((item, idx) => ({
-        no: item.order,
+      records={questions?.data?.map((item) => ({
+        no: (lastOrder ?? 0) + item.order,
         text: item.text,
         audio: item.audio?.url ? (
           <AudioTriggerButton src={item.audio.url} />

@@ -100,7 +100,7 @@ export function PartWrapper({
               <Menu.Dropdown>
                 <Menu.Item
                   leftSection={<IconEdit size={14} />}
-                  fz="xs"
+                  fz="sm"
                   py={6}
                   onClick={onEditPart}
                 >
@@ -108,7 +108,7 @@ export function PartWrapper({
                 </Menu.Item>
                 <Menu.Item
                   leftSection={<IconRowInsertTop size={14} />}
-                  fz="xs"
+                  fz="sm"
                   py={6}
                   onClick={onAddPartBelow}
                 >
@@ -117,7 +117,7 @@ export function PartWrapper({
                 <Menu.Item
                   color="red"
                   leftSection={<IconTrash size={14} />}
-                  fz="xs"
+                  fz="sm"
                   py={6}
                   onClick={onDeletePart}
                 >
@@ -128,7 +128,7 @@ export function PartWrapper({
           </Group>
         </Flex>
         <Collapse in={questionOpened}>
-          <Box pb="sm">{children}</Box>
+          <Box py="sm">{children}</Box>
         </Collapse>
         {/* <Group w="100%" justify="center">
           <Button

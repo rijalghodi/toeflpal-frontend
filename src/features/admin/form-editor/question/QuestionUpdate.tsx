@@ -2,20 +2,23 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import {
   Button,
   Group,
+  InputWrapper,
   Paper,
   SimpleGrid,
   Stack,
   Textarea,
 } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
-import { IconCheck, IconX } from '@tabler/icons-react';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import React from 'react';
-import { Controller, useForm } from 'react-hook-form';
+import { IconX } from '@tabler/icons-react';
+import { useMutation } from '@tanstack/react-query';
+import { debounce } from 'lodash';
+import React, { useCallback, useEffect } from 'react';
+import { Controller, useForm, useWatch } from 'react-hook-form';
 
 import { AudioInput } from '@/elements';
 import { questionUpdate } from '@/services';
 
+import { OptionList } from './OptionList';
 import { ReferenceInput } from './ReferenceInput';
 import {
   QuestionUpdateFormValues,
@@ -25,19 +28,25 @@ import {
 type Props = {
   questionId: string;
   onSuccess?: () => void;
+  onClose?: () => void;
   initValues?: {
     text?: string;
     audioUrl?: string;
     referenceId?: string;
   };
 };
-export function QuestionUpdate({ onSuccess, questionId, initValues }: Props) {
-  const q = useQueryClient();
+
+export function QuestionUpdate({
+  onSuccess,
+  questionId,
+  initValues,
+  onClose,
+}: Props) {
   // React Hook Form
   const {
+    control,
     handleSubmit,
     register,
-    control,
     formState: { isDirty },
   } = useForm<QuestionUpdateFormValues>({
     defaultValues: {
@@ -48,20 +57,12 @@ export function QuestionUpdate({ onSuccess, questionId, initValues }: Props) {
     resolver: zodResolver(questionUpdateSchema),
   });
 
+  const watchedValues = useWatch({ control }); // Watching form values
+
   // Update TOEFL
   const { mutateAsync: updateQuestion, isPending } = useMutation({
     mutationFn: questionUpdate,
     onSuccess: () => {
-      // q.invalidateQueries({ queryKey: questionListKey({ formId, partId }) });
-      notifications.update({
-        message: 'Success',
-        id: 'question-update',
-        color: 'green',
-        icon: <IconCheck size={16} />,
-        autoClose: 3000,
-        loading: false,
-        withCloseButton: true,
-      });
       onSuccess?.();
     },
     onError: () => {
@@ -78,18 +79,28 @@ export function QuestionUpdate({ onSuccess, questionId, initValues }: Props) {
   });
 
   const handleSubmitForm = handleSubmit(async (data) => {
-    notifications.show({
-      message: 'Loading...',
-      id: 'question-update',
-      loading: true,
-      autoClose: false,
-      withCloseButton: false,
-    });
     await updateQuestion({ questionId, ...data });
   });
 
+  // Debounce the submit function
+  const debouncedSubmit = useCallback(
+    debounce((data) => {
+      handleSubmitForm(data);
+    }, 2000), // 2 seconds debounce
+    [handleSubmitForm],
+  );
+
+  useEffect(() => {
+    if (isDirty) {
+      debouncedSubmit(watchedValues);
+    }
+    return () => {
+      debouncedSubmit.cancel();
+    };
+  }, [watchedValues]); // eslint-disable-line
+
   return (
-    <form onSubmit={handleSubmitForm}>
+    <form>
       <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="lg">
         <Stack gap="md">
           <Controller
@@ -121,6 +132,9 @@ export function QuestionUpdate({ onSuccess, questionId, initValues }: Props) {
               />
             )}
           />
+          <InputWrapper label="Options & Answer Key">
+            <OptionList questionId={questionId} />
+          </InputWrapper>
         </Stack>
       </SimpleGrid>
 
@@ -134,8 +148,13 @@ export function QuestionUpdate({ onSuccess, questionId, initValues }: Props) {
         p="xs"
       >
         <Group justify="flex-end" w="100%">
-          <Button type="submit" loading={isPending} disabled={!isDirty}>
-            Submit
+          <Button
+            type="button"
+            loading={isPending}
+            disabled={!isDirty}
+            onClick={onClose}
+          >
+            Save
           </Button>
         </Group>
       </Paper>
