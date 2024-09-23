@@ -137,7 +137,7 @@ export function ReferencePaginated() {
         horizontalSpacing="sm"
         onRowClick={({ record }) => handleViewReference(record.id)}
         scrollAreaProps={{
-          scrollbarSize: 3,
+          scrollbarSize: 5,
         }}
         columns={[
           { accessor: 'no', title: 'No', width: 50 },

@@ -6,7 +6,6 @@ import {
   Paper,
   SimpleGrid,
   Stack,
-  Textarea,
 } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
 import { IconX } from '@tabler/icons-react';
@@ -15,7 +14,7 @@ import { debounce } from 'lodash';
 import React, { useCallback, useEffect } from 'react';
 import { Controller, useForm, useWatch } from 'react-hook-form';
 
-import { AudioInput } from '@/elements';
+import { AudioInput, RichTextEditorInput } from '@/elements';
 import { questionUpdate } from '@/services';
 
 import { OptionList } from './OptionList';
@@ -33,6 +32,7 @@ type Props = {
     text?: string;
     audioUrl?: string;
     referenceId?: string;
+    referenceName?: string;
   };
 };
 
@@ -46,7 +46,6 @@ export function QuestionUpdate({
   const {
     control,
     handleSubmit,
-    register,
     formState: { isDirty },
   } = useForm<QuestionUpdateFormValues>({
     defaultValues: {
@@ -101,7 +100,7 @@ export function QuestionUpdate({
 
   return (
     <form>
-      <SimpleGrid cols={{ base: 1, md: 2 }} spacing="lg">
+      <SimpleGrid cols={{ base: 1, md: 2 }} spacing={{ base: 'lg', md: 40 }}>
         <Stack gap="md">
           <Controller
             name="referenceId"
@@ -110,16 +109,26 @@ export function QuestionUpdate({
               <ReferenceInput
                 label="Reference"
                 placeholder="Click here"
+                initValues={{
+                  id: initValues?.referenceId ?? '',
+                  name: initValues?.referenceName ?? 'No Name',
+                }}
                 {...field}
               />
             )}
           />
         </Stack>
         <Stack gap="md">
-          <Textarea
-            label="Question"
-            placeholder="Input here"
-            {...register('text')}
+          <Controller
+            name="text"
+            control={control}
+            render={({ field }) => (
+              <RichTextEditorInput
+                label="Question"
+                placeholder="Type here"
+                {...field}
+              />
+            )}
           />
           <Controller
             name="audio"

@@ -34,3 +34,35 @@ export type Storage = {
   mimetype: string;
   size?: number;
 };
+
+export type Part = {
+  id: string;
+  name?: string;
+  order: number;
+  instruction?: string;
+  instructionAudio?: Storage;
+  closing?: string;
+  closingAudio?: Storage;
+};
+
+export type Reference = {
+  id: string;
+  name?: string;
+  text?: string;
+  audio?: Storage;
+};
+
+export type Option = {
+  id: string;
+  text?: string;
+};
+
+export type Question = {
+  id: string;
+  text?: string;
+  audio?: Storage;
+  order: number;
+  reference?: Reference;
+  part?: Part;
+  options?: Option[];
+};

@@ -45,9 +45,10 @@ export const DrawerAlt2Provider: React.FC<{ children: React.ReactNode }> = ({
         size="md"
         position="right"
         overlayProps={{
-          opacity: 0.1,
+          opacity: 0.5,
+          color: 'white',
           bg: 'white',
-          blur: 5,
+          blur: 100,
         }}
         zIndex={260}
         styles={{

@@ -17,7 +17,7 @@ export function ToeflUpdateSectionItem({ toeflId }: Props) {
     enabled: !!toeflId,
   });
 
-  const active = data?.data.active;
+  const active = data?.data?.active;
 
   const {} = useMutation({});
 

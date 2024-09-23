@@ -5,16 +5,16 @@ import React, { useMemo } from 'react';
 import logo from '~/logo.png';
 
 type Props = {
-  size: MantineSize;
+  size?: MantineSize;
 };
 
 export function LogoAndText({ size }: Props) {
   const brandSize = useMemo(() => {
     switch (size) {
       case 'xs':
-        return { width: 40, height: 40, fontSize: 'h5' };
+        return { width: 32, height: 32, fontSize: 'sm' };
       case 'sm':
-        return { width: 50, height: 50, fontSize: 'h4' };
+        return { width: 40, height: 40, fontSize: 'md' };
       case 'md':
         return { width: 60, height: 60, fontSize: 'h3' };
       case 'lg':

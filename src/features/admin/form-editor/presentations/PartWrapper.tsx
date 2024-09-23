@@ -7,6 +7,7 @@ import {
   Group,
   Menu,
   Paper,
+  Stack,
   Text,
   Title,
 } from '@mantine/core';
@@ -22,6 +23,8 @@ import {
 } from '@tabler/icons-react';
 import React from 'react';
 
+import { AudioPlayer, LabelValuePairs, ReadTriggerButton } from '@/elements';
+
 type Props = {
   children: React.ReactNode;
   name?: string;
@@ -30,6 +33,8 @@ type Props = {
   onDeletePart?: () => void;
   onEditPart?: () => void;
   onAddPartBelow?: () => void;
+  instructionText?: string;
+  instructionAudioUrl?: string;
 };
 
 export function PartWrapper({
@@ -40,8 +45,27 @@ export function PartWrapper({
   onAddQuestion,
   onEditPart,
   onDeletePart,
+  instructionText,
+  instructionAudioUrl,
 }: Props) {
   const [questionOpened, { toggle: toggleQuestions }] = useDisclosure(true);
+
+  const renderReadAndAudio = (
+    read: { title: string; content?: string },
+    audio: { src?: string },
+  ) =>
+    read.content || audio.src ? (
+      <Group gap="sm">
+        {read.content && (
+          <ReadTriggerButton content={read.content} title={read.title} />
+        )}
+        {audio.src && (
+          <AudioPlayer src={audio.src} miw={100} maw={300} flex={1} />
+        )}
+      </Group>
+    ) : (
+      'None'
+    );
 
   return (
     <Box pos="relative" pt="xl">
@@ -128,23 +152,28 @@ export function PartWrapper({
           </Group>
         </Flex>
         <Collapse in={questionOpened}>
-          <Box py="sm">{children}</Box>
+          <Stack py="sm">
+            <LabelValuePairs
+              labelMinWidth={140}
+              data={[
+                {
+                  label: 'Instruction',
+                  value: renderReadAndAudio(
+                    {
+                      content: instructionText ?? '',
+                      title: `Instruction of Part ${order}`,
+                    },
+                    {
+                      src: instructionAudioUrl,
+                    },
+                  ),
+                },
+              ]}
+            />
+
+            <Box>{children}</Box>
+          </Stack>
         </Collapse>
-        {/* <Group w="100%" justify="center">
-          <Button
-            size="compact-sm"
-            variant="subtle"
-            color="gray"
-            onClick={toggleQuestions}
-            w={100}
-          >
-            {questionOpened ? (
-              <IconChevronCompactUp size={20} />
-            ) : (
-              <IconChevronCompactDown size={20} />
-            )}
-          </Button>
-        </Group> */}
       </Paper>
     </Box>
   );

@@ -13,6 +13,11 @@ a {
   background-color: none;
 }
 
+p {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
 iconify-icon {
   display: inline-block;
   width: 1em;

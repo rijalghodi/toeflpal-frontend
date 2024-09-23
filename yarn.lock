@@ -964,6 +964,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tiptap/extension-subscript@npm:^2.7.2":
+  version: 2.7.2
+  resolution: "@tiptap/extension-subscript@npm:2.7.2"
+  peerDependencies:
+    "@tiptap/core": ^2.7.0
+  checksum: 10c0/f8177f5e8713c310354c872826542bf1f2b831f5050cef932b26511990f28045f44d0f62716974a25985c877a5b110a66b7fe280d18d2f75cb449d4ec2250198
+  languageName: node
+  linkType: hard
+
+"@tiptap/extension-superscript@npm:^2.7.2":
+  version: 2.7.2
+  resolution: "@tiptap/extension-superscript@npm:2.7.2"
+  peerDependencies:
+    "@tiptap/core": ^2.7.0
+  checksum: 10c0/b4c6fd2fa02ec5a900d951a378bb0477d3d7535d4a45d5678397a260400f731883a579d70529da670954dce300005e19c056ab3a149324c3d11897c43e8ece40
+  languageName: node
+  linkType: hard
+
 "@tiptap/extension-text-align@npm:^2.7.2":
   version: 2.7.2
   resolution: "@tiptap/extension-text-align@npm:2.7.2"
@@ -5746,6 +5764,8 @@ __metadata:
     "@tiptap/extension-highlight": "npm:^2.7.2"
     "@tiptap/extension-link": "npm:^2.7.2"
     "@tiptap/extension-placeholder": "npm:^2.7.2"
+    "@tiptap/extension-subscript": "npm:^2.7.2"
+    "@tiptap/extension-superscript": "npm:^2.7.2"
     "@tiptap/extension-text-align": "npm:^2.7.2"
     "@tiptap/extension-underline": "npm:^2.7.2"
     "@tiptap/pm": "npm:^2.7.2"

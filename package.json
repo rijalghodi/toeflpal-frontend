@@ -30,6 +30,8 @@
     "@tiptap/extension-highlight": "^2.7.2",
     "@tiptap/extension-link": "^2.7.2",
     "@tiptap/extension-placeholder": "^2.7.2",
+    "@tiptap/extension-subscript": "^2.7.2",
+    "@tiptap/extension-superscript": "^2.7.2",
     "@tiptap/extension-text-align": "^2.7.2",
     "@tiptap/extension-underline": "^2.7.2",
     "@tiptap/pm": "^2.7.2",

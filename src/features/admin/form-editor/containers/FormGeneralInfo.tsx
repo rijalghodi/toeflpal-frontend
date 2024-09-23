@@ -42,6 +42,22 @@ export function FormGeneralInfo({ formId }: Props) {
     });
   };
 
+  const renderReadAndAudio = (
+    read: { title: string; content?: string },
+    audio: { src?: string },
+  ) =>
+    read.content || audio.src ? (
+      <Group gap="sm">
+        {read.content && (
+          <ReadTriggerButton content={read.content} title={read.title} />
+        )}
+        {audio.src && (
+          <AudioPlayer src={audio.src} miw={100} maw={300} flex={1} />
+        )}
+      </Group>
+    ) : (
+      'None'
+    );
   return (
     <Paper withBorder p="md" radius="md">
       <Group align="flex-start" justify="space-between" w="100%">
@@ -76,42 +92,26 @@ export function FormGeneralInfo({ formId }: Props) {
               },
               {
                 label: 'Instruction',
-                value: data?.data.instruction && (
-                  <ReadTriggerButton
-                    content={data?.data.instruction}
-                    title="Instruction"
-                  />
-                ),
-              },
-              {
-                label: '',
-                value: data?.data.instructionAudio?.url && (
-                  <AudioPlayer
-                    src={data?.data.instructionAudio?.url}
-                    miw={100}
-                    maw={300}
-                    w="100%"
-                  />
+                value: renderReadAndAudio(
+                  {
+                    content: data?.data.instruction ?? '',
+                    title: data?.data.name ?? 'Instruction',
+                  },
+                  {
+                    src: data?.data.instructionAudio?.url,
+                  },
                 ),
               },
               {
                 label: 'Closing',
-                value: data?.data.closing && (
-                  <ReadTriggerButton
-                    content={data?.data.closing}
-                    title="Closing"
-                  />
-                ),
-              },
-              {
-                label: '',
-                value: data?.data.closingAudio?.url && (
-                  <AudioPlayer
-                    src={data?.data.closingAudio?.url}
-                    miw={100}
-                    maw={300}
-                    w="100%"
-                  />
+                value: renderReadAndAudio(
+                  {
+                    content: data?.data.closing ?? '',
+                    title: data?.data.name ?? 'Instruction',
+                  },
+                  {
+                    src: data?.data.closingAudio?.url,
+                  },
                 ),
               },
             ]}

@@ -1,17 +1,11 @@
-import {
-  Button,
-  CheckIcon,
-  Group,
-  Loader,
-  Radio,
-  Stack,
-  Text,
-} from '@mantine/core';
+import { Button, CheckIcon, Group, Radio, Stack, Text } from '@mantine/core';
+import { useDebouncedValue } from '@mantine/hooks';
 import { notifications } from '@mantine/notifications';
 import { IconPlus, IconX } from '@tabler/icons-react';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
+import { RichTextEditorInput } from '@/elements';
 import {
   keyGet,
   keyGetKey,
@@ -22,9 +16,6 @@ import {
 } from '@/services';
 
 import { OptionItem } from './OptionItem';
-import { RichTextEditorInput } from '@/elements';
-import { debounce } from 'lodash';
-import { useDebouncedState, useDebouncedValue } from '@mantine/hooks';
 
 type Props = {
   questionId: string;

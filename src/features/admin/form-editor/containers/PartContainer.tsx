@@ -6,12 +6,8 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import React from 'react';
 
 import { useDrawer } from '@/contexts';
-import {
-  partDelete,
-  partListKey,
-  questionCreate,
-  questionListKey,
-} from '@/services';
+import { partDelete, partListKey, questionCreate } from '@/services';
+import { questionListInPartKey } from '@/services/question/question-list-in-part';
 
 import { PartWrapper } from '../presentations/PartWrapper';
 import { QuestionList } from '../question/QuestionList';
@@ -51,7 +47,7 @@ export function PartContainer({
           questionId={questionId}
           onSuccess={() => {
             q.invalidateQueries({
-              queryKey: questionListKey({ formId, partId }),
+              queryKey: questionListInPartKey({ formId, partId }),
             });
           }}
           onClose={closeDrawer}
@@ -65,7 +61,9 @@ export function PartContainer({
     mutationFn: questionCreate,
     onSuccess: (data) => {
       notifications.hide('create-question');
-      q.invalidateQueries({ queryKey: questionListKey({ formId, partId }) });
+      q.invalidateQueries({
+        queryKey: questionListInPartKey({ formId, partId }),
+      });
       handleUpdateQuestion(data.data.id, data.data.order);
     },
     onError: () => {
@@ -151,7 +149,7 @@ export function PartContainer({
     modals.openConfirmModal({
       title: 'Delete Part Confirmation',
       children: (
-        <Text size="sm">
+        <Text size="sm" c="dimmed">
           This will delete the part named '{name}', along with its associated
           questions and answer keys.
         </Text>
@@ -181,6 +179,8 @@ export function PartContainer({
       onAddPartBelow={handleAddPartBelow}
       onEditPart={handleEditPart}
       onDeletePart={handleDeletePart}
+      instructionAudioUrl={instructionAudioUrl}
+      instructionText={instruction}
     >
       <QuestionList formId={formId} partId={partId} />
     </PartWrapper>

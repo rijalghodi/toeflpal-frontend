@@ -1,7 +1,6 @@
 import { GResponse } from '@/types';
 
 import { axiosInstance } from '../axiosInstance';
-import { Storage } from '../types';
 
 type KeyGetRequest = {
   questionId: string;

@@ -27,9 +27,19 @@ import { ReferenceUpdate } from '../../reference/ReferenceUpdate';
 
 const PAGE_SIZE = 100;
 
-type Props = Omit<SelectProps, 'data'>;
+type Props = Omit<SelectProps, 'data'> & {
+  initValues?: {
+    name: string;
+    id: string;
+  };
+};
 
-export function ReferenceInput({ value, onChange, ...slcProps }: Props) {
+export function ReferenceInput({
+  value,
+  onChange,
+  initValues,
+  ...slcProps
+}: Props) {
   const [search, setSearch] = useState('');
   const [page, setPage] = useState(1);
   const [searchDebounced] = useDebouncedValue(search, 400);
@@ -108,10 +118,16 @@ export function ReferenceInput({ value, onChange, ...slcProps }: Props) {
           data={
             isLoading
               ? [{ label: 'Loading...', value: '#####', disabled: true }]
-              : options
+              : !search && initValues?.name
+                ? [
+                    { label: initValues.name, value: initValues.id },
+                    ...options.filter((val) => val.value !== initValues.id),
+                  ]
+                : options
           }
           searchable
           searchValue={search}
+          value={value}
           onSearchChange={setSearch}
           comboboxProps={{ shadow: 'xs' }}
           onChange={(val, opt) => {
@@ -152,7 +168,7 @@ export function ReferenceInput({ value, onChange, ...slcProps }: Props) {
               <ScrollArea.Autosize
                 mah="calc(100vh - 300px)"
                 px="sm"
-                scrollbarSize={4}
+                scrollbarSize={5}
               >
                 {safeHtml ? (
                   <Box dangerouslySetInnerHTML={{ __html: safeHtml }} />

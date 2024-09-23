@@ -1,6 +1,8 @@
 import { Link, RichTextEditor as MantineRichTextEditor } from '@mantine/tiptap';
 import Highlight from '@tiptap/extension-highlight';
 import Placeholder from '@tiptap/extension-placeholder';
+import SubScript from '@tiptap/extension-subscript';
+import Superscript from '@tiptap/extension-superscript';
 import TextAlign from '@tiptap/extension-text-align';
 import Underline from '@tiptap/extension-underline';
 import { useEditor } from '@tiptap/react';
@@ -31,6 +33,8 @@ export function RichTextEditor({
         Underline,
         Link,
         Highlight,
+        Superscript,
+        SubScript,
         TextAlign.configure({ types: ['heading', 'paragraph'] }),
       ],
       content: initialContent,
@@ -66,6 +70,12 @@ export function RichTextEditor({
           )}
           <MantineRichTextEditor.BulletList />
           <MantineRichTextEditor.OrderedList />
+          <MantineRichTextEditor.Superscript />
+          {!minimalist && (
+            <>
+              <MantineRichTextEditor.Subscript />
+            </>
+          )}
         </MantineRichTextEditor.ControlsGroup>
 
         <MantineRichTextEditor.ControlsGroup>

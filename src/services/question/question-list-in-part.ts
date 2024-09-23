@@ -3,11 +3,12 @@ import { MResponse } from '@/types';
 import { axiosInstance } from '../axiosInstance';
 import { Storage } from '../types';
 
-type QuestionListRequest = {
+type QuestionListInPartRequest = {
   formId: string;
+  partId: string;
 };
 
-type QuestionListResponse = MResponse<
+type QuestionListInPartResponse = MResponse<
   {
     id: string;
     text?: string;
@@ -19,11 +20,6 @@ type QuestionListResponse = MResponse<
       text?: string;
       audio?: Storage;
     };
-    part?: {
-      id: string;
-      name?: string;
-      order?: number;
-    };
     options?: {
       id: string;
       text?: string;
@@ -31,16 +27,17 @@ type QuestionListResponse = MResponse<
   }[]
 >;
 
-export const questionList = async ({
+export const questionListInPart = async ({
   formId,
-}: QuestionListRequest): Promise<QuestionListResponse> => {
-  const response = await axiosInstance.get<QuestionListResponse>(
-    `form/${formId}/question`,
+  partId,
+}: QuestionListInPartRequest): Promise<QuestionListInPartResponse> => {
+  const response = await axiosInstance.get<QuestionListInPartResponse>(
+    `form/${formId}/part/${partId}/question`,
   );
   return response.data;
 };
 
-export const questionListKey = (req: QuestionListRequest) => [
-  'question-list',
+export const questionListInPartKey = (req: QuestionListInPartRequest) => [
+  'question-list-in-part',
   req,
 ];

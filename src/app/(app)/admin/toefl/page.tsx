@@ -3,7 +3,7 @@
 import { Stack, Title } from '@mantine/core';
 import React, { Suspense } from 'react';
 
-import { AdminToeflListCotainer } from '@/features/admin/toefl-list/containers/AdminToeflListContainer';
+import { AdminToeflPaginated } from '@/features/admin/toefl-list/containers/AdminToeflPaginated';
 
 export default function AdminSimulationListPage() {
   return (
@@ -12,7 +12,7 @@ export default function AdminSimulationListPage() {
         Manage TOEFL Simulation
       </Title>
       <Suspense>
-        <AdminToeflListCotainer />
+        <AdminToeflPaginated />
       </Suspense>
     </Stack>
   );

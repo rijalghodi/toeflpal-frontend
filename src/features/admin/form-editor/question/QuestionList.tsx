@@ -9,8 +9,11 @@ import React from 'react';
 
 import { useDrawer } from '@/contexts';
 import { AudioTriggerButton, LoadingState } from '@/elements';
-import { questionList, questionListKey } from '@/services';
 import { questionDelete } from '@/services/question/question-delete';
+import {
+  questionListInPart,
+  questionListInPartKey,
+} from '@/services/question/question-list-in-part';
 
 import { QuestionUpdate } from './QuestionUpdate';
 
@@ -28,8 +31,8 @@ export function QuestionList({ formId, partId, lastOrder }: Props) {
     isFetching,
     refetch,
   } = useQuery({
-    queryKey: questionListKey({ formId, partId }),
-    queryFn: () => questionList({ formId, partId }),
+    queryKey: questionListInPartKey({ formId, partId }),
+    queryFn: () => questionListInPart({ formId, partId }),
   });
 
   const handleUpdateQuestion = (questionId: string) => {
@@ -43,6 +46,7 @@ export function QuestionList({ formId, partId, lastOrder }: Props) {
             text: question?.text,
             audioUrl: question?.audio?.url,
             referenceId: question?.reference?.id,
+            referenceName: question?.reference?.name,
           }}
           onSuccess={() => {
             refetch();
@@ -75,9 +79,9 @@ export function QuestionList({ formId, partId, lastOrder }: Props) {
 
   const handleDelete = async (questionId: string, name?: string) => {
     modals.openConfirmModal({
-      title: 'Delete Question',
+      title: 'Delete Question Confirmation',
       children: (
-        <Text size="sm">
+        <Text size="sm" c="dimmed">
           This will delete the question '
           {truncate(name, { length: 50, omission: '...' })}', along with its
           associated options and answer key.
@@ -114,7 +118,7 @@ export function QuestionList({ formId, partId, lastOrder }: Props) {
       onRowClick={({ record }) => handleUpdateQuestion(record.id)}
       columns={[
         { accessor: 'no', title: 'No', width: 50 },
-        { accessor: 'text', title: 'Question' },
+        { accessor: 'text', title: 'Question', ellipsis: true },
         {
           accessor: 'audio',
           width: 100,
@@ -152,7 +156,9 @@ export function QuestionList({ formId, partId, lastOrder }: Props) {
       ]}
       records={questions?.data?.map((item) => ({
         no: (lastOrder ?? 0) + item.order,
-        text: item.text,
+        text: new DOMParser()
+          .parseFromString(item.text || '', 'text/html')
+          .body.textContent?.trim(),
         audio: item.audio?.url ? (
           <AudioTriggerButton
             src={item.audio.url}

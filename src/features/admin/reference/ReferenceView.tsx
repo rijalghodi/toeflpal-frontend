@@ -31,7 +31,8 @@ export function ReferenceView({ initValues }: Props) {
           <ScrollArea.Autosize
             mah="calc(100vh - 250px)"
             p="sm"
-            scrollbarSize={4}
+            scrollbarSize={5}
+            color="gray"
           >
             {safeHtml ? (
               <Box

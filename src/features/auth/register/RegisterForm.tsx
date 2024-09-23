@@ -42,7 +42,6 @@ export function RegisterForm() {
   });
 
   const onSubmit: SubmitHandler<RegisterFormValues> = (data) => {
-    // console.log('HHHH');
     mutateAsync(data);
   };
 

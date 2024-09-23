@@ -150,7 +150,7 @@ export function ReferenceList() {
         horizontalSpacing="sm"
         highlightOnHover
         scrollAreaProps={{
-          scrollbarSize: 3,
+          scrollbarSize: 5,
         }}
         columns={[
           { accessor: 'no', title: 'No', width: 50 },

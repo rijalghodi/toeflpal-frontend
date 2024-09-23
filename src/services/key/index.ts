@@ -1,2 +1,2 @@
-export * from './key-update';
 export * from './key-get';
+export * from './key-update';

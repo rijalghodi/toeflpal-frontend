@@ -74,10 +74,12 @@ export function OptionItem({
         placeholder="Type here"
         onChange={(e) => setText(e.target.value)}
         flex={1}
+        value={text}
+        rightSectionWidth={60}
         rightSection={
           isPending ? (
-            <Text fz="xs" c="gray">
-              Saving...
+            <Text fz={10} c="dimmed">
+              Saving..
             </Text>
           ) : null
         }
