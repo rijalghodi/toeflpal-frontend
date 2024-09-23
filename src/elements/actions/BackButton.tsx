@@ -1,4 +1,4 @@
-import { NavLink } from '@mantine/core';
+import { Button } from '@mantine/core';
 import { IconArrowLeft } from '@tabler/icons-react';
 import Link from 'next/link';
 import React from 'react';
@@ -8,13 +8,16 @@ type Props = {
 };
 export function BackButton({ href }: Props) {
   return (
-    <NavLink
+    <Button
       component={Link}
       href={href}
-      label="Kembali"
       leftSection={<IconArrowLeft size={16} />}
-      py={4}
+      size="xs"
       w="min-content"
-    />
+      variant="subtle"
+      color="dark"
+    >
+      Back
+    </Button>
   );
 }

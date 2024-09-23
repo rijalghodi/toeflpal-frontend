@@ -8,7 +8,7 @@ import {
   IconPlus,
   IconSearch,
 } from '@tabler/icons-react';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { DataTable } from 'mantine-datatable';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
