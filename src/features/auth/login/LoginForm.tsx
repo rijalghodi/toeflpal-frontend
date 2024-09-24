@@ -9,7 +9,6 @@ import { useRouter } from 'next-nprogress-bar';
 import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-import { useUserStore } from '@/contexts/UserContext';
 import { login, setAuthCookie } from '@/services';
 import { LoginFormValues } from '@/types';
 import { routes } from '@/utils/constant/routes';
@@ -17,7 +16,6 @@ import { loginSchema } from '@/utils/form-schema/auth/login.schema';
 
 export function LoginForm() {
   const router = useRouter();
-  const { setUser } = useUserStore();
 
   const { register, handleSubmit } = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
@@ -41,7 +39,6 @@ export function LoginForm() {
           expires: accessToken.expiredAt,
         });
       }
-      setUser(data.data);
       router.push(routes.dashboard);
     },
     onError: (error) => {

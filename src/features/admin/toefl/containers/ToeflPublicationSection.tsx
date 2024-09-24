@@ -3,7 +3,6 @@ import React from 'react';
 
 import { ToeflPremiumSectionItem } from './ToeflPremiumSectionItem';
 import { ToeflPublishSectionItem } from './ToeflPublishSectionItem';
-import { ToeflUpdateSectionItem } from './ToeflUpdateSectionItem';
 
 type Props = {
   toeflId: string;
@@ -15,7 +14,6 @@ export function ToeflPublicationSection({ toeflId }: Props) {
         <Title order={2} fz="xs" fw="700" tt="uppercase">
           Publication
         </Title>
-        <ToeflUpdateSectionItem toeflId={toeflId} />
         <ToeflPublishSectionItem toeflId={toeflId} />
         <ToeflPremiumSectionItem toeflId={toeflId} />
       </Stack>

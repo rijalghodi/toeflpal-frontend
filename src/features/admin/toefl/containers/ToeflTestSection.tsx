@@ -2,19 +2,19 @@ import { Stack } from '@mantine/core';
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 
-import { toeflVersionLatestGet } from '@/services';
-
 import { TestSection } from '../presentations/TestSection';
+import { toeflGet, toeflGetKey } from '@/services';
+
 
 type Props = {
   toeflId: string;
 };
-export function ToeflTestSection(props: Props) {
-  // TODO: Get latest version
+export function ToeflTestSection({ toeflId }: Props) {
+  // TODO: Get toefl
   const { data } = useQuery({
-    queryKey: ['toefl-version-latest-get', props.toeflId],
-    queryFn: () => toeflVersionLatestGet({ toeflId: props.toeflId as string }),
-    enabled: !!props.toeflId,
+    queryKey: toeflGetKey({ toeflId }),
+    queryFn: () => toeflGet({ toeflId: toeflId as string }),
+    enabled: !!toeflId,
   });
 
   const toefl = data?.data;
@@ -28,19 +28,22 @@ export function ToeflTestSection(props: Props) {
         toeflId=""
         name={listening?.name || 'Listening Section'}
         formId={listening?.id || ''}
-        duration={listening?.duration || 0}
+        duration={listening?.duration}
+        questionNum={listening?.questionNum}
       />
       <TestSection
         toeflId=""
         name={grammar?.name || 'Structure & Written Expression Section'}
         formId={grammar?.id || ''}
-        duration={grammar?.duration || 0}
+        duration={grammar?.duration}
+        questionNum={grammar?.questionNum}
       />
       <TestSection
         toeflId=""
         name={reading?.name || 'Reading Section'}
         formId={reading?.id || ''}
         duration={reading?.duration || 0}
+        questionNum={reading?.questionNum}
       />
     </Stack>
   );

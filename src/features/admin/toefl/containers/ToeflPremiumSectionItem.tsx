@@ -10,22 +10,19 @@ import { SectionItem } from '../presentations/SectionItem';
 
 type Props = {
   toeflId: string;
+  premium?: boolean;
+  onSuccess?: () => void;
 };
-export function ToeflPremiumSectionItem({ toeflId }: Props) {
-  // Read Latest Version
-  const { data, isLoading, refetch } = useQuery({
-    queryKey: toeflGetKey({ toeflId: toeflId as string }),
-    queryFn: () => toeflGet({ toeflId: toeflId as string }),
-    enabled: !!toeflId,
-  });
-
-  const premium = data?.data.premium;
-
+export function ToeflPremiumSectionItem({
+  toeflId,
+  premium,
+  onSuccess,
+}: Props) {
   // Premium
   const { mutateAsync: premiumToefl, isPending } = useMutation({
     mutationFn: toeflPremium,
     onSuccess: (data) => {
-      refetch();
+      onSuccess?.();
       notifications.update({
         id: 'toefl-premium',
         message: data.data.premium
@@ -70,7 +67,6 @@ export function ToeflPremiumSectionItem({ toeflId }: Props) {
         premium ? (
           <Button
             variant="default"
-            disabled={isLoading || isPending}
             size="xs"
             onClick={() => handlePremium(false)}
           >
@@ -79,8 +75,7 @@ export function ToeflPremiumSectionItem({ toeflId }: Props) {
         ) : (
           <Button
             variant="filled"
-            color="yellow.7"
-            disabled={isLoading || isPending}
+            color="orange"
             size="xs"
             leftSection={<IconCrown size={16} />}
             onClick={() => handlePremium(true)}

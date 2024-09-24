@@ -16,11 +16,11 @@ export type Form = {
   closingAudio: Storage | null;
 };
 
-export type FormPublic = {
+export type FormMeta = {
   id: string;
   name: string;
-  duration: number | null;
-  questionNum: number | null;
+  duration?: number;
+  questionNum?: number;
 };
 
 export type Toefl = {
@@ -31,6 +31,9 @@ export type Toefl = {
   instruction?: string;
   closing?: string;
   publishedAt?: string;
+  readingSection: FormMeta;
+  listeningSection: FormMeta;
+  grammarSection: FormMeta;
 };
 
 export type Storage = {

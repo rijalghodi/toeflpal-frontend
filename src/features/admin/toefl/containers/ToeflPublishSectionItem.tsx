@@ -10,22 +10,19 @@ import { SectionItem } from '../presentations/SectionItem';
 
 type Props = {
   toeflId: string;
+  published?: boolean;
+  onSuccess?: () => void;
 };
-export function ToeflPublishSectionItem({ toeflId }: Props) {
-  // Read Latest Version
-  const { data, isLoading, refetch } = useQuery({
-    queryKey: toeflGetKey({ toeflId: toeflId as string }),
-    queryFn: () => toeflGet({ toeflId: toeflId as string }),
-    enabled: !!toeflId,
-  });
-
-  const published = data?.data.publishedAt;
-
+export function  ToeflPublishSectionItem({
+  toeflId,
+  published,
+  onSuccess,
+}: Props) {
   // Publish
   const { mutateAsync: publishToefl, isPending } = useMutation({
     mutationFn: toeflPublish,
     onSuccess: (data) => {
-      refetch();
+      onSuccess?.();
       notifications.update({
         id: 'toefl-publish',
         message: data.data.publishedAt
@@ -73,7 +70,6 @@ export function ToeflPublishSectionItem({ toeflId }: Props) {
           <Button
             variant="light"
             color="red"
-            disabled={isLoading || isPending}
             size="xs"
             onClick={() => handlePublish(false)}
           >
@@ -82,7 +78,6 @@ export function ToeflPublishSectionItem({ toeflId }: Props) {
         ) : (
           <Button
             variant="default"
-            disabled={isLoading || isPending}
             size="xs"
             onClick={() => handlePublish(true)}
           >

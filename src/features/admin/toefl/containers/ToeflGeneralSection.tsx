@@ -9,26 +9,28 @@ import { ToeflGeneralUpdate } from './ToeflGeneralUpdate';
 
 type Props = {
   toeflId: string;
+  name?: string;
+  description?: string;
 };
-export function ToeflGeneralSection({ toeflId }: Props) {
+export function ToeflGeneralSection({ toeflId, name, description }: Props) {
   const { open, close } = useDrawer();
 
-  const { data, isLoading } = useQuery({
-    queryKey: toeflGetKey({ toeflId: toeflId as string }),
-    queryFn: () => toeflGet({ toeflId: toeflId as string }),
-    enabled: !!toeflId,
-  });
+  // const { data, isLoading } = useQuery({
+  //   queryKey: toeflGetKey({ toeflId: toeflId as string }),
+  //   queryFn: () => toeflGet({ toeflId: toeflId as string }),
+  //   enabled: !!toeflId,
+  // });
 
-  const toefl = data?.data;
+  // const toefl = data?.data;
 
   const list = [
     {
       label: 'Name',
-      value: toefl?.name,
+      value: name,
     },
     {
       label: 'Description',
-      value: toefl?.description,
+      value: description,
     },
   ];
 
@@ -38,7 +40,7 @@ export function ToeflGeneralSection({ toeflId }: Props) {
       content: (
         <ToeflGeneralUpdate
           toeflId={toeflId}
-          initValues={{ description: toefl?.description, name: toefl?.name }}
+          initValues={{ description: description, name: name }}
           onSuccess={() => {
             close();
           }}
@@ -69,12 +71,7 @@ export function ToeflGeneralSection({ toeflId }: Props) {
             ))}
           </Stack>
         </Stack>
-        <Button
-          variant="default"
-          size="xs"
-          disabled={isLoading}
-          onClick={handleUpdateToeflGeneral}
-        >
+        <Button variant="default" size="xs" onClick={handleUpdateToeflGeneral}>
           Change
         </Button>
       </Group>

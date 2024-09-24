@@ -1,4 +1,13 @@
-import { Button, Group, Paper, Stack, Text, Title } from '@mantine/core';
+import {
+  ActionIcon,
+  Button,
+  Group,
+  Paper,
+  Stack,
+  Text,
+  Title,
+} from '@mantine/core';
+import { IconPlayerPlay, IconRefresh } from '@tabler/icons-react';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 
@@ -8,7 +17,7 @@ type Props = {
   toeflId: string;
   formId: string;
   name: string;
-  questionNum?: number | null;
+  questionNum?: number;
   duration?: number;
 };
 export function TestSection({ name, formId, questionNum, duration }: Props) {
@@ -33,16 +42,34 @@ export function TestSection({ name, formId, questionNum, duration }: Props) {
                 {questionNum} Questions
               </Text>
             )}
-            {duration !== undefined && (
+            {duration && (
               <Text c="dimmed" fz="sm">
                 {Math.floor(duration)} minutes
               </Text>
             )}
           </Group>
         </Stack>
-        <Button variant="default" onClick={handleChangeTest} size="xs">
-          Change
-        </Button>
+        <Group>
+          <Button variant="default" onClick={handleChangeTest} size="xs">
+            Evaluation
+          </Button>
+          <ActionIcon
+            variant="light"
+            onClick={handleChangeTest}
+            size="lg"
+            title="Start"
+          >
+            <IconPlayerPlay size={16} />
+          </ActionIcon>
+          <ActionIcon
+            variant="light"
+            onClick={handleChangeTest}
+            size="lg"
+            title="Restart"
+          >
+            <IconRefresh size={16} />
+          </ActionIcon>
+        </Group>
       </Group>
     </Paper>
   );
