@@ -24,33 +24,33 @@ export function AdminToeflList({ loading, data, expectedHeight }: Props) {
     return <LoadingState h={expectedHeight} />;
   }
 
-  return (
-    <SimpleGrid cols={{ base: 1, xs: 2, md: 2 }}>
-      {data?.map((toefl, idx) => (
-        <Paper
-          radius="md"
-          withBorder
-          p="md"
-          component={Link}
-          href={toefl.href}
-          className={cls.hovered}
-          key={idx}
-        >
-          <Group justify="space-between" wrap="nowrap">
-            <Text fw={400} fz="sm">
-              {toefl.name}
-            </Text>
-            <Group>
-              {!toefl.published && (
-                <Badge variant="light" tt="capitalize" color="gray">
-                  Draft
-                </Badge>
-              )}
-              {toefl.premium && <IconCrown color="orange" title="Premium" />}
+    return (
+      <SimpleGrid cols={{ base: 1, xs: 2, md: 2 }}>
+        {data?.map((toefl, idx) => (
+          <Paper
+            radius="md"
+            withBorder
+            p="md"
+            component={Link}
+            href={toefl.href}
+            className={cls.hovered}
+            key={idx}
+          >
+            <Group justify="space-between" wrap="nowrap">
+              <Text fw={400} fz="sm">
+                {toefl.name}
+              </Text>
+              <Group>
+                {!toefl.published && (
+                  <Badge variant="light" tt="capitalize" color="gray">
+                    Draft
+                  </Badge>
+                )}
+                {toefl.premium && <IconCrown color="orange" title="Premium" />}
+              </Group>
             </Group>
-          </Group>
-        </Paper>
-      ))}
-    </SimpleGrid>
-  );
+          </Paper>
+        ))}
+      </SimpleGrid>
+    );
 }

@@ -113,7 +113,7 @@ export default function AppLayout({ children }: Props) {
           footer: {
             borderTopRightRadius: 16,
             borderTopLeftRadius: 16,
-            boxShadow: '0 -10px 10px -10px rgba(51, 63, 85, 0.2)',
+            boxShadow: '0 -10px 10px -10px rgba(51, 63, 85, 0.1)',
           },
         }}
       >

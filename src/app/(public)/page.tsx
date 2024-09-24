@@ -119,7 +119,7 @@ export default function Home() {
                 prepare systematically—all in one place!
               </Text>
               <Group>
-                <Button component={Link} href="/register" size="lg">
+                <Button component={Link} href="/login" size="lg">
                   Try Now
                 </Button>
               </Group>
