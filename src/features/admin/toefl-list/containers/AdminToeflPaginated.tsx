@@ -73,37 +73,41 @@ export function AdminToeflPaginated() {
   return (
     <Stack gap="md">
       <Group justify="space-between" w="100%">
-        <Group gap="lg">
+        <Group gap="lg" flex={1}>
           <TextInput
             value={search}
-            miw={300}
+            miw={250}
+            maw={360}
+            w="100%"
             onChange={(e) => setSearch(e.target.value)}
             leftSection={<IconSearch size={16} />}
             leftSectionWidth={40}
             placeholder="Search"
           />
 
-          <FastFilter
-            title="Premium"
-            data={[
-              { label: 'Premium', value: 'true' },
-              { label: 'Free', value: 'false' },
-              { label: 'All', value: '' },
-            ]}
-            value={premium}
-            onChange={setPremium}
-          />
+          <Group wrap="nowrap">
+            <FastFilter
+              title="Premium"
+              data={[
+                { label: 'Premium', value: 'true' },
+                { label: 'Free', value: 'false' },
+                { label: 'All', value: '' },
+              ]}
+              value={premium}
+              onChange={setPremium}
+            />
 
-          <FastFilter
-            title="Status"
-            data={[
-              { label: 'Published', value: 'true' },
-              { label: 'Draft', value: 'false' },
-              { label: 'All', value: '' },
-            ]}
-            value={published}
-            onChange={setPublished}
-          />
+            <FastFilter
+              title="Status"
+              data={[
+                { label: 'Published', value: 'true' },
+                { label: 'Draft', value: 'false' },
+                { label: 'All', value: '' },
+              ]}
+              value={published}
+              onChange={setPublished}
+            />
+          </Group>
         </Group>
         <Button
           leftSection={<IconPlus size={16} />}

@@ -30,7 +30,7 @@ export function UserAvatar() {
     router.push(routes.home);
   };
   return (
-    <Popover radius="md" shadow="xs" width={200}>
+    <Popover radius="md" shadow="xs" width={200} position="bottom-end">
       <Popover.Target>
         <ActionIcon
           variant="transparent"
@@ -42,8 +42,8 @@ export function UserAvatar() {
         </ActionIcon>
       </Popover.Target>
       <Popover.Dropdown p="xs">
-        <Stack>
-          <Text fz="sm" px="sm" pt="xs">
+        <Stack gap={0}>
+          <Text fz="sm" px="sm" py="xs" c="dimmed">
             {truncate(data?.data.email, { length: 20, omission: '..' })}
           </Text>
           <NavLink

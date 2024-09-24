@@ -1,0 +1,15 @@
+.menuLink {
+  text-decoration: none;
+  color: var(--mantine-color-dark-3) !important;
+  flex: 1;
+  border-radius: var(--mantine-radius-md);
+}
+
+.menuLink:hover {
+  background-color: var(--mantine-color-gray-0);
+  color: var(--mantine-color-indigo-7) !important;
+}
+
+.activeMenu {
+  color: var(--mantine-color-indigo-7) !important;
+}

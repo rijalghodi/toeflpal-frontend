@@ -1,10 +1,17 @@
 'use client';
 
-import { ActionIcon, AppShell, Container, Group } from '@mantine/core';
+import {
+  ActionIcon,
+  AppShell,
+  Box,
+  Container,
+  Flex,
+  Group,
+} from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { IconMenu3 } from '@tabler/icons-react';
 import Link from 'next/link';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { LogoAndText } from '@/elements/brand/LogoAndText';
 import { Navbar } from '@/features/layout/Navbar';
@@ -16,20 +23,47 @@ type Props = {
 };
 
 export default function AppLayout({ children }: Props) {
-  const [opened, { toggle }] = useDisclosure();
+  const [opened, { toggle, close }] = useDisclosure();
+
+  const [scrolled, setScrolled] = useState(false);
+
+  // FIXME: It doesnt work
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 30) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   return (
     <AppShell
-      header={{ height: { base: 40, xs: 54 }, offset: true }}
+      header={{ height: { base: 54, sm: 60 }, offset: true }}
+      footer={{ height: { base: 70, sm: 0 }, offset: true }}
       navbar={{
         width: 200,
         breakpoint: 'sm',
         collapsed: { desktop: opened, mobile: !opened },
       }}
       withBorder={false}
-      px={{ base: 'md', xs: 'xl' }}
+      px={{ base: 'md', xs: 'lg', sm: 'xl' }}
     >
-      <AppShell.Header bg="rgba(0, 0, 0, 0)">
+      <AppShell.Header
+        bg="white"
+        style={{
+          boxShadow: scrolled
+            ? 'rgba(17, 12, 46, 0.1) 0px 5px 40px 0px'
+            : 'none',
+        }}
+      >
         <Group
           justify="space-between"
           h="100%"
@@ -38,21 +72,29 @@ export default function AppLayout({ children }: Props) {
           pl="md"
           pr="md"
         >
-          <Group gap="xl">
+          <Flex gap={{ base: 'md', sm: 'lg' }}>
             <ActionIcon
               size="lg"
               onClick={toggle}
               variant="subtle"
               color="dark"
+              visibleFrom="sm"
             >
               <IconMenu3 />
             </ActionIcon>
-            <Link href={routes.home}>
-              <LogoAndText size="xs" />
-            </Link>
-          </Group>
+            <Box visibleFrom="xs">
+              <Link href={routes.home}>
+                <LogoAndText size="sm" />
+              </Link>
+            </Box>
+            <Box hiddenFrom="xs">
+              <Link href={routes.home}>
+                <LogoAndText size="xs" />
+              </Link>
+            </Box>
+          </Flex>
 
-          <Group gap="md" visibleFrom="xs">
+          <Group gap="md">
             <UserAvatar />
           </Group>
         </Group>
@@ -63,7 +105,22 @@ export default function AppLayout({ children }: Props) {
           {children}
         </Container>
       </AppShell.Main>
+      <AppShell.Footer
+        component="nav"
+        hiddenFrom="sm"
+        withBorder
+        styles={{
+          footer: {
+            borderTopRightRadius: 16,
+            borderTopLeftRadius: 16,
+            boxShadow: '0 -10px 10px -10px rgba(51, 63, 85, 0.2)',
+          },
+        }}
+      >
+        <Navbar mobile />
+      </AppShell.Footer>
       <AppShell.Navbar
+        visibleFrom="sm"
         py="md"
         px="sm"
         styles={{
