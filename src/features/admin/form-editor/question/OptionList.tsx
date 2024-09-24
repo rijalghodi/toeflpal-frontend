@@ -79,11 +79,11 @@ export function OptionList({ questionId }: Props) {
   return (
     <Stack gap="md">
       <Radio.Group
-        value={answerKey?.data.optionId}
+        value={answerKey?.data?.option?.id}
         onChange={(value) => updateKey({ optionId: value, questionId })}
       >
         <Stack gap={8}>
-          {options?.data.map(({ id, text }, idx) => (
+          {options?.data?.map(({ id, text }, idx) => (
             <Group w="100%" align="flex-start" key={idx}>
               <Radio
                 pt={8}

@@ -1,6 +1,7 @@
 import { GResponse } from '@/types';
 
 import { axiosInstance } from '../axiosInstance';
+import { Option, Question } from '../types';
 
 type KeyGetRequest = {
   questionId: string;
@@ -8,8 +9,8 @@ type KeyGetRequest = {
 
 type KeyGetResponse = GResponse<{
   id: string;
-  questionId: string;
-  optionId?: string;
+  question: Question;
+  option?: Option;
   explanation?: string;
 }>;
 
