@@ -2,9 +2,9 @@ import { Stack } from '@mantine/core';
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 
-import { TestSection } from '../presentations/TestSection';
 import { toeflGet, toeflGetKey } from '@/services';
 
+import { TestSection } from '../presentations/TestSection';
 
 type Props = {
   toeflId: string;

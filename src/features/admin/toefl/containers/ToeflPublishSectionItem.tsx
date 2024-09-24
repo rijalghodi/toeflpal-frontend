@@ -1,10 +1,10 @@
 import { Button } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
 import { IconCheck, IconX } from '@tabler/icons-react';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import React from 'react';
 
-import { toeflGet, toeflGetKey, toeflPublish } from '@/services';
+import { toeflPublish } from '@/services';
 
 import { SectionItem } from '../presentations/SectionItem';
 
@@ -13,7 +13,7 @@ type Props = {
   published?: boolean;
   onSuccess?: () => void;
 };
-export function  ToeflPublishSectionItem({
+export function ToeflPublishSectionItem({
   toeflId,
   published,
   onSuccess,
@@ -72,6 +72,7 @@ export function  ToeflPublishSectionItem({
             color="red"
             size="xs"
             onClick={() => handlePublish(false)}
+            disabled={isPending}
           >
             Unpublish
           </Button>
@@ -80,6 +81,7 @@ export function  ToeflPublishSectionItem({
             variant="default"
             size="xs"
             onClick={() => handlePublish(true)}
+            disabled={isPending}
           >
             Publish
           </Button>

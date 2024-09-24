@@ -1,9 +1,7 @@
 import { Button, Group, Paper, Stack, Text, Title } from '@mantine/core';
-import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 
 import { useDrawer } from '@/contexts';
-import { toeflGet, toeflGetKey } from '@/services';
 
 import { ToeflGeneralUpdate } from './ToeflGeneralUpdate';
 

@@ -1,10 +1,10 @@
 import { Button } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
 import { IconCheck, IconCrown, IconX } from '@tabler/icons-react';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import React from 'react';
 
-import { toeflGet, toeflGetKey, toeflPremium } from '@/services';
+import { toeflPremium } from '@/services';
 
 import { SectionItem } from '../presentations/SectionItem';
 
@@ -69,6 +69,7 @@ export function ToeflPremiumSectionItem({
             variant="default"
             size="xs"
             onClick={() => handlePremium(false)}
+            disabled={isPending}
           >
             Make Free
           </Button>
@@ -79,6 +80,7 @@ export function ToeflPremiumSectionItem({
             size="xs"
             leftSection={<IconCrown size={16} />}
             onClick={() => handlePremium(true)}
+            disabled={isPending}
           >
             Make Premium
           </Button>

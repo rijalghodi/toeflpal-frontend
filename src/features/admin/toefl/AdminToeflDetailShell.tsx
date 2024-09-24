@@ -12,9 +12,7 @@ import { routes } from '@/utils/constant/routes';
 
 import { ToeflGeneralSection } from './containers/ToeflGeneralSection';
 import { ToeflPremiumSectionItem } from './containers/ToeflPremiumSectionItem';
-import { ToeflPublicationSection } from './containers/ToeflPublicationSection';
 import { ToeflPublishSectionItem } from './containers/ToeflPublishSectionItem';
-import { ToeflTestSection } from './containers/ToeflTestSection';
 import { TestSection } from './presentations/TestSection';
 
 export function AdminToeflDetailShell() {
