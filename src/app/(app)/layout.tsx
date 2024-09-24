@@ -1,6 +1,6 @@
 'use client';
 
-import { ActionIcon, AppShell, Avatar, Container, Group } from '@mantine/core';
+import { ActionIcon, AppShell, Container, Group } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { IconMenu3 } from '@tabler/icons-react';
 import Link from 'next/link';
@@ -8,6 +8,7 @@ import React from 'react';
 
 import { LogoAndText } from '@/elements/brand/LogoAndText';
 import { Navbar } from '@/features/layout/Navbar';
+import { UserAvatar } from '@/features/layout/UserAvatar';
 import { routes } from '@/utils/constant/routes';
 
 type Props = {
@@ -52,7 +53,7 @@ export default function AppLayout({ children }: Props) {
           </Group>
 
           <Group gap="md" visibleFrom="xs">
-            <Avatar />
+            <UserAvatar />
           </Group>
         </Group>
       </AppShell.Header>

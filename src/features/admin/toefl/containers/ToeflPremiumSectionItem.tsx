@@ -1,4 +1,5 @@
 import { Button } from '@mantine/core';
+import { notifications } from '@mantine/notifications';
 import { IconCheck, IconCrown, IconX } from '@tabler/icons-react';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import React from 'react';
@@ -6,7 +7,6 @@ import React from 'react';
 import { toeflGet, toeflGetKey, toeflPremium } from '@/services';
 
 import { SectionItem } from '../presentations/SectionItem';
-import { notifications } from '@mantine/notifications';
 
 type Props = {
   toeflId: string;

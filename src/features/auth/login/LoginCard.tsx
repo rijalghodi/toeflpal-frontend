@@ -14,7 +14,7 @@ export function LoginCard() {
     // <Paper classNames={{ root: classes['auth-card'] }}>
     <Stack align="stretch" w="100%" gap="lg" maw={400}>
       <Stack gap="xl" align="center">
-        <LogoAndText size="xs" />
+        <LogoAndText size="sm" />
         <Title order={1} fz="h2" fw="600" ta="center" mb="md">
           Login to Your Account
         </Title>

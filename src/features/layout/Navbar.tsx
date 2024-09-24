@@ -13,7 +13,7 @@ import Link from 'next/link';
 import React from 'react';
 
 import { LoadingState } from '@/elements/feedbacks/LoadingState';
-import { getProfile } from '@/services/user/profile.service';
+import { userSelfGet, userSelfGetKey } from '@/services';
 import { routes } from '@/utils/constant/routes';
 
 const userNavs = [
@@ -64,8 +64,8 @@ const superAdminNavs = [
 
 export function Navbar() {
   const { data, isError, isLoading } = useQuery({
-    queryKey: ['profile'],
-    queryFn: getProfile,
+    queryKey: userSelfGetKey(),
+    queryFn: userSelfGet,
   });
 
   if (isLoading) return <LoadingState h={150} />;

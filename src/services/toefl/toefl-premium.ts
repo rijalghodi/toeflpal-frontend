@@ -19,6 +19,6 @@ export const toeflPremium = async ({
   const response = await axiosInstance.post<ToeflPremiumResponse>(
     `/toefl/${toeflId}/premium`,
     { premium },
-  );    
+  );
   return response.data;
 };

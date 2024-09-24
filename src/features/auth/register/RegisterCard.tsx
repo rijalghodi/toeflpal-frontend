@@ -14,7 +14,7 @@ export function RegisterCard() {
     <Stack align="stretch" w="100%" gap="lg" maw={400}>
       <Stack gap={8} align="center">
         <Stack gap="xl" align="center">
-          <LogoAndText size="xs" />
+          <LogoAndText size="sm" />
           <Title order={1} fz="h2" fw="600" ta="center" mb="md">
             Register New Account
           </Title>

@@ -20,7 +20,6 @@ import { routes } from '@/utils/constant/routes';
 const PAGE_SIZE = 15;
 
 export function AdminToeflPaginated() {
-  
   const router = useRouter();
 
   const [search, setSearch] = useState<string>('');
