@@ -1,25 +1,8 @@
 'use client';
 import { useQuery } from '@tanstack/react-query';
 import React, { createContext, ReactNode, useContext } from 'react';
-import { create } from 'zustand';
 
 import { userSelfGet, userSelfGetKey } from '@/services';
-
-export type Profile = {
-  email: string;
-  id: string;
-  roles: string[];
-};
-
-type UserStore = {
-  user: Profile | null;
-  setUser: (user: Profile | null) => void;
-};
-
-export const useUserStore = create<UserStore>((set) => ({
-  user: null,
-  setUser: (user) => set(() => ({ user })),
-}));
 
 // Define the user data structure
 interface UserCtx {
