@@ -6,6 +6,7 @@ type UserSelfResponse = GResponse<{
   email: string;
   roles: string[];
   createdAt: string;
+  id: string;
 }>;
 
 export const userSelfGet = async (): Promise<UserSelfResponse> => {

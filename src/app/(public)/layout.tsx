@@ -16,25 +16,6 @@ import { useEffect, useState } from 'react';
 import { LogoAndText } from '@/elements/brand/LogoAndText';
 import { routes } from '@/utils/constant/routes';
 
-const features = [
-  {
-    title: '20+',
-    desc: 'TOEFL Test',
-  },
-  {
-    title: '99+',
-    desc: 'TOEFL lessons',
-  },
-  {
-    title: '1000+',
-    desc: 'Growing users',
-  },
-  {
-    title: '100%',
-    desc: 'Free access',
-  },
-];
-
 const navs = [
   {
     title: 'Simulation',

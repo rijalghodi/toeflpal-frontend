@@ -1,13 +1,4 @@
-import {
-  ActionIcon,
-  Badge,
-  Group,
-  Paper,
-  Pill,
-  SimpleGrid,
-  Stack,
-  Text,
-} from '@mantine/core';
+import { Group, Paper, Pill, SimpleGrid, Stack, Text } from '@mantine/core';
 import { IconCrown, IconPlayerPlay } from '@tabler/icons-react';
 import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
@@ -16,6 +7,7 @@ import React from 'react';
 import { LoadingState } from '@/elements/feedbacks/LoadingState';
 import { toeflList, toeflListKey } from '@/services';
 import { routes } from '@/utils/constant/routes';
+
 import cls from './styles.module.css';
 
 type Props = {

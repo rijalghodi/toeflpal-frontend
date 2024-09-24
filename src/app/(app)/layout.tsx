@@ -23,7 +23,7 @@ type Props = {
 };
 
 export default function AppLayout({ children }: Props) {
-  const [opened, { toggle, close }] = useDisclosure();
+  const [opened, { toggle }] = useDisclosure();
 
   const [scrolled, setScrolled] = useState(false);
 

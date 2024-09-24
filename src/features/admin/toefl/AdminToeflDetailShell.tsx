@@ -11,7 +11,7 @@ import { ToeflGeneralSection } from './containers/ToeflGeneralSection';
 import { ToeflPublicationSection } from './containers/ToeflPublicationSection';
 import { ToeflTestSection } from './containers/ToeflTestSection';
 
-export function ToeflDetailShell() {
+export function AdminToeflDetailShell() {
   const { toeflId } = useParams();
 
   return (

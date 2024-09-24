@@ -16,6 +16,13 @@ export type Form = {
   closingAudio: Storage | null;
 };
 
+export type FormPublic = {
+  id: string;
+  name: string;
+  duration: number | null;
+  questionNum: number | null;
+};
+
 export type Toefl = {
   id: string;
   name: string;

@@ -3,3 +3,4 @@ export * from './DrawerAlt2Context';
 export * from './DrawerAltContext';
 export * from './DrawerContext';
 export * from './DrawersContext';
+export * from './UserContext';

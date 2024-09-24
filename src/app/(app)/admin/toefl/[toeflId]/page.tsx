@@ -3,13 +3,13 @@
 import { Stack } from '@mantine/core';
 import React, { Suspense } from 'react';
 
-import { ToeflDetailShell } from '@/features/admin/toefl/ToeflDetailShell';
+import { AdminToeflDetailShell } from '@/features/admin/toefl/AdminToeflDetailShell';
 
 export default function ToeflDetailPage() {
   return (
     <Stack>
       <Suspense>
-        <ToeflDetailShell />
+        <AdminToeflDetailShell />
       </Suspense>
     </Stack>
   );

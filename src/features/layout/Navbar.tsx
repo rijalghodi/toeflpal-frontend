@@ -8,13 +8,11 @@ import {
   IconPlayerPlay,
   IconSchool,
 } from '@tabler/icons-react';
-import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React from 'react';
 
-import { LoadingState } from '@/elements/feedbacks/LoadingState';
-import { userSelfGet, userSelfGetKey } from '@/services';
+import { useUser } from '@/contexts/UserContext';
 import { routes } from '@/utils/constant/routes';
 
 import classes from './styles.module.css';
@@ -69,22 +67,24 @@ type Props = {
   mobile?: boolean;
 };
 export function Navbar({ mobile }: Props) {
-  const { data, isError, isLoading } = useQuery({
-    queryKey: userSelfGetKey(),
-    queryFn: userSelfGet,
-  });
+  // const { data, isError, isLoading } = useQuery({
+  //   queryKey: userSelfGetKey(),
+  //   queryFn: userSelfGet,
+  //   retry: false,
+  // });
 
-  if (isLoading) return <LoadingState h={150} />;
-  if (isError || !data?.data)
-    return (
-      <Group justify="center">
-        <Text ta="center">Error</Text>
-      </Group>
-    );
+  const { user } = useUser();
 
-  const navs = data.data.roles.includes('superadmin')
-    ? superAdminNavs
-    : userNavs;
+  // if (isLoading) return <LoadingState h={150} />;
+
+  // if (isError || !data?.data)
+  //   return (
+  //     <Group justify="center">
+  //       <Text ta="center">Error</Text>
+  //     </Group>
+  //   );
+
+  const navs = user?.roles.includes('superadmin') ? superAdminNavs : userNavs;
 
   const pathname = usePathname();
 

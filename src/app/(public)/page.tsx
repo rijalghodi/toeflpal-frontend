@@ -14,12 +14,9 @@ import {
   Title,
   useMantineTheme,
 } from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
 
-import { routes } from '@/utils/constant/routes';
 import hero from '~/hero.png';
 
 const features = [
@@ -41,42 +38,8 @@ const features = [
   },
 ];
 
-const navs = [
-  {
-    title: 'Simulation',
-    href: routes.toeflList,
-  },
-  {
-    title: 'Practice',
-    href: routes.practiceList,
-  },
-  {
-    title: 'Lessons',
-    href: routes.lessonList,
-  },
-];
-
 export default function Home() {
   const { colors } = useMantineTheme();
-  const [opened, { toggle }] = useDisclosure();
-
-  const [scrolled, setScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 100) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
 
   return (
     <>

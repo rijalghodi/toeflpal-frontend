@@ -15,6 +15,7 @@ import {
   DrawerAlt2Provider,
   DrawerAltProvider,
   DrawerProvider,
+  UserProvider,
 } from '@/contexts';
 import { MantineProviders } from '@/elements/providers/MantineProvider';
 import { ClientProviders } from '@/features/ClientProviders';
@@ -49,18 +50,20 @@ export default function RootLayout({ children }: { children: any }) {
       // className={`${titleFont.className} ${font.className}`}
       >
         <ClientProviders>
-          <MantineProviders
-            fontFamily={font.style.fontFamily}
-            headingFontFamily={headingFont.style.fontFamily}
-          >
-            <AudioPlayerProvider>
-              <DrawerAlt2Provider>
-                <DrawerAltProvider>
-                  <DrawerProvider>{children}</DrawerProvider>
-                </DrawerAltProvider>
-              </DrawerAlt2Provider>
-            </AudioPlayerProvider>
-          </MantineProviders>
+          <UserProvider>
+            <MantineProviders
+              fontFamily={font.style.fontFamily}
+              headingFontFamily={headingFont.style.fontFamily}
+            >
+              <AudioPlayerProvider>
+                <DrawerAlt2Provider>
+                  <DrawerAltProvider>
+                    <DrawerProvider>{children}</DrawerProvider>
+                  </DrawerAltProvider>
+                </DrawerAlt2Provider>
+              </AudioPlayerProvider>
+            </MantineProviders>
+          </UserProvider>
         </ClientProviders>
       </body>
     </html>
