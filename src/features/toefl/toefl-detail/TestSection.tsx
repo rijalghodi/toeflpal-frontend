@@ -9,8 +9,10 @@ import {
 } from '@mantine/core';
 import { IconPlayerPlay, IconRefresh } from '@tabler/icons-react';
 import { useRouter } from 'next/navigation';
-import React from 'react';
+import React, { useMemo } from 'react';
 
+import { useDrawer, useUser } from '@/contexts';
+import { LoginForm } from '@/features/auth/login/LoginForm';
 import { routes } from '@/utils/constant/routes';
 
 type Props = {
@@ -19,12 +21,68 @@ type Props = {
   name: string;
   questionNum?: number;
   duration?: number;
+  startedAt?: string;
+  finishedAt?: string;
+  canceledAt?: string;
+  remainingTime?: number;
 };
-export function TestSection({ name, formId, questionNum, duration }: Props) {
+export function TestSection({
+  name,
+  formId,
+  toeflId,
+  questionNum,
+  duration,
+  startedAt,
+  finishedAt,
+  remainingTime,
+}: Props) {
+  const { user } = useUser();
   const { push } = useRouter();
+  const { open: openDrawer } = useDrawer();
 
-  const handleChangeTest = () => {
-    push(routes.formEditor(formId));
+  // Status:
+  // Not taken: startedAt null
+  // In progress: startedAt not null, finishedAt null && endtime < server time
+  // Finished: startedAt not null, finishedAt not null || endtime > server time
+  const status = useMemo(() => {
+    if (!startedAt || remainingTime === undefined || remainingTime === null) {
+      return 'Not taken';
+    }
+
+    if (startedAt && finishedAt && remainingTime < 0) {
+      return 'Finished';
+    }
+    if (remainingTime > 0) {
+      return 'In progress';
+    }
+    return 'Unknown';
+  }, [finishedAt, startedAt, remainingTime]);
+
+  const handleStartTest = () => {
+    if (!user) {
+      openDrawer({
+        title: 'Please Log In',
+        content: (
+          <Stack gap={8}>
+            <Text fz="lg">You need to log in to start the test.</Text>
+            <LoginForm
+              onSuccess={() => {
+                push(routes.toeflGrammar(toeflId));
+              }}
+            />
+          </Stack>
+        ),
+      });
+      return;
+    }
+    push(routes.toeflReading(toeflId));
+  };
+
+  const handleOpenEvaluation = () => {
+    openDrawer({
+      title: 'Evaluation',
+      content: '',
+    });
   };
 
   return (
@@ -50,24 +108,23 @@ export function TestSection({ name, formId, questionNum, duration }: Props) {
           </Group>
         </Stack>
         <Group>
-          <Button variant="default" onClick={handleChangeTest} size="xs">
-            Evaluation
-          </Button>
+          {status === 'Finished' && (
+            <Button variant="default" onClick={handleOpenEvaluation} size="xs">
+              Evaluation
+            </Button>
+          )}
+
           <ActionIcon
             variant="light"
-            onClick={handleChangeTest}
+            onClick={handleStartTest}
             size="lg"
             title="Start"
           >
-            <IconPlayerPlay size={16} />
-          </ActionIcon>
-          <ActionIcon
-            variant="light"
-            onClick={handleChangeTest}
-            size="lg"
-            title="Restart"
-          >
-            <IconRefresh size={16} />
+            {status === 'Finished' ? (
+              <IconRefresh size={16} />
+            ) : (
+              <IconPlayerPlay size={16} />
+            )}
           </ActionIcon>
         </Group>
       </Group>

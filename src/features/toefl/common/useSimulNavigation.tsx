@@ -56,7 +56,7 @@ export const useSimulNavigation = ({
         setPart((prev) => prev - 1);
         setQuestion(questionLengths[part - 2]);
       } else {
-        // setSuffix('formstart');
+        setSuffix('formstart');
       }
     }
   };

@@ -32,7 +32,7 @@ type Props = {
   step?: string | number;
 };
 
-export function TextSimulationHeader({
+export function ReadingSimulationHeader({
   onNext,
   onPrev,
   onReview,

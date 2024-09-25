@@ -36,6 +36,21 @@ export type Toefl = {
   grammarSection: FormMeta;
 };
 
+export type Eval = {
+  id: string;
+  questionNum?: number;
+  correctAnswerNum?: number;
+  attempt: Attempt;
+};
+
+export type ToeflEval = {
+  id: string;
+  toefl: Toefl;
+  readingEval?: Eval;
+  listeningEval?: Eval;
+  grammarEval?: Eval;
+};
+
 export type Storage = {
   id: string;
   url: string;
@@ -75,4 +90,22 @@ export type Question = {
   reference?: Reference;
   part?: Part;
   options?: Option[];
+};
+
+export type Attempt = {
+  endTime?: string;
+  startedAt?: string;
+  finishedAt?: string;
+  canceledAt?: string;
+  createdAt?: string;
+  remainingTime?: number;
+};
+
+export type AttemptWithRemainingTime = Attempt & {
+  remainingTime?: number;
+};
+
+export type Answer = {
+  optionId?: string;
+  questionId: string;
 };

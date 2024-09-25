@@ -12,6 +12,9 @@ export const routes = {
   dashboard: '/dashboard',
   toeflList: '/toefl',
   toeflDetail: (toeflId: string) => `/toefl/${toeflId}`,
+  toeflReading: (toeflId: string) => `/toefl/${toeflId}/reading`,
+  toeflListening: (toeflId: string) => `/toefl/${toeflId}/listening`,
+  toeflGrammar: (toeflId: string) => `/toefl/${toeflId}/grammar`,
   practiceList: '/practice',
   lessonList: '/lesson',
 
@@ -24,4 +27,5 @@ export const routes = {
 
   // Form
   formEditor: (formId: string) => `/form/${formId}`,
+  formPreview: (formId: string) => `/form/${formId}/preview`,
 };

@@ -2,6 +2,7 @@
 
 import { Anchor, Stack, Text, Title } from '@mantine/core';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import React from 'react';
 
 import { LogoAndText } from '@/elements/brand/LogoAndText';
@@ -10,6 +11,7 @@ import { routes } from '@/utils/constant/routes';
 import { LoginForm } from './LoginForm';
 
 export function LoginCard() {
+  const router = useRouter();
   return (
     // <Paper classNames={{ root: classes['auth-card'] }}>
     <Stack align="stretch" w="100%" gap="lg" maw={400}>
@@ -21,7 +23,11 @@ export function LoginCard() {
       </Stack>
       {/* <GoogleLoginButton /> */}
       <Stack gap={8}>
-        <LoginForm />
+        <LoginForm
+          onSuccess={() => {
+            router.push(routes.dashboard);
+          }}
+        />
       </Stack>
       <Stack align="center" gap={8}>
         {/* <Text fz="sm" c="dark.3" ta="center">

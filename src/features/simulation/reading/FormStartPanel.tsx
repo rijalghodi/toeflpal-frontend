@@ -8,6 +8,7 @@ import React from 'react';
 
 type Props = {
   text?: string;
+  onStart?: () => void;
 };
 
 export function FormStartPanel({ text }: Props) {

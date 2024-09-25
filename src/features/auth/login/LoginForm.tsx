@@ -5,18 +5,17 @@ import { Button, PasswordInput, Stack, TextInput } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
 import { IconLock, IconMail } from '@tabler/icons-react';
 import { useMutation } from '@tanstack/react-query';
-import { useRouter } from 'next-nprogress-bar';
 import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { login, setAuthCookie } from '@/services';
 import { LoginFormValues } from '@/types';
-import { routes } from '@/utils/constant/routes';
 import { loginSchema } from '@/utils/form-schema/auth/login.schema';
 
-export function LoginForm() {
-  const router = useRouter();
-
+type Props = {
+  onSuccess?: () => void;
+};
+export function LoginForm({ onSuccess }: Props) {
   const { register, handleSubmit } = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -39,7 +38,7 @@ export function LoginForm() {
           expires: accessToken.expiredAt,
         });
       }
-      router.push(routes.dashboard);
+      onSuccess?.();
     },
     onError: (error) => {
       notifications.show({
