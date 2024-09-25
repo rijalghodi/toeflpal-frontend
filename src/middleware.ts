@@ -18,6 +18,22 @@ export async function middleware(request: NextRequest) {
 
   const authPages = Object.values(routes.auth).map((v) => v.toString());
 
+  const isAdminPage = adminPath.find((path) => {
+    return pathname.startsWith(path);
+  });
+
+  const isAuthPage = authPages.some((authPage) =>
+    pathname.startsWith(authPage),
+  );
+
+  const isUserPage = userPath.find((path) => {
+    return pathname.startsWith(path);
+  });
+
+  if (isUserPage || (!isAuthPage && !isAdminPage)) {
+    return NextResponse.next();
+  }
+
   try {
     // --- Fetch user role information ---
     const userResponse = await vanillaFetch(
@@ -32,10 +48,6 @@ export async function middleware(request: NextRequest) {
 
     // --- auth page permissions ---
 
-    const isAuthPage = authPages.some((authPage) =>
-      pathname.startsWith(authPage),
-    );
-
     // ------ If user has been logged in, redirect to dashboard ----
     if (isAuthPage && roles) {
       if (roles.includes('superadmin')) {
@@ -46,19 +58,11 @@ export async function middleware(request: NextRequest) {
 
     // --- User page permissions ---
 
-    const isUserPage = userPath.find((path) => {
-      return pathname.startsWith(path);
-    });
-
     if (isUserPage && roles?.includes('superadmin')) {
       return NextResponse.redirect(superadminDashboard);
     }
 
     // --- Admin page permissions ---
-
-    const isAdminPage = adminPath.find((path) => {
-      return pathname.startsWith(path);
-    });
 
     if (isAdminPage && !roles?.includes('superadmin')) {
       return NextResponse.redirect(loginPage);
