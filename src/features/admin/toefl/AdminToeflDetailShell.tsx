@@ -29,8 +29,6 @@ export function AdminToeflDetailShell() {
   const reading = toefl?.readingSection;
   const grammar = toefl?.grammarSection;
 
-  console.log(toefl);
-
   if (isLoading) {
     return <LoadingState h="calc(100vh - 140px)" />;
   }

@@ -1,18 +1,11 @@
-import {
-  ActionIcon,
-  Button,
-  Group,
-  Paper,
-  Stack,
-  Text,
-  Title,
-} from '@mantine/core';
+import { Button, Group, Paper, Stack, Text, Title } from '@mantine/core';
 import { IconPlayerPlay, IconRefresh } from '@tabler/icons-react';
 import { useRouter } from 'next/navigation';
 import React, { useMemo } from 'react';
 
-import { useDrawer, useUser } from '@/contexts';
+import { useDrawer } from '@/contexts';
 import { LoginForm } from '@/features/auth/login/LoginForm';
+import { useUserSelf } from '@/services';
 import { routes } from '@/utils/constant/routes';
 
 type Props = {
@@ -36,7 +29,7 @@ export function TestSection({
   finishedAt,
   remainingTime,
 }: Props) {
-  const { user } = useUser();
+  const { user } = useUserSelf();
   const { push } = useRouter();
   const { open: openDrawer } = useDrawer();
 
@@ -45,16 +38,18 @@ export function TestSection({
   // In progress: startedAt not null, finishedAt null && endtime < server time
   // Finished: startedAt not null, finishedAt not null || endtime > server time
   const status = useMemo(() => {
-    if (!startedAt || remainingTime === undefined || remainingTime === null) {
+    if (!startedAt) {
       return 'Not taken';
     }
 
-    if (startedAt && finishedAt && remainingTime < 0) {
+    if ((startedAt && finishedAt) || (remainingTime ?? 0) < 0) {
       return 'Finished';
     }
-    if (remainingTime > 0) {
+
+    if ((remainingTime ?? 0) > 0) {
       return 'In progress';
     }
+
     return 'Unknown';
   }, [finishedAt, startedAt, remainingTime]);
 
@@ -78,12 +73,12 @@ export function TestSection({
     push(routes.toeflReading(toeflId));
   };
 
-  const handleOpenEvaluation = () => {
-    openDrawer({
-      title: 'Evaluation',
-      content: '',
-    });
-  };
+  // const handleOpenEvaluation = () => {
+  //   openDrawer({
+  //     title: 'Evaluation',
+  //     content: '',
+  //   });
+  // };
 
   return (
     <Paper withBorder p="md" radius="md">
@@ -108,24 +103,31 @@ export function TestSection({
           </Group>
         </Stack>
         <Group>
-          {status === 'Finished' && (
-            <Button variant="default" onClick={handleOpenEvaluation} size="xs">
+          {/* {status === 'Finished' && (
+            <Button
+              variant="default"
+              onClick={handleOpenEvaluation}
+              size="xs"
+              leftSection={<IconChartLine size={16} />}
+            >
               Evaluation
             </Button>
-          )}
+          )} */}
 
-          <ActionIcon
-            variant="light"
+          <Button
+            variant="default"
             onClick={handleStartTest}
-            size="lg"
-            title="Start"
+            size="xs"
+            leftSection={
+              status === 'Finished' ? (
+                <IconRefresh size={16} />
+              ) : (
+                <IconPlayerPlay size={16} />
+              )
+            }
           >
-            {status === 'Finished' ? (
-              <IconRefresh size={16} />
-            ) : (
-              <IconPlayerPlay size={16} />
-            )}
-          </ActionIcon>
+            {status === 'Finished' ? 'Restart' : 'Start'}
+          </Button>
         </Group>
       </Group>
     </Paper>

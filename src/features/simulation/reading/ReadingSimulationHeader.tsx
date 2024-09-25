@@ -27,8 +27,6 @@ import { Logo, LogoAndText } from '@/elements';
 
 import { Timer } from './Timer';
 
-// import { FormEditorMain } from './FormEditorMain';
-
 type Props = {
   onNext?: () => void;
   onPrev?: () => void;
@@ -43,30 +41,50 @@ type Props = {
   disabledNavigation?: boolean;
 };
 
-export function ReadingSimulationHeader(props: Props) {
+export function ReadingSimulationHeader({
+  onNext,
+  onPrev,
+  onReview,
+  onStart,
+  onSubmit,
+  name,
+  step,
+  humanizedStep,
+  duration,
+  disabledNavigation,
+}: Props) {
   const router = useRouter();
-  console.log(props.step);
 
   const handleQuit = () => {
     modals.openConfirmModal({
       title: 'Quit Confirmation',
       children: (
-        <Text size="sm" c="dimmed">
+        <Text size="sm" color="dimmed">
           Are you sure you want to quit the test? You will lose all your current
           data for this section.
         </Text>
       ),
       labels: { confirm: 'Confirm', cancel: 'Cancel' },
       confirmProps: { color: 'red' },
-      onConfirm: () => {
-        router.back();
-      },
+      onConfirm: () => router.back(),
     });
+  };
+
+  const handleActionClick = async (
+    action: () => Promise<any>,
+    next?: () => void,
+  ) => {
+    try {
+      await action();
+      next?.();
+    } catch (e) {
+      notifications.show({ message: `Error ${String(e)}` });
+    }
   };
 
   return (
     <Stack gap={0} w="100%">
-      <Group justify="space-between" w="100%" pl="md" pr="md" py={8}>
+      <Group justify="space-between" w="100%" px="md" py={8}>
         <Group gap="md">
           <Box hiddenFrom="xs">
             <Logo size="xs" />
@@ -85,44 +103,52 @@ export function ReadingSimulationHeader(props: Props) {
           >
             <IconLogout2 size={16} />
           </ActionIcon>
-          {props.step === 'formstart' ? (
+
+          {step === 'formstart' ? (
             <Button
               color="dark"
               variant="default"
               size="sm"
               title="Start Test"
-              disabled={props.disabledNavigation}
-              onClick={async () => {
-                try {
-                  await props.onStart?.();
-                  props.onNext?.();
-                } catch (e) {
-                  notifications.show({ message: `Error ${String(e)}` });
-                }
-              }}
+              disabled={disabledNavigation}
+              onClick={() => handleActionClick(onStart!, onNext)}
               leftSection={<IconPlayerPlay size={16} />}
             >
               Start
             </Button>
-          ) : props.step === 'formend' ? (
-            <Button
-              color="dark"
-              variant="default"
-              size="sm"
-              title="Submit answers"
-              disabled={props.disabledNavigation}
-              onClick={async () => {
-                try {
-                  await props.onSubmit?.();
-                  props.onNext?.();
-                } catch (e) {
-                  notifications.show({ message: `Error ${String(e)}` });
-                }
-              }}
-              leftSection={<IconChecks size={16} />}
-            >
-              Submit
-            </Button>
+          ) : step === 'formend' ? (
+            <>
+              <ActionIcon
+                color="dark"
+                variant="default"
+                size="lg"
+                title="Review"
+                onClick={onReview}
+              >
+                <IconSearch size={16} />
+              </ActionIcon>
+              <ActionIcon
+                color="dark"
+                variant="default"
+                size="lg"
+                title="Previous"
+                onClick={onPrev}
+                disabled={disabledNavigation}
+              >
+                <IconArrowLeft size={16} />
+              </ActionIcon>
+              <Button
+                color="dark"
+                variant="default"
+                size="sm"
+                title="Submit answers"
+                disabled={disabledNavigation}
+                onClick={() => handleActionClick(onSubmit!, onNext)}
+                leftSection={<IconChecks size={16} />}
+              >
+                Submit
+              </Button>
+            </>
           ) : (
             <>
               <ActionIcon
@@ -130,19 +156,17 @@ export function ReadingSimulationHeader(props: Props) {
                 variant="default"
                 size="lg"
                 title="Review"
-                onClick={props.onReview}
+                onClick={onReview}
               >
                 <IconSearch size={16} />
               </ActionIcon>
-
               <ActionIcon
                 color="dark"
                 variant="default"
                 size="lg"
                 title="Previous"
-                onClick={props.onPrev}
-                disabled={props.step === 'part-p1' || props.disabledNavigation}
-                hidden
+                onClick={onPrev}
+                disabled={disabledNavigation}
               >
                 <IconArrowLeft size={16} />
               </ActionIcon>
@@ -151,8 +175,8 @@ export function ReadingSimulationHeader(props: Props) {
                 variant="default"
                 size="lg"
                 title="Next"
-                onClick={props.onNext}
-                disabled={props.disabledNavigation}
+                onClick={onNext}
+                disabled={disabledNavigation}
               >
                 <IconArrowRight size={16} />
               </ActionIcon>
@@ -160,19 +184,19 @@ export function ReadingSimulationHeader(props: Props) {
           )}
         </Group>
       </Group>
-      <Paper px="md" py={4} radius={0} bg="gray.1   ">
+      <Paper px="md" py={4} radius={0} bg="gray.1">
         <Group justify="space-between" w="100%">
           <Group>
             <Text fz="xs" fw={600}>
-              {props.name}
+              {name}
             </Text>
             <Divider orientation="vertical" />
             <Text fz="xs" fw={600}>
-              {props.humanizedStep}
+              {humanizedStep}
             </Text>
           </Group>
-          {props.duration !== undefined && !props.step?.startsWith('form') && (
-            <Timer duration={props.duration ?? 0} />
+          {duration !== undefined && !step?.startsWith('form') && (
+            <Timer duration={duration} />
           )}
         </Group>
       </Paper>

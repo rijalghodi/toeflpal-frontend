@@ -7,7 +7,6 @@ type Props = {
 
 export function Timer({ duration }: Props) {
   const [timeLeft, setTimeLeft] = useState(duration);
-  console.log(duration / 60000);
 
   useEffect(() => {
     if (timeLeft <= 0) return;

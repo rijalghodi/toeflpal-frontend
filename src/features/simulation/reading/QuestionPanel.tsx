@@ -49,9 +49,11 @@ export function QuestionPanel({
           mah="calc(100vh - 80px)"
           offsetScrollbars
           scrollbarSize={5}
+          type="auto"
         >
           <Box
             px="md"
+            py="md"
             dangerouslySetInnerHTML={{
               __html: DOMPurify.sanitize(reference ?? ''),
             }}

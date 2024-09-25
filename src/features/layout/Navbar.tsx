@@ -12,7 +12,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React from 'react';
 
-import { useUser } from '@/contexts/UserContext';
+import { useUserSelf } from '@/services';
 import { routes } from '@/utils/constant/routes';
 
 import classes from './styles.module.css';
@@ -73,7 +73,7 @@ export function Navbar({ mobile }: Props) {
   //   retry: false,
   // });
 
-  const { user } = useUser();
+  const { user } = useUserSelf();
 
   // if (isLoading) return <LoadingState h={150} />;
 

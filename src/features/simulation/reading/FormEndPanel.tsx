@@ -1,6 +1,6 @@
 'use client';
 
-import { Box, Center, ScrollArea, Text } from '@mantine/core';
+import { Box, Center, Text } from '@mantine/core';
 import DOMPurify from 'dompurify';
 import React from 'react';
 
@@ -14,19 +14,12 @@ export function FormEndPanel({ text }: Props) {
   if (text) {
     return (
       <Box maw={800} w="100%" mx="auto">
-        <ScrollArea.Autosize
-          mah="calc(100vh - 80px)"
-          offsetScrollbars
-          scrollbarSize={5}
-          py="md"
-        >
-          <Box
-            mx="auto"
-            dangerouslySetInnerHTML={{
-              __html: DOMPurify.sanitize(text ?? ''),
-            }}
-          />
-        </ScrollArea.Autosize>
+        <Box
+          mx="auto"
+          dangerouslySetInnerHTML={{
+            __html: DOMPurify.sanitize(text ?? ''),
+          }}
+        />
       </Box>
     );
   }

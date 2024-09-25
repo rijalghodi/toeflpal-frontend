@@ -106,7 +106,7 @@ export function QuestionList({ formId, partId, lastOrder }: Props) {
 
   return (
     <DataTable
-      minHeight={100}
+      minHeight={180}
       noRecordsText="No Question"
       fetching={isLoading || isFetching}
       withRowBorders

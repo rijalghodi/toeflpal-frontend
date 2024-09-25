@@ -1,19 +1,28 @@
 'use client';
 import { useQuery } from '@tanstack/react-query';
-import React, { createContext, ReactNode, useContext } from 'react';
+import React, {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 
 import { userSelfGet, userSelfGetKey } from '@/services';
 
 // Define the user data structure
+type User = {
+  id: string;
+  email: string;
+  roles: string[];
+};
+
+// Define the context structure
 interface UserCtx {
-  user:
-    | {
-        id: string;
-        email: string;
-        roles: string[];
-      }
-    | undefined;
+  user: User | undefined;
   loading: boolean;
+  refetchUser: () => void;
+  logout: () => void;
 }
 
 // Create the UserContext
@@ -35,14 +44,27 @@ interface UserProviderProps {
 
 // Create the UserProvider component
 export const UserProvider = ({ children }: UserProviderProps) => {
-  const { data, isLoading } = useQuery({
+  const [user, setUser] = useState<User | undefined>(undefined);
+
+  // Fetch user data
+  const { data, isLoading, refetch } = useQuery({
     queryKey: userSelfGetKey(),
     queryFn: userSelfGet,
     retry: false,
   });
 
+  useEffect(() => {
+    setUser(data?.data);
+  }, [data]);
+  // Logout function to clear user data
+  const logout = () => {
+    setUser(undefined); // Clear the user data
+  };
+
   return (
-    <UserContext.Provider value={{ user: data?.data, loading: isLoading }}>
+    <UserContext.Provider
+      value={{ user, loading: isLoading, refetchUser: refetch, logout }}
+    >
       {children}
     </UserContext.Provider>
   );

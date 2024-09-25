@@ -10,7 +10,6 @@ import { toeflGet, toeflGetKey } from '@/services';
 
 export default function ToeflRaedingPage() {
   const { toeflId } = useParams();
-  console.log(toeflId);
 
   // Get TOEFL
   const { data: toefl, isLoading } = useQuery({
@@ -20,8 +19,6 @@ export default function ToeflRaedingPage() {
   });
 
   const formId = toefl?.data.readingSection.id;
-
-  console.log('toefl', toefl, 'toeflId', formId);
 
   if (isLoading) {
     return <LoadingState h="100vh" />;

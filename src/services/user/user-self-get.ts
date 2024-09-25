@@ -1,3 +1,5 @@
+import { useQuery } from '@tanstack/react-query';
+
 import { GResponse } from '@/types';
 
 import { axiosInstance } from '../axiosInstance';
@@ -15,6 +17,18 @@ export const userSelfGet = async (): Promise<UserSelfResponse> => {
 };
 
 export const userSelfGetKey = () => ['user-self-get'];
+
+// Fetch user data
+export const useUserSelf = () => {
+  const { data, isLoading, refetch } = useQuery({
+    queryKey: userSelfGetKey(),
+    queryFn: userSelfGet,
+    retry: false,
+    staleTime: 10 * 60 * 1000, // 10 minutes
+  });
+
+  return { user: data?.data, loading: isLoading, refetch };
+};
 
 export async function userSelfGetServer(
   options: { timeout?: number } & RequestInit = {},

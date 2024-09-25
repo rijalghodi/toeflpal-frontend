@@ -41,8 +41,6 @@ export function ReadingFormPresenter({ formId, ...props }: Props) {
     enabled: !!formId,
   });
 
-  console.log('formData', dataForm);
-
   const questions = dataForm?.data.questions;
   const parts = dataForm?.data.parts;
   const form = dataForm?.data;
@@ -53,9 +51,6 @@ export function ReadingFormPresenter({ formId, ...props }: Props) {
     queryFn: () => attemptGet({ formId }),
     enabled: !!formId,
   });
-
-  console.log('attempt data', attempt);
-  console.log('remainig time', attempt?.data.remainingTime);
 
   // --- Prvent user for quiting ---
   useEffect(() => {
@@ -102,7 +97,6 @@ export function ReadingFormPresenter({ formId, ...props }: Props) {
     defaultValues: Object.fromEntries(questionAndAnswers ?? []),
   });
 
-
   const handleSubmit = async () => {
     const inp = method.getValues();
     const foo = Object.entries(inp).map(([questionId, optionId]) => ({
@@ -124,11 +118,7 @@ export function ReadingFormPresenter({ formId, ...props }: Props) {
     >
       <AppShell.Header bg="#fff">
         <ReadingSimulationHeader
-          name={
-            typeof props.name === 'string'
-              ? props.name
-              : props.name?.(form?.name)
-          }
+          name={form?.name}
           humanizedStep={humanizedStep}
           step={currentStep}
           onNext={goNext}

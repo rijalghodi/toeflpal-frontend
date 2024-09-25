@@ -14,17 +14,17 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 
-import { useUser } from '@/contexts';
-import { removeAuthCookie } from '@/services';
+import { removeAuthCookie, useUserSelf } from '@/services';
 import { routes } from '@/utils/constant/routes';
 
 export function UserAvatar() {
   const q = useQueryClient();
   const router = useRouter();
 
-  const { user, loading } = useUser();
+  const { user, loading } = useUserSelf();
 
   const handleLogout = () => {
+    q.clear();
     q.removeQueries();
     removeAuthCookie();
     router.push(routes.home);

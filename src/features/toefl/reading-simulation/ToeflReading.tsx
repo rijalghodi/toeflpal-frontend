@@ -1,7 +1,7 @@
 import { Text } from '@mantine/core';
 import { modals } from '@mantine/modals';
 import { notifications } from '@mantine/notifications';
-import { IconCheck } from '@tabler/icons-react';
+import { IconCheck, IconX } from '@tabler/icons-react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import React from 'react';
@@ -39,16 +39,28 @@ export function ToeflReading({ toeflId, formId }: Props) {
     });
   };
 
-  const { mutateAsync: start, isPending: loadingStart } = useMutation({
+  const { mutateAsync: start } = useMutation({
     mutationFn: attemptStart,
     onSuccess: () => {
       notifications.hide('toefl-start');
       q.invalidateQueries({ queryKey: evalGetKey({ toeflId }) });
       q.refetchQueries({ queryKey: attemptGetKey({ formId }) });
     },
+    onError: (error) => {
+      notifications.update({
+        title: 'Fail to start',
+        message: error.message,
+        id: 'toefl-start',
+        loading: false,
+        autoClose: 5000,
+        withCloseButton: true,
+        icon: <IconX size={16} />,
+        color: 'red',
+      });
+    },
   });
 
-  const { mutateAsync: submit, isPending: loadingSubmit } = useMutation({
+  const { mutateAsync: submit } = useMutation({
     mutationFn: async ({
       formId,
       toeflId,
@@ -73,6 +85,20 @@ export function ToeflReading({ toeflId, formId }: Props) {
         color: 'green',
       });
       q.invalidateQueries({ queryKey: evalGetKey({ toeflId }) });
+      q.refetchQueries({ queryKey: evalGetKey({ toeflId }) });
+      router.push(routes.toeflDetail(toeflId));
+    },
+    onError: (error) => {
+      notifications.update({
+        title: 'Fail to submit',
+        message: error.message,
+        id: 'toefl-submit',
+        loading: false,
+        autoClose: 5000,
+        withCloseButton: true,
+        icon: <IconX size={16} />,
+        color: 'red',
+      });
     },
   });
 

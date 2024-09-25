@@ -7,10 +7,15 @@ import dayjs from 'dayjs';
 import { useParams } from 'next/navigation';
 import React, { useMemo } from 'react';
 
-import { useUser } from '@/contexts';
 import { LoadingState } from '@/elements';
 import { BackButton } from '@/elements/actions/BackButton';
-import { evalGet, evalGetKey, toeflGet, toeflGetKey } from '@/services';
+import {
+  evalGet,
+  evalGetKey,
+  toeflGet,
+  toeflGetKey,
+  useUserSelf,
+} from '@/services';
 import { routes } from '@/utils/constant/routes';
 
 import { TestSection } from './TestSection';
@@ -18,8 +23,7 @@ import { ToeflScoreRing } from './ToeflScoreRing';
 
 export function ToeflDetailShell() {
   const { toeflId } = useParams();
-  const { user } = useUser();
-
+  const { user } = useUserSelf();
   // Fetch TOEFL data
   const { data, isLoading: loadingToefl } = useQuery({
     queryKey: toeflGetKey({ toeflId: toeflId as string }),
@@ -102,9 +106,9 @@ export function ToeflDetailShell() {
           <Button
             leftSection={<IconRefresh size={16} />}
             size="sm"
-            variant="light"
+            variant="filled"
           >
-            Restart
+            Restart Session
           </Button>
         </Stack>
       </Group>
