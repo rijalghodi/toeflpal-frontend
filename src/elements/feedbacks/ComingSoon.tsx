@@ -9,7 +9,7 @@ export function ComingSoon({ h = 300, w = '100%', ...cntrProps }: Props) {
     <Center {...cntrProps} h={h} w={w}>
       <Stack align="center" gap="xs">
         <Logo size="md" />
-        <Text fz="h2" fw={600} ta="center">
+        <Text fz="h3" fw={500} ta="center">
           Coming Soon
         </Text>
       </Stack>

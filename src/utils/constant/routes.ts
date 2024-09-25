@@ -9,7 +9,7 @@ export const routes = {
   },
 
   // user
-  dashboard: '/dashboard',
+  dashboard: '/toefl',
   toeflList: '/toefl',
   toeflDetail: (toeflId: string) => `/toefl/${toeflId}`,
   toeflReading: (toeflId: string) => `/toefl/${toeflId}/reading`,

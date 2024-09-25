@@ -4,7 +4,6 @@ import { Group, NavLink, Stack, Text } from '@mantine/core';
 import {
   IconAlignJustified,
   IconBolt,
-  IconBrandSpeedtest,
   IconPlayerPlay,
   IconSchool,
 } from '@tabler/icons-react';
@@ -18,11 +17,11 @@ import { routes } from '@/utils/constant/routes';
 import classes from './styles.module.css';
 
 const userNavs = [
-  {
-    label: 'Dashboard',
-    href: routes.dashboard,
-    icon: <IconBrandSpeedtest size={16} />,
-  },
+  // {
+  //   label: 'Dashboard',
+  //   href: routes.dashboard,
+  //   icon: <IconBrandSpeedtest size={16} />,
+  // },
   {
     label: 'Simulation',
     href: routes.toeflList,

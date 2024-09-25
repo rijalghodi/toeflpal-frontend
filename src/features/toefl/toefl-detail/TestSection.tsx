@@ -1,5 +1,9 @@
 import { Button, Group, Paper, Stack, Text, Title } from '@mantine/core';
-import { IconPlayerPlay, IconRefresh } from '@tabler/icons-react';
+import {
+  IconCircleCheckFilled,
+  IconPlayerPlay,
+  IconRefresh,
+} from '@tabler/icons-react';
 import { useRouter } from 'next/navigation';
 import React, { useMemo } from 'react';
 
@@ -18,16 +22,19 @@ type Props = {
   finishedAt?: string;
   canceledAt?: string;
   remainingTime?: number;
+  skillType: string;
+  correctAnswerNum?: number;
 };
 export function TestSection({
   name,
-  formId,
   toeflId,
   questionNum,
   duration,
   startedAt,
   finishedAt,
   remainingTime,
+  skillType,
+  correctAnswerNum,
 }: Props) {
   const { user } = useUserSelf();
   const { push } = useRouter();
@@ -56,13 +63,15 @@ export function TestSection({
   const handleStartTest = () => {
     if (!user) {
       openDrawer({
-        title: 'Please Log In',
         content: (
-          <Stack gap={8}>
+          <Stack mt="xl">
+            <Title order={1} fz="h2">
+              Log In
+            </Title>
             <Text fz="lg">You need to log in to start the test.</Text>
             <LoginForm
               onSuccess={() => {
-                push(routes.toeflGrammar(toeflId));
+                push(`/toefl/${toeflId}/${skillType}`);
               }}
             />
           </Stack>
@@ -89,16 +98,24 @@ export function TestSection({
               {name}
             </Title>
           </Group>
-          <Group>
+          <Group gap="lg">
+            {duration && (
+              <Text c="dimmed" fz="sm">
+                {duration} minutes
+              </Text>
+            )}
             {questionNum !== undefined && (
               <Text c="dimmed" fz="sm">
                 {questionNum} Questions
               </Text>
             )}
-            {duration && (
-              <Text c="dimmed" fz="sm">
-                {Math.floor(duration)} minutes
-              </Text>
+            {correctAnswerNum !== undefined && (
+              <Group gap={4}>
+                <IconCircleCheckFilled color="#5c7cfa" size={16} />
+                <Text c="dimmed" fz="sm">
+                  {correctAnswerNum}
+                </Text>
+              </Group>
             )}
           </Group>
         </Stack>
@@ -113,7 +130,6 @@ export function TestSection({
               Evaluation
             </Button>
           )} */}
-
           <Button
             variant="default"
             onClick={handleStartTest}

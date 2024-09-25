@@ -1,14 +1,16 @@
 'use client';
 
 import { Box, Button, Group, Stack, Text, Title } from '@mantine/core';
-import { IconRefresh } from '@tabler/icons-react';
+import { IconPlayerPlay } from '@tabler/icons-react';
 import { useQuery } from '@tanstack/react-query';
 import dayjs from 'dayjs';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import React, { useMemo } from 'react';
 
+import { useDrawer } from '@/contexts';
 import { LoadingState } from '@/elements';
 import { BackButton } from '@/elements/actions/BackButton';
+import { LoginForm } from '@/features/auth/login/LoginForm';
 import {
   evalGet,
   evalGetKey,
@@ -71,6 +73,31 @@ export function ToeflDetailShell() {
     readingEval?.finishedAt,
   ]);
 
+  const { open: openDrawer } = useDrawer();
+  const router = useRouter();
+
+  const handleStartAllTest = () => {
+    if (!user) {
+      openDrawer({
+        content: (
+          <Stack mt="xl">
+            <Title order={1} fz="h2">
+              Log In
+            </Title>
+            <Text fz="lg">You need to log in to start the test.</Text>
+            <LoginForm
+              onSuccess={() => {
+                router.push(routes.toeflReading(toeflId as string));
+              }}
+            />
+          </Stack>
+        ),
+      });
+      return;
+    }
+    router.push(routes.toeflReading(toeflId as string));
+  };
+
   if (loadingEval || loadingToefl) {
     return <LoadingState h="calc(100vh - 140px)" />;
   }
@@ -104,11 +131,12 @@ export function ToeflDetailShell() {
             </Text>
           </Text>
           <Button
-            leftSection={<IconRefresh size={16} />}
+            leftSection={<IconPlayerPlay size={16} />}
             size="sm"
             variant="filled"
+            onClick={handleStartAllTest}
           >
-            Restart Session
+            Start Test
           </Button>
         </Stack>
       </Group>
@@ -119,9 +147,11 @@ export function ToeflDetailShell() {
         formId={listening?.id || ''}
         duration={listening?.duration || 0}
         questionNum={listening?.questionNum ?? 0}
+        correctAnswerNum={dataEval?.data.listeningEval?.correctAnswerNum}
         finishedAt={listeningEval?.finishedAt}
         startedAt={listeningEval?.startedAt}
         remainingTime={listeningEval?.remainingTime}
+        skillType="listening"
       />
       <TestSection
         toeflId={toeflId as string}
@@ -132,6 +162,8 @@ export function ToeflDetailShell() {
         finishedAt={grammarEval?.finishedAt}
         startedAt={grammarEval?.startedAt}
         remainingTime={grammarEval?.remainingTime}
+        correctAnswerNum={dataEval?.data.grammarEval?.correctAnswerNum}
+        skillType="grammar"
       />
       <TestSection
         toeflId={toeflId as string}
@@ -142,6 +174,8 @@ export function ToeflDetailShell() {
         finishedAt={readingEval?.finishedAt}
         startedAt={readingEval?.startedAt}
         remainingTime={readingEval?.remainingTime}
+        correctAnswerNum={dataEval?.data.readingEval?.correctAnswerNum}
+        skillType="reading"
       />
     </Stack>
   );
