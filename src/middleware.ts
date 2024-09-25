@@ -7,6 +7,8 @@ const adminPath = ['/admin', '/form'];
 
 const userPath = ['/toefl', '/lesson', '/practice', '/dashboard'];
 
+const authPath = ['/login', '/register', '/forgot-password'];
+
 export async function middleware(request: NextRequest) {
   const loginPage = new URL(routes.auth.login, request.url);
   const homePage = new URL(routes.home, request.url);
@@ -16,15 +18,11 @@ export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const accessToken = request.cookies.get('accessToken')?.value;
 
-  const authPages = Object.values(routes.auth).map((v) => v.toString());
-
   const isAdminPage = adminPath.find((path) => {
     return pathname.startsWith(path);
   });
 
-  const isAuthPage = authPages.some((authPage) =>
-    pathname.startsWith(authPage),
-  );
+  const isAuthPage = authPath.some((path) => pathname.startsWith(path));
 
   const isUserPage = userPath.find((path) => {
     return pathname.startsWith(path);
@@ -75,5 +73,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: [...Object.values(routes.auth), '/admin'],
+  matcher: [...authPath, ...userPath, ...adminPath],
 };
