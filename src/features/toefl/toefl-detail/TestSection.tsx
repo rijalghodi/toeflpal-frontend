@@ -68,7 +68,7 @@ export function TestSection({
             <Title order={1} fz="h2">
               Log In
             </Title>
-            <Text fz="lg">You need to log in to start the test.</Text>
+            <Text fz="md">You need to log in to start the test.</Text>
             <LoginForm
               onSuccess={() => {
                 push(`/toefl/${toeflId}/${skillType}`);
