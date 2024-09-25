@@ -1,17 +1,27 @@
 import { Text } from '@mantine/core';
 import { modals } from '@mantine/modals';
+import { notifications } from '@mantine/notifications';
+import { IconCheck } from '@tabler/icons-react';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 
 import { ReadingFormPresenter } from '@/features/simulation';
+import { evalGetKey, evalStale } from '@/services';
+import { attemptFinish } from '@/services/attempt/attempt-finish';
+import { attemptGetKey } from '@/services/attempt/attempt-get';
+import { attemptStart } from '@/services/attempt/attempt-start';
 import { Answer } from '@/services/types';
 import { routes } from '@/utils/constant/routes';
 
 type Props = {
+  toeflId: string;
   formId: string;
 };
-export function ToeflReading({ formId }: Props) {
+export function ToeflReading({ toeflId, formId }: Props) {
   const router = useRouter();
+  const q = useQueryClient();
+
   const handleQuit = () => {
     modals.openConfirmModal({
       title: 'Quit Confirmation',
@@ -29,8 +39,73 @@ export function ToeflReading({ formId }: Props) {
     });
   };
 
-  const handleUpdateAnswer = (answers: Answer) => {
-    // TODO: Update answer in the database or state
+  const { mutateAsync: start, isPending: loadingStart } = useMutation({
+    mutationFn: attemptStart,
+    onSuccess: () => {
+      notifications.hide('toefl-start');
+      q.invalidateQueries({ queryKey: evalGetKey({ toeflId }) });
+      q.refetchQueries({ queryKey: attemptGetKey({ formId }) });
+    },
+  });
+
+  const { mutateAsync: submit, isPending: loadingSubmit } = useMutation({
+    mutationFn: async ({
+      formId,
+      toeflId,
+      answers,
+    }: {
+      formId: string;
+      toeflId: string;
+      answers: Answer[];
+    }) => {
+      await attemptFinish({ formId, answers });
+      const stale = await evalStale({ toeflId, stale: true });
+      return stale;
+    },
+    onSuccess: () => {
+      notifications.update({
+        message: 'Success! Your answers has been submitted',
+        id: 'toefl-submit',
+        loading: false,
+        autoClose: 3000,
+        withCloseButton: true,
+        icon: <IconCheck size={16} />,
+        color: 'green',
+      });
+      q.invalidateQueries({ queryKey: evalGetKey({ toeflId }) });
+    },
+  });
+
+  const handleStart = async () => {
+    notifications.show({
+      message: 'Loading Start...',
+      id: 'toefl-start',
+      loading: true,
+      autoClose: false,
+      withCloseButton: false,
+    });
+    return await start({ formId });
   };
-  return <ReadingFormPresenter formId={formId} onQuit={handleQuit} />;
+
+  const handleSubmit = async (answers: Answer[], formId: string) => {
+    notifications.show({
+      message: 'Submitting your answers...',
+      id: 'toefl-submit',
+      loading: true,
+      autoClose: false,
+      withCloseButton: false,
+    });
+    return await submit({ formId, toeflId, answers });
+  };
+
+  const handleFinsih = () => {};
+  return (
+    <ReadingFormPresenter
+      formId={formId}
+      onQuit={handleQuit}
+      onStart={handleStart}
+      onSubmit={handleSubmit}
+      onFinsih={handleFinsih}
+    />
+  );
 }

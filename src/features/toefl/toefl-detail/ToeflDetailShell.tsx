@@ -3,6 +3,7 @@
 import { Box, Button, Group, Stack, Text, Title } from '@mantine/core';
 import { IconRefresh } from '@tabler/icons-react';
 import { useQuery } from '@tanstack/react-query';
+import dayjs from 'dayjs';
 import { useParams } from 'next/navigation';
 import React, { useMemo } from 'react';
 
@@ -76,20 +77,27 @@ export function ToeflDetailShell() {
         <BackButton href={routes.toeflList} />
       </Box>
       <Title order={1} fz="h2" ta="center">
-        TOEFL Test
+        {toefl?.name}
       </Title>
       <Text c="dimmed" ta="center">
-        Description
+        {toefl?.description}
       </Text>
 
       <Group justify="space-between">
-        <ToeflScoreRing score={80} totalScore={100} />
+        <ToeflScoreRing
+          score={dataEval?.data.totalScore ?? 0}
+          maxScore={dataEval?.data.maxScore ?? 0}
+        />
         <Stack align="flex-end">
           <Text fz="sm">
             <Text span c="dimmed" fz="sm">
               Date:
             </Text>{' '}
-            {latestFinishedDate?.toLocaleDateString() || 'N/A'}
+            <Text span fz="sm" fw={500}>
+              {latestFinishedDate
+                ? dayjs(latestFinishedDate).format('DD MMM YYYY')
+                : 'No Attempt'}
+            </Text>
           </Text>
           <Button
             leftSection={<IconRefresh size={16} />}

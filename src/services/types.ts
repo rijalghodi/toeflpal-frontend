@@ -49,6 +49,8 @@ export type ToeflEval = {
   readingEval?: Eval;
   listeningEval?: Eval;
   grammarEval?: Eval;
+  totalScore?: number;
+  maxScore?: number;
 };
 
 export type Storage = {
@@ -99,6 +101,7 @@ export type Attempt = {
   canceledAt?: string;
   createdAt?: string;
   remainingTime?: number;
+  answers?: Answer[];
 };
 
 export type AttemptWithRemainingTime = Attempt & {

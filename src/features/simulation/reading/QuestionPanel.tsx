@@ -13,6 +13,7 @@ import {
 import { IconAlignJustified } from '@tabler/icons-react';
 import DOMPurify from 'dompurify';
 import React from 'react';
+import { Controller } from 'react-hook-form';
 
 import { useDrawer } from '@/contexts';
 
@@ -22,10 +23,20 @@ type Props = {
   question: string;
   reference?: string;
   options?: { id: string; text?: string }[];
+  questionId: string;
+  onChangeAnswer?: (value?: string) => void;
+  value?: string;
+  control: any;
 };
 
-export function QuestionPanel({ question, reference, options }: Props) {
+export function QuestionPanel({
+  question,
+  reference,
+  options,
+  ...props
+}: Props) {
   const { open: openDrawer } = useDrawer();
+
   return (
     <Flex
       direction={{ base: 'column', md: 'row' }}
@@ -76,18 +87,24 @@ export function QuestionPanel({ question, reference, options }: Props) {
             __html: DOMPurify.sanitize(question ?? ''),
           }}
         />
-        <Radio.Group>
-          <Stack gap="md">
-            {options?.map((opt, idx) => (
-              <Radio
-                key={idx}
-                label={opt.text}
-                value={opt.id}
-                icon={CheckIcon}
-              />
-            ))}
-          </Stack>
-        </Radio.Group>
+        <Controller
+          name={props.questionId}
+          control={props.control}
+          render={({ field }) => (
+            <Radio.Group {...field}>
+              <Stack gap="md">
+                {options?.map((opt, idx) => (
+                  <Radio
+                    key={idx}
+                    label={opt.text}
+                    value={opt.id}
+                    icon={CheckIcon}
+                  />
+                ))}
+              </Stack>
+            </Radio.Group>
+          )}
+        ></Controller>
       </Stack>
     </Flex>
   );

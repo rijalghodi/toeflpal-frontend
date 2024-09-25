@@ -4,8 +4,10 @@ import { AppShell, Drawer, Tabs } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { useQuery } from '@tanstack/react-query';
 import React, { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
 
 import { LoadingState } from '@/elements';
+import { attemptGet, attemptGetKey } from '@/services/attempt/attempt-get';
 import { formGetFull, formGetFullKey } from '@/services/form/form-get-full';
 import { Answer } from '@/services/types';
 
@@ -22,31 +24,45 @@ import { ReadingSimulationHeader } from './ReadingSimulationHeader';
 type Props = {
   formId: string;
   onQuit?: () => void;
-  onStart?: () => void;
+  onStart?: () => Promise<any>;
   onNext?: () => void;
   onPrev?: () => void;
   name?: string | ((formName?: string) => string);
-  onSubmit?: (answers: Answer[], formId: string) => void;
+  onSubmit?: (answers: Answer[], formId: string) => Promise<any>;
   onFinsih?: () => void;
+  disabledNavigation?: boolean;
 };
 
 export function ReadingFormPresenter({ formId, ...props }: Props) {
   // --- Get form data ---
-  const { data, isLoading } = useQuery({
+  const { data: dataForm, isLoading: loadingForm } = useQuery({
     queryKey: formGetFullKey({ formId }),
     queryFn: () => formGetFull({ formId }),
+    enabled: !!formId,
   });
 
-  const questions = data?.data.questions;
-  const parts = data?.data.parts;
-  const form = data?.data;
+  console.log('formData', dataForm);
+
+  const questions = dataForm?.data.questions;
+  const parts = dataForm?.data.parts;
+  const form = dataForm?.data;
+
+  // --- Get attempt data ---
+  const { data: attempt, isLoading: loadingAttempt } = useQuery({
+    queryKey: attemptGetKey({ formId }),
+    queryFn: () => attemptGet({ formId }),
+    enabled: !!formId,
+  });
+
+  console.log('attempt data', attempt);
+  console.log('remainig time', attempt?.data.remainingTime);
 
   // --- Prvent user for quiting ---
   useEffect(() => {
     const handleBeforeUnload = (event: any) => {
       event.preventDefault();
       event.returnValue = ''; // Required for some browsers
-      return '';
+      return 'Hello';
     };
 
     // Adding the event listener
@@ -76,7 +92,27 @@ export function ReadingFormPresenter({ formId, ...props }: Props) {
     closeQuestionNav();
   };
 
-  if (isLoading) {
+  const answers = attempt?.data.answers;
+  const questionAndAnswers = questions?.map((q) => [
+    q.id,
+    answers?.find((a) => a.questionId === q.id)?.optionId,
+  ]);
+
+  const method = useForm({
+    defaultValues: Object.fromEntries(questionAndAnswers ?? []),
+  });
+
+
+  const handleSubmit = async () => {
+    const inp = method.getValues();
+    const foo = Object.entries(inp).map(([questionId, optionId]) => ({
+      questionId,
+      optionId: optionId as string | undefined,
+    }));
+    await props.onSubmit?.(foo, formId);
+  };
+
+  if (loadingAttempt || loadingForm) {
     return <LoadingState h="100vh" />;
   }
 
@@ -93,50 +129,63 @@ export function ReadingFormPresenter({ formId, ...props }: Props) {
               ? props.name
               : props.name?.(form?.name)
           }
-          step={humanizedStep}
+          humanizedStep={humanizedStep}
+          step={currentStep}
           onNext={goNext}
           onPrev={goPrev}
           onQuit={props.onQuit}
           onReview={openQuestionNav}
+          onStart={props.onStart}
+          onSubmit={handleSubmit}
+          duration={
+            attempt?.data.remainingTime && attempt.data.remainingTime > 0
+              ? attempt.data.remainingTime
+              : undefined
+          }
         />
       </AppShell.Header>
 
       <AppShell.Main>
-        <Tabs value={currentStep}>
-          {/* Form Start */}
-          <Tabs.Panel value="formstart">
-            <FormStartPanel
-              text={form?.instruction ?? undefined}
-              onStart={props.onStart}
-            />
-          </Tabs.Panel>
-
-          {/* Form Start */}
-          <Tabs.Panel value="formend">
-            <FormEndPanel text={form?.closing ?? undefined} />
-          </Tabs.Panel>
-
-          {/* Get all parts */}
-          {parts?.map((part) => (
-            <Tabs.Panel key={part.id} value={`part-p${part.order}`}>
-              <PartPanel text={part?.instruction ?? undefined} />
-            </Tabs.Panel>
-          ))}
-
-          {/* Questions */}
-          {questions?.map((question, idx) => (
-            <Tabs.Panel
-              key={idx}
-              value={`question-p${question.part?.order}q${question.order}`}
-            >
-              <QuestionPanel
-                question={question.text ?? 'No Question'}
-                options={question.options ?? []}
-                reference={question.reference?.text}
+        <form>
+          <Tabs value={currentStep}>
+            {/* Form Start */}
+            <Tabs.Panel value="formstart">
+              <FormStartPanel
+                text={form?.instruction ?? undefined}
+                onStart={props.onStart}
               />
             </Tabs.Panel>
-          ))}
-        </Tabs>
+
+            {/* Form Start */}
+            <Tabs.Panel value="formend">
+              <FormEndPanel text={form?.closing ?? undefined} />
+            </Tabs.Panel>
+
+            {/* Get all parts */}
+            {parts?.map((part) => (
+              <Tabs.Panel key={part.id} value={`part-p${part.order}`}>
+                <PartPanel text={part?.instruction ?? undefined} />
+              </Tabs.Panel>
+            ))}
+
+            {/* Questions */}
+
+            {questions?.map((question, idx) => (
+              <Tabs.Panel
+                key={idx}
+                value={`question-p${question.part?.order}q${question.order}`}
+              >
+                <QuestionPanel
+                  question={question.text ?? 'No Question'}
+                  options={question.options ?? []}
+                  reference={question.reference?.text}
+                  questionId={question.id}
+                  control={method.control}
+                />
+              </Tabs.Panel>
+            ))}
+          </Tabs>
+        </form>
 
         <Drawer
           opened={questionNavOpened}

@@ -5,20 +5,20 @@ import React from 'react';
 
 type Props = {
   score: number;
-  totalScore: number;
+  maxScore: number;
 };
-export function ToeflScoreRing({ score, totalScore }: Props) {
+export function ToeflScoreRing({ score, maxScore }: Props) {
   // Get score in evaluation
   return (
     <Stack align="center" gap={5}>
       <SemiCircleProgress
-        value={90}
+        value={(score / maxScore) * 100}
         size={150}
         thickness={8}
-        label={score}
+        label={`${score}`}
         styles={{ label: { fontSize: 24, fontWeight: 700 } }}
       />
-      <Text fz="xs">out of {totalScore}</Text>
+      <Text fz="xs">out of {maxScore}</Text>
     </Stack>
   );
 }

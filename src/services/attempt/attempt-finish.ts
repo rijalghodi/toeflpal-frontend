@@ -12,9 +12,13 @@ type AttemptFinsihResponse = GResponse<Attempt>;
 
 export const attemptFinish = async ({
   formId,
+  answers,
 }: AttemptFinsihRequest): Promise<AttemptFinsihResponse> => {
   const response = await axiosInstance.post<AttemptFinsihResponse>(
-    `/form/${formId}/attempt/finsih`,
+    `/form/${formId}/attempt/finish`,
+    {
+      answers,
+    },
   );
   return response.data;
 };

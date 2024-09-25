@@ -16,9 +16,12 @@ export default function ToeflRaedingPage() {
   const { data: toefl, isLoading } = useQuery({
     queryKey: toeflGetKey({ toeflId: toeflId as string }),
     queryFn: () => toeflGet({ toeflId: toeflId as string }),
+    enabled: !!toeflId,
   });
 
   const formId = toefl?.data.readingSection.id;
+
+  console.log('toefl', toefl, 'toeflId', formId);
 
   if (isLoading) {
     return <LoadingState h="100vh" />;
@@ -26,7 +29,7 @@ export default function ToeflRaedingPage() {
 
   return (
     <Suspense>
-      <ToeflReading formId={formId as string} />
+      <ToeflReading formId={formId as string} toeflId={toeflId as string} />
     </Suspense>
   );
 }

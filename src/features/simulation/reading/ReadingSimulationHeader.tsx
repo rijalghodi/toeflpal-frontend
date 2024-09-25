@@ -3,6 +3,7 @@
 import {
   ActionIcon,
   Box,
+  Button,
   Divider,
   Group,
   Paper,
@@ -10,16 +11,21 @@ import {
   Text,
 } from '@mantine/core';
 import { modals } from '@mantine/modals';
+import { notifications } from '@mantine/notifications';
 import {
   IconArrowLeft,
   IconArrowRight,
+  IconChecks,
   IconLogout2,
+  IconPlayerPlay,
   IconSearch,
 } from '@tabler/icons-react';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 
 import { Logo, LogoAndText } from '@/elements';
+
+import { Timer } from './Timer';
 
 // import { FormEditorMain } from './FormEditorMain';
 
@@ -28,18 +34,18 @@ type Props = {
   onPrev?: () => void;
   onReview?: () => void;
   onQuit?: () => void;
+  onStart?: () => Promise<any>;
+  onSubmit?: () => Promise<any>;
   name?: string;
-  step?: string | number;
+  step?: string;
+  humanizedStep?: string;
+  duration?: number;
+  disabledNavigation?: boolean;
 };
 
-export function ReadingSimulationHeader({
-  onNext,
-  onPrev,
-  onReview,
-  name,
-  step,
-}: Props) {
+export function ReadingSimulationHeader(props: Props) {
   const router = useRouter();
+  console.log(props.step);
 
   const handleQuit = () => {
     modals.openConfirmModal({
@@ -79,50 +85,95 @@ export function ReadingSimulationHeader({
           >
             <IconLogout2 size={16} />
           </ActionIcon>
-          <ActionIcon
-            color="dark"
-            variant="default"
-            size="lg"
-            title="Review"
-            onClick={onReview}
-          >
-            <IconSearch size={16} />
-          </ActionIcon>
+          {props.step === 'formstart' ? (
+            <Button
+              color="dark"
+              variant="default"
+              size="sm"
+              title="Start Test"
+              disabled={props.disabledNavigation}
+              onClick={async () => {
+                try {
+                  await props.onStart?.();
+                  props.onNext?.();
+                } catch (e) {
+                  notifications.show({ message: `Error ${String(e)}` });
+                }
+              }}
+              leftSection={<IconPlayerPlay size={16} />}
+            >
+              Start
+            </Button>
+          ) : props.step === 'formend' ? (
+            <Button
+              color="dark"
+              variant="default"
+              size="sm"
+              title="Submit answers"
+              disabled={props.disabledNavigation}
+              onClick={async () => {
+                try {
+                  await props.onSubmit?.();
+                  props.onNext?.();
+                } catch (e) {
+                  notifications.show({ message: `Error ${String(e)}` });
+                }
+              }}
+              leftSection={<IconChecks size={16} />}
+            >
+              Submit
+            </Button>
+          ) : (
+            <>
+              <ActionIcon
+                color="dark"
+                variant="default"
+                size="lg"
+                title="Review"
+                onClick={props.onReview}
+              >
+                <IconSearch size={16} />
+              </ActionIcon>
 
-          <ActionIcon
-            color="dark"
-            variant="default"
-            size="lg"
-            title="Previous"
-            onClick={onPrev}
-          >
-            <IconArrowLeft size={16} />
-          </ActionIcon>
-          <ActionIcon
-            color="dark"
-            variant="default"
-            size="lg"
-            title="Next"
-            onClick={onNext}
-          >
-            <IconArrowRight size={16} />
-          </ActionIcon>
+              <ActionIcon
+                color="dark"
+                variant="default"
+                size="lg"
+                title="Previous"
+                onClick={props.onPrev}
+                disabled={props.step === 'part-p1' || props.disabledNavigation}
+                hidden
+              >
+                <IconArrowLeft size={16} />
+              </ActionIcon>
+              <ActionIcon
+                color="dark"
+                variant="default"
+                size="lg"
+                title="Next"
+                onClick={props.onNext}
+                disabled={props.disabledNavigation}
+              >
+                <IconArrowRight size={16} />
+              </ActionIcon>
+            </>
+          )}
         </Group>
       </Group>
       <Paper px="md" py={4} radius={0} bg="gray.1   ">
         <Group justify="space-between" w="100%">
           <Group>
             <Text fz="xs" fw={600}>
-              {name}
+              {props.name}
             </Text>
             <Divider orientation="vertical" />
             <Text fz="xs" fw={600}>
-              {step}
+              {props.humanizedStep}
             </Text>
           </Group>
-          <Text fz="xs" fw={600}>
-            30:00
-          </Text>
+          {props.duration !== undefined && !props.step?.startsWith('form') && (
+            <Timer duration={props.duration ?? 0} />
+          )}
         </Group>
       </Paper>
     </Stack>
