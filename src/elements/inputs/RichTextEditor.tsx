@@ -62,12 +62,8 @@ export function RichTextEditor({
 
         <MantineRichTextEditor.ControlsGroup>
           <MantineRichTextEditor.H1 />
-          {!minimalist && (
-            <>
-              <MantineRichTextEditor.H2 />
-              <MantineRichTextEditor.H3 />
-            </>
-          )}
+          <MantineRichTextEditor.H2 />
+          <MantineRichTextEditor.H3 />
           <MantineRichTextEditor.BulletList />
           <MantineRichTextEditor.OrderedList />
           <MantineRichTextEditor.Superscript />
