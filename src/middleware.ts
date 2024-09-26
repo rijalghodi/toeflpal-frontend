@@ -9,7 +9,7 @@ const userPath = ['/toefl', '/lesson', '/practice', '/dashboard'];
 
 const authPath = ['/login', '/register', '/forgot-password'];
 
-export async function middleware(request: NextRequest) {
+export async function middleware(request: NextRequest, response: NextResponse) {
   const loginPage = new URL(routes.auth.login, request.url);
   const homePage = new URL(routes.home, request.url);
   const superadminDashboard = new URL(routes.adminToeflList, request.url);
@@ -68,6 +68,8 @@ export async function middleware(request: NextRequest) {
 
     return NextResponse.next();
   } catch {
+    // Remove a cookie
+    response.cookies.delete('accessToken');
     return NextResponse.redirect(`${homePage}`);
   }
 }
