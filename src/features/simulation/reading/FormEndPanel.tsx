@@ -26,7 +26,7 @@ export function FormEndPanel({ text }: Props) {
 
   return (
     <Center h="calc(100vh - 150px)" maw={700} mx="auto">
-      <Text>No closing provided. Click Finish.</Text>
+      <Text>No closing provided. Click Submit.</Text>
     </Center>
   );
 }
