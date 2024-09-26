@@ -32,12 +32,13 @@ export const zStringNumberOptional = z
     message: 'Must be a number',
   })
   .or(z.literal(''));
-
+  
 export const zPassword = z
   .string()
   .min(8, { message: 'Min 8 characters' })
-  .regex(/^(?=.*[A-Z])(?=.*[0-9])[A-Za-z0-9]*$/, {
-    message: 'Must be a combination between capital, non-capital, and number',
+  .regex(/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).*$/, {
+    message:
+      'Must contain at least one uppercase letter, one lowercase letter, and one number',
   });
 
 export const zTime = z
