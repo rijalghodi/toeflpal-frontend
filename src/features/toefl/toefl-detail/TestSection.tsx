@@ -1,6 +1,7 @@
 import {
   Anchor,
   Button,
+  Flex,
   Group,
   Paper,
   Stack,
@@ -111,10 +112,16 @@ export function TestSection({
 
   return (
     <Paper withBorder p="md" radius="md">
-      <Group align="flex-start" justify="space-between" w="100%">
+      <Flex
+        direction={{ base: 'column', sm: 'row' }}
+        gap="sm"
+        align="flex-start"
+        justify="space-between"
+        w="100%"
+      >
         <Stack gap={12}>
           <Group justify="space-between" wrap="wrap-reverse">
-            <Title order={2} fz="xs" fw="700" tt="uppercase">
+            <Title order={2} fz="xs" fw="700" tt="uppercase" lh={1.4}>
               {name}
             </Title>
           </Group>
@@ -165,7 +172,7 @@ export function TestSection({
             {status === 'Finished' ? 'Restart' : 'Start'}
           </Button>
         </Group>
-      </Group>
+      </Flex>
     </Paper>
   );
 }
