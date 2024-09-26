@@ -187,10 +187,10 @@ export function ReadingSimulationHeader({
       <Paper px="md" py={4} radius={0} bg="gray.1">
         <Group justify="space-between" w="100%">
           <Group>
-            <Text fz="xs" fw={600}>
+            <Text fz="xs" fw={600} visibleFrom="xs">
               {name}
             </Text>
-            <Divider orientation="vertical" />
+            <Divider orientation="vertical" visibleFrom="xs" />
             <Text fz="xs" fw={600}>
               {humanizedStep}
             </Text>
