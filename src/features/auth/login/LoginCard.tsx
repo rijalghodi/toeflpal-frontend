@@ -17,9 +17,12 @@ export function LoginCard() {
     <Stack align="stretch" w="100%" gap="lg" maw={400}>
       <Stack gap="xl" align="center">
         <LogoAndText size="sm" />
-        <Title order={1} fz="h2" fw="600" ta="center" mb="md">
-          Login to Your Account
-        </Title>
+        <Stack gap="sm">
+          <Title order={1} fz="h2" fw="600" ta="center">
+            Welcome Back
+          </Title>
+          <Text fz="md">Login to your account</Text>
+        </Stack>
       </Stack>
       {/* <GoogleLoginButton /> */}
       <Stack gap={8}>
