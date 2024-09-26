@@ -1,15 +1,25 @@
-import { Button, Group, Paper, Stack, Text, Title } from '@mantine/core';
+import {
+  Anchor,
+  Button,
+  Group,
+  Paper,
+  Stack,
+  Text,
+  Title,
+} from '@mantine/core';
 import {
   IconCircleCheckFilled,
   IconPlayerPlay,
   IconRefresh,
 } from '@tabler/icons-react';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useMemo } from 'react';
 
 import { useDrawer } from '@/contexts';
 import { LoginForm } from '@/features/auth/login/LoginForm';
 import { useUserSelf } from '@/services';
+import { routes } from '@/utils/constant/routes';
 
 type Props = {
   toeflId: string;
@@ -37,7 +47,7 @@ export function TestSection({
 }: Props) {
   const { user } = useUserSelf();
   const { push } = useRouter();
-  const { open: openDrawer } = useDrawer();
+  const { open: openDrawer, close: closeDrawer } = useDrawer();
 
   // Status:
   // Not taken: startedAt null
@@ -73,6 +83,17 @@ export function TestSection({
                 push(`/toefl/${toeflId}/${skillType}`);
               }}
             />
+            <Text fz="sm" c="dark.3" ta="center">
+              No account?{' '}
+              <Anchor
+                fz="sm"
+                href={routes.auth.register}
+                component={Link}
+                onClick={closeDrawer}
+              >
+                Register here
+              </Anchor>
+            </Text>
           </Stack>
         ),
       });

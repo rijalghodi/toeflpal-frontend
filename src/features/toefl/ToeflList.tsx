@@ -13,7 +13,7 @@ import Link from 'next/link';
 import React, { useState } from 'react';
 
 import { LoadingState } from '@/elements/feedbacks/LoadingState';
-import { toeflList, toeflListKey } from '@/services';
+import { toeflList, toeflListKey, useUserSelf } from '@/services';
 import { evalList, evalListKey } from '@/services/eval/eval-list';
 import { routes } from '@/utils/constant/routes';
 
@@ -25,6 +25,7 @@ type Props = {
 
 export function ToeflList({ expectedHeight }: Props) {
   const [page, setPage] = useState(1);
+  const { user } = useUserSelf();
 
   const { data: toeflData, isLoading: loadingToefl } = useQuery({
     queryKey: toeflListKey({ published: true, limit: 20, page }),
@@ -34,6 +35,7 @@ export function ToeflList({ expectedHeight }: Props) {
   const { data: evalData } = useQuery({
     queryKey: evalListKey(),
     queryFn: evalList,
+    enabled: !!user,
   });
 
   if (loadingToefl) {

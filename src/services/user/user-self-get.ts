@@ -22,9 +22,16 @@ export const userSelfGetKey = () => ['user-self-get'];
 export const useUserSelf = () => {
   const { data, isLoading, refetch } = useQuery({
     queryKey: userSelfGetKey(),
-    queryFn: userSelfGet,
+    queryFn: async () => {
+      try {
+        return await userSelfGet();
+      } catch {
+        return null;
+      }
+    },
     retry: false,
-    staleTime: 10 * 60 * 1000, // 10 minutes
+    staleTime: 20 * 60 * 1000, // 10 minutes
+    gcTime: 20 * 60 * 1000,
   });
 
   return { user: data?.data, loading: isLoading, refetch };

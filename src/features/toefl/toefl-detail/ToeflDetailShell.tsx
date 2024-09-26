@@ -1,9 +1,10 @@
 'use client';
 
-import { Box, Button, Group, Stack, Text, Title } from '@mantine/core';
+import { Anchor, Box, Button, Group, Stack, Text, Title } from '@mantine/core';
 import { IconPlayerPlay } from '@tabler/icons-react';
 import { useQuery } from '@tanstack/react-query';
 import dayjs from 'dayjs';
+import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
 import React, { useMemo } from 'react';
 
@@ -36,7 +37,7 @@ export function ToeflDetailShell() {
   const { data: dataEval, isLoading: loadingEval } = useQuery({
     queryKey: evalGetKey({ toeflId: toeflId as string }),
     queryFn: () => evalGet({ toeflId: toeflId as string }),
-    enabled: !!toeflId,
+    enabled: !!toeflId && !!user,
   });
 
   const toefl = data?.data;
@@ -73,7 +74,7 @@ export function ToeflDetailShell() {
     readingEval?.finishedAt,
   ]);
 
-  const { open: openDrawer } = useDrawer();
+  const { open: openDrawer, close: closeDrawer } = useDrawer();
   const router = useRouter();
 
   const handleStartAllTest = () => {
@@ -87,15 +88,26 @@ export function ToeflDetailShell() {
             <Text fz="md">You need to log in to start the test.</Text>
             <LoginForm
               onSuccess={() => {
-                router.push(routes.toeflReading(toeflId as string));
+                router.push(routes.toeflGrammar(toeflId as string));
               }}
             />
+            <Text fz="sm" c="dark.3" ta="center">
+              No account?{' '}
+              <Anchor
+                fz="sm"
+                href={routes.auth.register}
+                component={Link}
+                onClick={closeDrawer}
+              >
+                Register here
+              </Anchor>
+            </Text>
           </Stack>
         ),
       });
       return;
     }
-    router.push(routes.toeflReading(toeflId as string));
+    router.push(routes.toeflGrammar(toeflId as string));
   };
 
   if (loadingEval || loadingToefl) {
