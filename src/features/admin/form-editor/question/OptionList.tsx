@@ -66,7 +66,7 @@ export function OptionList({ questionId }: Props) {
   const [explanation, setExplanation] = useState(answerKey?.data.explanation);
   const [debExplanation, cancelDebExplanation] = useDebouncedValue(
     explanation,
-    2000,
+    1000,
   );
 
   useEffect(() => {
