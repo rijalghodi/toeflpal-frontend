@@ -11,11 +11,17 @@ type Props = {
   questionNum?: number | null;
   duration?: number;
 };
-export function TestSection({ name, formId, questionNum, duration }: Props) {
+export function TestSection({
+  name,
+  formId,
+  questionNum,
+  toeflId,
+  duration,
+}: Props) {
   const { push } = useRouter();
 
   const handleChangeTest = () => {
-    push(routes.formEditor(formId));
+    push(routes.adminFormEditor(formId, toeflId));
   };
 
   return (

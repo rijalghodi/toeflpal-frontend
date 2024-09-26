@@ -24,8 +24,9 @@ export const routes = {
   adminLessonList: '/admin/lesson',
   adminToeflDetail: (toeflId: string) => `/admin/toefl/${toeflId}`,
   adminReferenceList: '/admin/reference',
-
   // Form
-  formEditor: (formId: string) => `/form/${formId}`,
-  formPreview: (formId: string) => `/form/${formId}/preview`,
+  adminFormEditor: (formId: string, toeflId: string) =>
+    `/admin/toefl/${toeflId}/${formId}`,
+  adminFormPreview: (formId: string, toeflId: string) =>
+    `/admin/toefl/${toeflId}/${formId}/preview`,
 };

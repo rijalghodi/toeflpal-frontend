@@ -13,7 +13,7 @@ type Props = {
 export function PartPanel({ text }: Props) {
   if (text) {
     return (
-      <Box maw={800} w="100%" mx="auto">
+      <Box maw={800} w="100%" mx="auto" py="md">
         <Box
           mx="auto"
           dangerouslySetInnerHTML={{

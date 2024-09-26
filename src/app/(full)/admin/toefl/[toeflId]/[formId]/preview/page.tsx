@@ -1,19 +1,19 @@
 'use client';
 
-import { Text } from '@mantine/core';
+import { Center, Text } from '@mantine/core';
 import { modals } from '@mantine/modals';
 import { useQuery } from '@tanstack/react-query';
 import { useParams, useRouter } from 'next/navigation';
 import React from 'react';
 
-import { LoadingState } from '@/elements';
+import { ComingSoon, LoadingState } from '@/elements';
 import { ReadingFormPresenter } from '@/features/simulation';
 import { formGet, formGetKey } from '@/services';
 import { SkillType } from '@/services/types';
 import { routes } from '@/utils/constant/routes';
 
 export default function FormPreviewPage() {
-  const { formId } = useParams();
+  const { formId, toeflId } = useParams();
   const router = useRouter();
   const { data, isLoading } = useQuery({
     queryKey: formGetKey({ formId: formId as string }),
@@ -33,7 +33,9 @@ export default function FormPreviewPage() {
       labels: { confirm: 'Confirm', cancel: 'Cancel' },
       confirmProps: { color: 'red' },
       onConfirm: () => {
-        router.push(routes.formEditor(formId as string));
+        router.push(
+          routes.adminFormEditor(formId as string, toeflId as string),
+        );
       },
     });
   };
@@ -51,8 +53,18 @@ export default function FormPreviewPage() {
         formId={formId as string}
         name={data.data.name}
         onQuit={handleQuit}
+        onSubmit={() => {
+          router.push(
+            routes.adminFormEditor(formId as string, toeflId as string),
+          );
+          return Promise.resolve(true);
+        }}
       />
     );
   }
-  return <div>SimulationRouter</div>;
+  return (
+    <Center h="100vh">
+      <ComingSoon />
+    </Center>
+  );
 }

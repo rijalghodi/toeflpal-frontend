@@ -150,9 +150,9 @@ export function ReferencePaginated() {
           { accessor: 'text', width: 100, title: 'Text', textAlign: 'center' },
           {
             accessor: 'actions',
-            title: 'Action',
+            title: '',
             textAlign: 'center',
-            width: 100,
+            width: 40,
             render: (item) => (
               <Group gap={4} justify="center" wrap="nowrap">
                 <ActionIcon

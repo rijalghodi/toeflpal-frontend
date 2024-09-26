@@ -50,25 +50,25 @@ export function AdminToeflDetailShell() {
       />
       <Stack>
         <TestSection
-          toeflId=""
-          name={listening?.name || 'Listening Section'}
-          formId={listening?.id || ''}
-          duration={listening?.duration}
-          questionNum={listening?.questionNum}
-        />
-        <TestSection
-          toeflId=""
+          toeflId={toeflId as string}
           name={grammar?.name || 'Structure & Written Expression Section'}
           formId={grammar?.id || ''}
           duration={grammar?.duration}
           questionNum={grammar?.questionNum}
         />
         <TestSection
-          toeflId=""
+          toeflId={toeflId as string}
           name={reading?.name || 'Reading Section'}
           formId={reading?.id || ''}
           duration={reading?.duration || 0}
           questionNum={reading?.questionNum}
+        />
+        <TestSection
+          toeflId={toeflId as string}
+          name={listening?.name || 'Listening Section'}
+          formId={listening?.id || ''}
+          duration={listening?.duration}
+          questionNum={listening?.questionNum}
         />
       </Stack>
       <Paper withBorder p="md" radius="md">

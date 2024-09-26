@@ -83,11 +83,13 @@ export function ToeflList({ expectedHeight }: Props) {
     const start = ((page ?? 1) - 1) * (pageSize ?? 0) + 1;
     const end = (page ?? 1) * (pageSize ?? 0);
 
+    if (!totalData || totalData <= 0) return 'No Data';
+
     return `${start} - ${end} / ${totalData}`;
   };
 
   return (
-    <Stack>
+    <Stack mih={300} justify="space-between">
       <SimpleGrid cols={{ base: 1, xs: 2, md: 2 }}>
         {toeflData?.data?.map(renderToeflItem)}
       </SimpleGrid>

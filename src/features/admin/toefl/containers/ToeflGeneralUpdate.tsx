@@ -1,4 +1,11 @@
-import { Button, Group, Paper, Stack, TextInput } from '@mantine/core';
+import {
+  Button,
+  Group,
+  Paper,
+  Stack,
+  Textarea,
+  TextInput,
+} from '@mantine/core';
 import { notifications } from '@mantine/notifications';
 import { IconCheck, IconX } from '@tabler/icons-react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -66,7 +73,7 @@ export function ToeflGeneralUpdate({ initValues, toeflId, onSuccess }: Props) {
   return (
     <Stack component="form" onSubmit={handleSubmitForm}>
       <TextInput label="Name" placeholder="Input here" {...register('name')} />
-      <TextInput
+      <Textarea
         label="Description"
         placeholder="Input here"
         {...register('description')}

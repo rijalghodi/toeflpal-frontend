@@ -6,8 +6,12 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import React from 'react';
 
 import { useDrawer } from '@/contexts';
-import { partDelete, partListKey, questionCreate } from '@/services';
-import { questionListInPartKey } from '@/services/question/question-list-in-part';
+import {
+  partDelete,
+  partListKey,
+  questionAndKeyListInPartKey,
+  questionCreate,
+} from '@/services';
 
 import { PartWrapper } from '../presentations/PartWrapper';
 import { QuestionList } from '../question/QuestionList';
@@ -47,7 +51,7 @@ export function PartContainer({
           questionId={questionId}
           onSuccess={() => {
             q.invalidateQueries({
-              queryKey: questionListInPartKey({ formId, partId }),
+              queryKey: questionAndKeyListInPartKey({ formId, partId }),
             });
           }}
           onClose={closeDrawer}
@@ -62,7 +66,7 @@ export function PartContainer({
     onSuccess: (data) => {
       notifications.hide('create-question');
       q.invalidateQueries({
-        queryKey: questionListInPartKey({ formId, partId }),
+        queryKey: questionAndKeyListInPartKey({ formId, partId }),
       });
       handleUpdateQuestion(data.data.id, data.data.order);
     },

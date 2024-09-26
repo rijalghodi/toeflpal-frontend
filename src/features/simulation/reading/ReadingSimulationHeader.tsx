@@ -71,11 +71,11 @@ export function ReadingSimulationHeader({
   };
 
   const handleActionClick = async (
-    action: () => Promise<any>,
+    action?: () => Promise<any>,
     next?: () => void,
   ) => {
     try {
-      await action();
+      await action?.();
       next?.();
     } catch (e) {
       notifications.show({ message: `Error ${String(e)}` });

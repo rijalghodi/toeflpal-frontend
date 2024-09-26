@@ -26,13 +26,6 @@ export function ToeflTestSection({ toeflId }: Props) {
     <Stack>
       <TestSection
         toeflId=""
-        name={listening?.name || 'Listening Section'}
-        formId={listening?.id || ''}
-        duration={listening?.duration}
-        questionNum={listening?.questionNum}
-      />
-      <TestSection
-        toeflId=""
         name={grammar?.name || 'Structure & Written Expression Section'}
         formId={grammar?.id || ''}
         duration={grammar?.duration}
@@ -44,6 +37,13 @@ export function ToeflTestSection({ toeflId }: Props) {
         formId={reading?.id || ''}
         duration={reading?.duration || 0}
         questionNum={reading?.questionNum}
+      />
+      <TestSection
+        toeflId=""
+        name={listening?.name || 'Listening Section'}
+        formId={listening?.id || ''}
+        duration={listening?.duration}
+        questionNum={listening?.questionNum}
       />
     </Stack>
   );

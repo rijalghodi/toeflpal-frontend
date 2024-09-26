@@ -9,14 +9,16 @@ import {
   Title,
 } from '@mantine/core';
 import { IconChevronLeft, IconPlayerPlay } from '@tabler/icons-react';
-import { useParams, useRouter } from 'next/navigation';
+import Link from 'next/link';
+import { useParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
+
+import { routes } from '@/utils/constant/routes';
 
 import { FormEditorMain } from './FormEditorMain';
 
 export function FormEditorShell() {
-  const router = useRouter();
-  const { formId } = useParams();
+  const { formId, toeflId } = useParams();
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -36,7 +38,10 @@ export function FormEditorShell() {
   }, []);
 
   const handlePreview = () => {
-    window.open(`/form/${formId}/preview`, '_blank');
+    window.open(
+      routes.adminFormPreview(formId as string, toeflId as string),
+      '_blank',
+    );
   };
 
   return (
@@ -68,7 +73,8 @@ export function FormEditorShell() {
               size="lg"
               variant="subtle"
               title="Back to Previous Page"
-              onClick={router.back}
+              component={Link}
+              href={routes.adminToeflDetail(toeflId as string)}
             >
               <IconChevronLeft size={16} />
             </ActionIcon>

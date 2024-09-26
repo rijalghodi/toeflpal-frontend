@@ -22,8 +22,8 @@ export function LoginForm({ onSuccess }: Props) {
       email: '',
       password: '',
     },
-    mode: 'onChange',
-    reValidateMode: 'onChange',
+    mode: 'onSubmit',
+    reValidateMode: 'onSubmit',
   });
 
   const { mutateAsync, isPending } = useMutation({

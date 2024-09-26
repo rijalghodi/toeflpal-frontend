@@ -10,7 +10,6 @@ import React, { useMemo } from 'react';
 import { useDrawer } from '@/contexts';
 import { LoginForm } from '@/features/auth/login/LoginForm';
 import { useUserSelf } from '@/services';
-import { routes } from '@/utils/constant/routes';
 
 type Props = {
   toeflId: string;
@@ -79,7 +78,7 @@ export function TestSection({
       });
       return;
     }
-    push(routes.toeflReading(toeflId));
+    push(`/toefl/${toeflId}/${skillType}`);
   };
 
   // const handleOpenEvaluation = () => {
@@ -109,7 +108,7 @@ export function TestSection({
                 {questionNum} Questions
               </Text>
             )}
-            {correctAnswerNum !== undefined && (
+            {correctAnswerNum && (
               <Group gap={4}>
                 <IconCircleCheckFilled color="#5c7cfa" size={16} />
                 <Text c="dimmed" fz="sm">

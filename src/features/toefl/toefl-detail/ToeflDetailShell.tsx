@@ -36,7 +36,7 @@ export function ToeflDetailShell() {
   const { data: dataEval, isLoading: loadingEval } = useQuery({
     queryKey: evalGetKey({ toeflId: toeflId as string }),
     queryFn: () => evalGet({ toeflId: toeflId as string }),
-    enabled: !!toeflId && !!user,
+    enabled: !!toeflId,
   });
 
   const toefl = data?.data;
@@ -143,18 +143,6 @@ export function ToeflDetailShell() {
 
       <TestSection
         toeflId={toeflId as string}
-        name={listening?.name || 'Listening Section'}
-        formId={listening?.id || ''}
-        duration={listening?.duration || 0}
-        questionNum={listening?.questionNum ?? 0}
-        correctAnswerNum={dataEval?.data.listeningEval?.correctAnswerNum}
-        finishedAt={listeningEval?.finishedAt}
-        startedAt={listeningEval?.startedAt}
-        remainingTime={listeningEval?.remainingTime}
-        skillType="listening"
-      />
-      <TestSection
-        toeflId={toeflId as string}
         name={grammar?.name || 'Structure & Written Expression Section'}
         formId={grammar?.id || ''}
         duration={grammar?.duration || 0}
@@ -176,6 +164,18 @@ export function ToeflDetailShell() {
         remainingTime={readingEval?.remainingTime}
         correctAnswerNum={dataEval?.data.readingEval?.correctAnswerNum}
         skillType="reading"
+      />
+      <TestSection
+        toeflId={toeflId as string}
+        name={listening?.name || 'Listening Section'}
+        formId={listening?.id || ''}
+        duration={listening?.duration || 0}
+        questionNum={listening?.questionNum ?? 0}
+        correctAnswerNum={dataEval?.data.listeningEval?.correctAnswerNum}
+        finishedAt={listeningEval?.finishedAt}
+        startedAt={listeningEval?.startedAt}
+        remainingTime={listeningEval?.remainingTime}
+        skillType="listening"
       />
     </Stack>
   );

@@ -1,19 +1,19 @@
 import { ActionIcon, Group, Text } from '@mantine/core';
 import { modals } from '@mantine/modals';
 import { notifications } from '@mantine/notifications';
-import { IconTrash, IconX } from '@tabler/icons-react';
+import { IconCheck, IconTrash, IconX } from '@tabler/icons-react';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { truncate } from 'lodash';
 import { DataTable } from 'mantine-datatable';
 import React from 'react';
 
 import { useDrawer } from '@/contexts';
-import { AudioTriggerButton, LoadingState } from '@/elements';
-import { questionDelete } from '@/services/question/question-delete';
+import { LoadingState } from '@/elements';
 import {
-  questionListInPart,
-  questionListInPartKey,
-} from '@/services/question/question-list-in-part';
+  questionAndKeyListInPart,
+  questionAndKeyListInPartKey,
+} from '@/services';
+import { questionDelete } from '@/services/question/question-delete';
 
 import { QuestionUpdate } from './QuestionUpdate';
 
@@ -31,8 +31,8 @@ export function QuestionList({ formId, partId, lastOrder }: Props) {
     isFetching,
     refetch,
   } = useQuery({
-    queryKey: questionListInPartKey({ formId, partId }),
-    queryFn: () => questionListInPart({ formId, partId }),
+    queryKey: questionAndKeyListInPartKey({ formId, partId }),
+    queryFn: () => questionAndKeyListInPart({ formId, partId }),
   });
 
   const handleUpdateQuestion = (questionId: string) => {
@@ -115,25 +115,41 @@ export function QuestionList({ formId, partId, lastOrder }: Props) {
       horizontalSpacing="sm"
       onRowClick={({ record }) => handleUpdateQuestion(record.id)}
       columns={[
-        { accessor: 'no', title: 'No', width: 50 },
-        { accessor: 'text', title: 'Question', ellipsis: true },
+        { accessor: 'no', title: 'No', width: 30, textAlign: 'center' },
+        {
+          accessor: 'text',
+          title: 'Question',
+          ellipsis: true,
+          width: 300,
+        },
+        {
+          accessor: 'answerKey',
+          title: 'Key',
+          ellipsis: true,
+          textAlign: 'center',
+          width: 40,
+          render: ({ answerKey }) =>
+            answerKey ? <IconCheck size={16} color="#5c7cfa" /> : null,
+        },
         {
           accessor: 'audio',
-          width: 100,
+          width: 50,
           title: 'Audio',
           textAlign: 'center',
+          render: ({ audio }) =>
+            audio ? <IconCheck size={16} color="#5c7cfa" /> : null,
         },
         {
           accessor: 'reference',
           title: 'Reference',
           ellipsis: true,
-          width: 150,
+          width: 100,
         },
         {
           accessor: 'actions',
-          title: 'Action',
+          title: '',
           textAlign: 'center',
-          width: 100,
+          width: 40,
           render: (item) => (
             <Group gap={4} justify="center" wrap="nowrap">
               <ActionIcon
@@ -157,16 +173,10 @@ export function QuestionList({ formId, partId, lastOrder }: Props) {
         text: new DOMParser()
           .parseFromString(item.text || '', 'text/html')
           .body.textContent?.trim(),
-        audio: item.audio?.url ? (
-          <AudioTriggerButton
-            src={item.audio.url}
-            title={`Question ${item.order}`}
-          />
-        ) : (
-          '-'
-        ),
+        audio: item.audio?.url,
         reference: item.reference?.name,
         id: item.id,
+        answerKey: item.key?.option?.id,
       }))}
     />
   );

@@ -32,7 +32,7 @@ export const zStringNumberOptional = z
     message: 'Must be a number',
   })
   .or(z.literal(''));
-  
+
 export const zPassword = z
   .string()
   .min(8, { message: 'Min 8 characters' })

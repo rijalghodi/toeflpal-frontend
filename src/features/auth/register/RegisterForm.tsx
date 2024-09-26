@@ -26,8 +26,8 @@ export function RegisterForm() {
       email: '',
       password: '',
     },
-    mode: 'onChange',
-    reValidateMode: 'onChange',
+    mode: 'onSubmit',
+    reValidateMode: 'onSubmit',
   });
 
   const { mutateAsync, isPending } = useMutation({
