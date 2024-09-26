@@ -38,7 +38,7 @@ export function QuestionList({ formId, partId, lastOrder }: Props) {
   const handleUpdateQuestion = (questionId: string) => {
     const question = questions?.data.find((q) => q.id === questionId);
     openDrawer({
-      title: 'Update Question',
+      title: `Update Question ${question?.order}`,
       content: (
         <QuestionUpdate
           questionId={questionId}
