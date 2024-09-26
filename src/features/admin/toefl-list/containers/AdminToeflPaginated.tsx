@@ -122,7 +122,6 @@ export function AdminToeflPaginated() {
         mah={740}
         fetching={isLoading || isFetching}
         withRowBorders
-        striped
         highlightOnHover
         verticalSpacing="sm"
         horizontalSpacing="sm"

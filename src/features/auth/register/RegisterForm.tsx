@@ -16,7 +16,11 @@ import { registerSchema } from '@/utils/form-schema/auth';
 export function RegisterForm() {
   const router = useRouter();
 
-  const { register, handleSubmit } = useForm<RegisterFormValues>({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<RegisterFormValues>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
       email: '',
@@ -54,12 +58,14 @@ export function RegisterForm() {
           label="Email"
           leftSection={<IconMail size={16} />}
           {...register('email')}
+          error={errors.email?.message}
         />
         <PasswordInput
           placeholder="*****"
           label="Password"
           leftSection={<IconLock size={16} />}
           {...register('password')}
+          error={errors.password?.message}
         />
         <Button type="submit" loading={isPending} size="md">
           Register

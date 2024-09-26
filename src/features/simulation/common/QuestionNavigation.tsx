@@ -39,7 +39,6 @@ export function QuestionNavigation({ onClickQuestion, formId }: Props) {
         noRecordsText="No Question"
         fetching={false}
         withRowBorders
-        striped
         highlightOnHover
         verticalSpacing="xs"
         horizontalSpacing="sm"

@@ -110,7 +110,6 @@ export function QuestionList({ formId, partId, lastOrder }: Props) {
       noRecordsText="No Question"
       fetching={isLoading || isFetching}
       withRowBorders
-      striped
       highlightOnHover
       verticalSpacing="xs"
       horizontalSpacing="sm"

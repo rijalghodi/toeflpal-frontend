@@ -1,9 +1,9 @@
-import '@mantine/core/styles.css';
+// import '@mantine/core/styles.css';
+import '@mantine/core/styles.layer.css';
 import '@mantine/notifications/styles.css';
 import '@mantine/tiptap/styles.css';
-import '@mantine/core/styles.layer.css';
 import 'mantine-datatable/styles.layer.css';
-import '@/styles/global.css';
+import './layout.css';
 import 'react-h5-audio-player/lib/styles.css';
 
 import { ColorSchemeScript } from '@mantine/core';
