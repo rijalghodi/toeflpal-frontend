@@ -44,46 +44,50 @@ export function QuestionPanel({
       w="100%"
       justify="center"
     >
-      <Box maw={800} w="100%" visibleFrom="md">
-        <ScrollArea.Autosize
-          mah="calc(100vh - 80px)"
-          offsetScrollbars
-          scrollbarSize={5}
-          type="auto"
-        >
-          <Box
-            px="md"
-            py="md"
-            dangerouslySetInnerHTML={{
-              __html: DOMPurify.sanitize(reference ?? ''),
-            }}
-          />
-        </ScrollArea.Autosize>
-      </Box>
-      <Stack gap="md" maw={800} w="100%" py="lg">
-        <Group justify="flex-end" hiddenFrom="md">
-          <Button
-            variant="default"
-            size="xs"
-            leftSection={<IconAlignJustified size={16} />}
-            onClick={() => {
-              openDrawer({
-                title: 'Reference',
-                size: '100vw',
-                content: (
-                  <Box
-                    w="100%"
-                    dangerouslySetInnerHTML={{
-                      __html: DOMPurify.sanitize(reference ?? ''),
-                    }}
-                  />
-                ),
-              });
-            }}
+      {reference && (
+        <Box maw={800} w="100%" visibleFrom="md">
+          <ScrollArea.Autosize
+            mah="calc(100vh - 80px)"
+            offsetScrollbars
+            scrollbarSize={5}
+            type="auto"
           >
-            Reference
-          </Button>
-        </Group>
+            <Box
+              px="md"
+              py="md"
+              dangerouslySetInnerHTML={{
+                __html: DOMPurify.sanitize(reference ?? ''),
+              }}
+            />
+          </ScrollArea.Autosize>
+        </Box>
+      )}
+      <Stack gap="md" maw={800} w="100%" py="lg">
+        {reference && (
+          <Group justify="flex-end" hiddenFrom="md">
+            <Button
+              variant="default"
+              size="xs"
+              leftSection={<IconAlignJustified size={16} />}
+              onClick={() => {
+                openDrawer({
+                  title: 'Reference',
+                  size: '100vw',
+                  content: (
+                    <Box
+                      w="100%"
+                      dangerouslySetInnerHTML={{
+                        __html: DOMPurify.sanitize(reference ?? ''),
+                      }}
+                    />
+                  ),
+                });
+              }}
+            >
+              Reference
+            </Button>
+          </Group>
+        )}
         <Box
           dangerouslySetInnerHTML={{
             __html: DOMPurify.sanitize(question ?? ''),
@@ -101,6 +105,7 @@ export function QuestionPanel({
                     label={opt.text}
                     value={opt.id}
                     icon={CheckIcon}
+                    size="md"
                   />
                 ))}
               </Stack>
