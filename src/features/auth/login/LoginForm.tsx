@@ -3,7 +3,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button, PasswordInput, Stack, TextInput } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
-import { IconLock, IconMail } from '@tabler/icons-react';
+import { IconLock, IconMail, IconX } from '@tabler/icons-react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -47,6 +47,8 @@ export function LoginForm({ onSuccess }: Props) {
         title: 'Fail to login',
         message: (error as any)?.response?.data?.message,
         color: 'red',
+        icon: <IconX size={16} />,
+        autoClose: 5000,
       });
     },
   });

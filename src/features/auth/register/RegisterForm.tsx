@@ -3,7 +3,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button, PasswordInput, Stack, TextInput } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
-import { IconLock, IconMail } from '@tabler/icons-react';
+import { IconCheck, IconLock, IconMail, IconX } from '@tabler/icons-react';
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next-nprogress-bar';
 import React from 'react';
@@ -34,6 +34,13 @@ export function RegisterForm() {
     mutationFn: registerUser,
     mutationKey: ['register'],
     onSuccess() {
+      notifications.show({
+        title: 'Account created!',
+        message: 'Now login to your registered account',
+        color: 'green',
+        icon: <IconCheck size={16} />,
+        autoClose: 5000,
+      });
       router.push('/login');
     },
     onError: (error) => {
@@ -41,6 +48,8 @@ export function RegisterForm() {
         title: 'Fail to create account',
         message: (error as any)?.response?.data?.message,
         color: 'red',
+        icon: <IconX size={16} />,
+        autoClose: 5000,
       });
     },
   });
