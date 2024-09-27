@@ -81,10 +81,12 @@ export function ToeflDetailShell() {
       modals.open({
         children: (
           <Stack mt="xl">
-            <Title order={1} fz="h2">
+            <Title order={1} fz="h2" ta="center">
               Log In
             </Title>
-            <Text fz="md">You need to log in to start the test.</Text>
+            <Text fz="md" ta="center">
+              You need to log in to start the test.
+            </Text>
             <LoginForm
               onSuccess={() => {
                 modals.closeAll();
