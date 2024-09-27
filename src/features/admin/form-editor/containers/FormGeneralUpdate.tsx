@@ -133,6 +133,7 @@ export function FormGeneralUpdate({ initValues, formId, onSuccess }: Props) {
             <RichTextEditorInput
               label="Instruction"
               placeholder="Click here"
+              mah={200}
               {...field}
             />
           )}
@@ -156,6 +157,7 @@ export function FormGeneralUpdate({ initValues, formId, onSuccess }: Props) {
             <RichTextEditorInput
               label="Closing"
               placeholder="Click here"
+              mah={200}
               {...field}
             />
           )}

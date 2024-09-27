@@ -118,6 +118,7 @@ export function OptionList({ questionId }: Props) {
         label="Explanation"
         value={answerKey?.data.explanation}
         onChange={(val) => setExplanation(String(val))}
+        mah={400}
       />
       {isPending && (
         <Text fz="xs" c="gray.3">

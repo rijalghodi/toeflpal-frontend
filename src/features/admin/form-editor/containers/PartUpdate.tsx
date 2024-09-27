@@ -97,6 +97,7 @@ export function PartUpdate({ initValues, formId, partId, onSuccess }: Props) {
             <RichTextEditorInput
               label="Instruction"
               placeholder="Click here"
+              mah={200}
               {...field}
             />
           )}
@@ -119,6 +120,7 @@ export function PartUpdate({ initValues, formId, partId, onSuccess }: Props) {
           render={({ field }) => (
             <RichTextEditorInput
               label="Closing"
+              mah={200}
               placeholder="Click here"
               {...field}
             />

@@ -91,6 +91,7 @@ export function PartCreate({ order, formId, onSuccess }: Props) {
             <RichTextEditorInput
               label="Instruction"
               placeholder="Click here"
+              mah={200}
               {...field}
             />
           )}
@@ -113,6 +114,7 @@ export function PartCreate({ order, formId, onSuccess }: Props) {
             <RichTextEditorInput
               label="Closing"
               placeholder="Click here"
+              mah={200}
               {...field}
             />
           )}

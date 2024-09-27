@@ -148,6 +148,7 @@ export function QuestionUpdate({
               <RichTextEditorInput
                 label="Question"
                 placeholder="Type here"
+                mah={200}
                 {...field}
               />
             )}

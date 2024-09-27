@@ -93,6 +93,7 @@ export function ReferenceUpdate({ onSuccess, referenceId, initValues }: Props) {
             <RichTextEditorInput
               label="Text Reference"
               placeholder="Click here"
+              mah={400}
               {...field}
             />
           )}
