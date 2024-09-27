@@ -90,16 +90,18 @@ export function ReadingSimulationPresenter({ formId, ...props }: Props) {
     closeQuestionNav();
   };
 
-  const answers = attempt?.data.answers;
-  const questionAndAnswers = questions?.map((q) => [
-    q.id,
-    answers?.find((a) => a.question?.id === q.id)?.option?.id,
-  ]);
+  // TODO: Handle resume
+  // const answers = attempt?.data.answers;
+  // const questionAndAnswers = questions?.map((q) => [
+  //   q.id,
+  //   answers?.find((a) => a.question?.id === q.id)?.option?.id,
+  // ]);
 
-  const questionObj = Object.fromEntries(questionAndAnswers ?? []);
+  // const questionObj = Object.fromEntries(questionAndAnswers ?? []);
 
   const { getValues, control } = useForm({
-    defaultValues: questionObj,
+    // defaultValues: attempt?.data.finishedAt ? {} : questionObj,
+    defaultValues: {},
   });
 
   const handleSubmit = async () => {

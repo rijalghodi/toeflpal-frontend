@@ -40,7 +40,7 @@ export function QuestionAnswerPanel({
   function numberToLetter(num?: number): string | undefined {
     if (num === undefined) return 'No Answer';
     const letters = ['A', 'B', 'C', 'D', 'E'];
-    return letters[num];
+    return letters[num - 1];
   }
 
   return (
