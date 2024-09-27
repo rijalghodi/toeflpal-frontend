@@ -7,7 +7,7 @@ import { useParams, useRouter } from 'next/navigation';
 import React from 'react';
 
 import { ComingSoon, LoadingState } from '@/elements';
-import { ReadingFormPresenter } from '@/features/simulation';
+import { ReadingSimulationPresenter } from '@/features/simulation';
 import { formGet, formGetKey } from '@/services';
 import { SkillType } from '@/services/types';
 import { routes } from '@/utils/constant/routes';
@@ -49,7 +49,7 @@ export default function FormPreviewPage() {
     data?.data.skillType === SkillType.Grammar
   ) {
     return (
-      <ReadingFormPresenter
+      <ReadingSimulationPresenter
         formId={formId as string}
         name={data.data.name}
         onQuit={handleQuit}

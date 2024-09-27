@@ -6,7 +6,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 
-import { ReadingFormPresenter } from '@/features/simulation';
+import { ReadingSimulationPresenter } from '@/features/simulation';
 import { evalGetKey, evalStale } from '@/services';
 import { attemptFinish } from '@/services/attempt/attempt-finish';
 import { attemptGetKey } from '@/services/attempt/attempt-get';
@@ -113,7 +113,7 @@ export function ToeflReading({ toeflId, formId }: Props) {
     return await start({ formId });
   };
 
-  const handleSubmit = async (answers: Answer[], formId: string) => {
+  const handleSubmit = async (answers: any[], formId: string) => {
     notifications.show({
       message: 'Submitting your answers...',
       id: 'toefl-submit',
@@ -126,7 +126,7 @@ export function ToeflReading({ toeflId, formId }: Props) {
 
   const handleFinsih = () => {};
   return (
-    <ReadingFormPresenter
+    <ReadingSimulationPresenter
       formId={formId}
       onQuit={handleQuit}
       onStart={handleStart}

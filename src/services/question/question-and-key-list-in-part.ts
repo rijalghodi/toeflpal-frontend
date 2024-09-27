@@ -1,36 +1,14 @@
 import { MResponse } from '@/types';
 
 import { axiosInstance } from '../axiosInstance';
-import { Storage } from '../types';
+import { QuestionAndKey } from '../types';
 
 type QuestionAndKeyListInPartRequest = {
   formId: string;
   partId: string;
 };
 
-type QuestionAndKeyListInPartResponse = MResponse<
-  {
-    id: string;
-    text?: string;
-    audio?: Storage;
-    order: number;
-    reference?: {
-      id: string;
-      name?: string;
-      text?: string;
-      audio?: Storage;
-    };
-    key?: {
-      option?: {
-        id: string;
-      };
-    };
-    options?: {
-      id: string;
-      text?: string;
-    }[];
-  }[]
->;
+type QuestionAndKeyListInPartResponse = MResponse<QuestionAndKey[]>;
 
 export const questionAndKeyListInPart = async ({
   formId,

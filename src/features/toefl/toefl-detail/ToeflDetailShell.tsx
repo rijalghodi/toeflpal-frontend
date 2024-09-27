@@ -1,6 +1,7 @@
 'use client';
 
 import { Anchor, Box, Button, Group, Stack, Text, Title } from '@mantine/core';
+import { modals } from '@mantine/modals';
 import { IconPlayerPlay } from '@tabler/icons-react';
 import { useQuery } from '@tanstack/react-query';
 import dayjs from 'dayjs';
@@ -8,7 +9,6 @@ import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
 import React, { useMemo } from 'react';
 
-import { useDrawer } from '@/contexts';
 import { LoadingState } from '@/elements';
 import { BackButton } from '@/elements/actions/BackButton';
 import { LoginForm } from '@/features/auth/login/LoginForm';
@@ -74,13 +74,12 @@ export function ToeflDetailShell() {
     readingEval?.finishedAt,
   ]);
 
-  const { open: openDrawer, close: closeDrawer } = useDrawer();
   const router = useRouter();
 
   const handleStartAllTest = () => {
     if (!user) {
-      openDrawer({
-        content: (
+      modals.open({
+        children: (
           <Stack mt="xl">
             <Title order={1} fz="h2">
               Log In
@@ -88,6 +87,7 @@ export function ToeflDetailShell() {
             <Text fz="md">You need to log in to start the test.</Text>
             <LoginForm
               onSuccess={() => {
+                modals.closeAll();
                 router.push(routes.toeflGrammar(toeflId as string));
               }}
             />
@@ -97,7 +97,7 @@ export function ToeflDetailShell() {
                 fz="sm"
                 href={routes.auth.register}
                 component={Link}
-                onClick={closeDrawer}
+                onClick={modals.closeAll}
               >
                 Register here
               </Anchor>

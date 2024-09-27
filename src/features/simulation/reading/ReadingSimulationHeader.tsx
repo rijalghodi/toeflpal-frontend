@@ -11,7 +11,6 @@ import {
   Text,
 } from '@mantine/core';
 import { modals } from '@mantine/modals';
-import { notifications } from '@mantine/notifications';
 import {
   IconArrowLeft,
   IconArrowRight,
@@ -59,7 +58,7 @@ export function ReadingSimulationHeader({
     modals.openConfirmModal({
       title: 'Quit Confirmation',
       children: (
-        <Text size="sm" color="dimmed">
+        <Text size="sm" c="dimmed">
           Are you sure you want to quit the test? You will lose all your current
           data for this section.
         </Text>
@@ -78,7 +77,7 @@ export function ReadingSimulationHeader({
       await action?.();
       next?.();
     } catch (e) {
-      notifications.show({ message: `Error ${String(e)}` });
+      return e;
     }
   };
 
@@ -187,11 +186,11 @@ export function ReadingSimulationHeader({
       <Paper px="md" py={4} radius={0} bg="gray.1">
         <Group justify="space-between" w="100%">
           <Group>
-            <Text fz="xs" fw={600} visibleFrom="xs">
+            <Text fz={{ base: 'xs', xs: 'sm' }} fw={600} visibleFrom="xs">
               {name}
             </Text>
             <Divider orientation="vertical" visibleFrom="xs" />
-            <Text fz="xs" fw={600}>
+            <Text fz={{ base: 'xs', xs: 'sm' }} fw={600}>
               {humanizedStep}
             </Text>
           </Group>

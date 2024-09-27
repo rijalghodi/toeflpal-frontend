@@ -31,19 +31,19 @@ export function Timer({ duration }: Props) {
     const secs = Math.floor((milliseconds % 60000) / 1000);
     return (
       <Group gap={4}>
-        <Text fz="xs" fw={600} w={16} ta="center">
+        <Text fz={{ base: 'xs', xs: 'sm' }} fw={600} w={16} ta="center">
           {String(hrs).padStart(2, '0')}
         </Text>
-        <Text fz="xs" fw={600}>
+        <Text fz={{ base: 'xs', xs: 'sm' }} fw={600}>
           :
         </Text>
-        <Text fz="xs" fw={600} w={16} ta="center">
+        <Text fz={{ base: 'xs', xs: 'sm' }} fw={600} w={16} ta="center">
           {String(mins).padStart(2, '0')}
         </Text>
-        <Text fz="xs" fw={600}>
+        <Text fz={{ base: 'xs', xs: 'sm' }} fw={600}>
           :
         </Text>
-        <Text fz="xs" fw={600} w={16} ta="center">
+        <Text fz={{ base: 'xs', xs: 'sm' }} fw={600} w={16} ta="center">
           {String(secs).padStart(2, '0')}
         </Text>
       </Group>
@@ -52,7 +52,7 @@ export function Timer({ duration }: Props) {
   };
 
   return (
-    <Text fz="xs" fw={600}>
+    <Text fz={{ base: 'xs', xs: 'sm' }} fw={600}>
       {formatTime(timeLeft)}
     </Text>
   );

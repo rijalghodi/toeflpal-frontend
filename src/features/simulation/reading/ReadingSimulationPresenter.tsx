@@ -9,7 +9,6 @@ import { useForm } from 'react-hook-form';
 import { LoadingState } from '@/elements';
 import { attemptGet, attemptGetKey } from '@/services/attempt/attempt-get';
 import { formGetFull, formGetFullKey } from '@/services/form/form-get-full';
-import { Answer } from '@/services/types';
 
 import { QuestionNavigation } from '../common/QuestionNavigation';
 import { useSimulNavigation } from '../common/useSimulNavigation';
@@ -28,12 +27,16 @@ type Props = {
   onNext?: () => void;
   onPrev?: () => void;
   name?: string | ((formName?: string) => string);
-  onSubmit?: (answers: Answer[], formId: string) => Promise<any>;
+  onSubmit?: (
+    answers: { optionId?: string; questionId: string }[],
+    formId: string,
+  ) => Promise<any>;
   onFinsih?: () => void;
   disabledNavigation?: boolean;
+  preview?: boolean;
 };
 
-export function ReadingFormPresenter({ formId, ...props }: Props) {
+export function ReadingSimulationPresenter({ formId, ...props }: Props) {
   // --- Get form data ---
   const { data: dataForm, isLoading: loadingForm } = useQuery({
     queryKey: formGetFullKey({ formId }),
@@ -49,7 +52,7 @@ export function ReadingFormPresenter({ formId, ...props }: Props) {
   const { data: attempt, isLoading: loadingAttempt } = useQuery({
     queryKey: attemptGetKey({ formId }),
     queryFn: () => attemptGet({ formId }),
-    enabled: !!formId,
+    enabled: !!formId && !props.preview,
   });
 
   // --- Prvent user for quiting ---
@@ -57,7 +60,7 @@ export function ReadingFormPresenter({ formId, ...props }: Props) {
     const handleBeforeUnload = (event: any) => {
       event.preventDefault();
       event.returnValue = ''; // Required for some browsers
-      return 'Hello';
+      return '';
     };
 
     // Adding the event listener
@@ -90,20 +93,22 @@ export function ReadingFormPresenter({ formId, ...props }: Props) {
   const answers = attempt?.data.answers;
   const questionAndAnswers = questions?.map((q) => [
     q.id,
-    answers?.find((a) => a.questionId === q.id)?.optionId,
+    answers?.find((a) => a.question?.id === q.id)?.option?.id,
   ]);
 
-  const method = useForm({
-    defaultValues: Object.fromEntries(questionAndAnswers ?? []),
+  const questionObj = Object.fromEntries(questionAndAnswers ?? []);
+
+  const { getValues, control } = useForm({
+    defaultValues: questionObj,
   });
 
   const handleSubmit = async () => {
-    const inp = method.getValues();
-    const foo = Object.entries(inp).map(([questionId, optionId]) => ({
+    const inp = getValues();
+    const userAns = Object.entries(inp).map(([questionId, optionId]) => ({
       questionId,
       optionId: optionId as string | undefined,
     }));
-    await props.onSubmit?.(foo, formId);
+    await props.onSubmit?.(userAns, formId);
   };
 
   if (loadingAttempt || loadingForm) {
@@ -146,7 +151,7 @@ export function ReadingFormPresenter({ formId, ...props }: Props) {
               />
             </Tabs.Panel>
 
-            {/* Form Start */}
+            {/* Form End */}
             <Tabs.Panel value="formend">
               <FormEndPanel text={form?.closing ?? undefined} />
             </Tabs.Panel>
@@ -170,7 +175,7 @@ export function ReadingFormPresenter({ formId, ...props }: Props) {
                   options={question.options ?? []}
                   reference={question.reference?.text}
                   questionId={question.id}
-                  control={method.control}
+                  control={control}
                 />
               </Tabs.Panel>
             ))}

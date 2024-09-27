@@ -1,3 +1,4 @@
+export * from './question-and-key-list';
 export * from './question-and-key-list-in-part';
 export * from './question-create';
 export * from './question-delete';

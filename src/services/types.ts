@@ -82,6 +82,7 @@ export type Reference = {
 export type Option = {
   id: string;
   text?: string;
+  order: number;
 };
 
 export type Question = {
@@ -92,6 +93,15 @@ export type Question = {
   reference?: Reference;
   part?: Part;
   options?: Option[];
+};
+
+export type Key = {
+  option?: Option;
+  question: Question;
+  explanation?: string;
+};
+export type QuestionAndKey = Question & {
+  key?: Key;
 };
 
 export type Attempt = {
@@ -109,6 +119,6 @@ export type AttemptWithRemainingTime = Attempt & {
 };
 
 export type Answer = {
-  optionId?: string;
-  questionId: string;
+  option?: Option;
+  question: Question;
 };

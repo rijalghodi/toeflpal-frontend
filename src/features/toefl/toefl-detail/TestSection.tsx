@@ -8,16 +8,17 @@ import {
   Text,
   Title,
 } from '@mantine/core';
+import { modals } from '@mantine/modals';
 import {
   IconCircleCheckFilled,
   IconPlayerPlay,
   IconRefresh,
+  IconStethoscope,
 } from '@tabler/icons-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useMemo } from 'react';
 
-import { useDrawer } from '@/contexts';
 import { LoginForm } from '@/features/auth/login/LoginForm';
 import { useUserSelf } from '@/services';
 import { routes } from '@/utils/constant/routes';
@@ -47,8 +48,7 @@ export function TestSection({
   correctAnswerNum,
 }: Props) {
   const { user } = useUserSelf();
-  const { push } = useRouter();
-  const { open: openDrawer, close: closeDrawer } = useDrawer();
+  const router = useRouter();
 
   // Status:
   // Not taken: startedAt null
@@ -72,16 +72,20 @@ export function TestSection({
 
   const handleStartTest = () => {
     if (!user) {
-      openDrawer({
-        content: (
-          <Stack mt="xl">
-            <Title order={1} fz="h2">
+      modals.open({
+        radius: 'md',
+        children: (
+          <Stack>
+            <Title order={1} fz="h2" ta="center">
               Log In
             </Title>
-            <Text fz="md">You need to log in to start the test.</Text>
+            <Text fz="md" ta="center">
+              You need to log in to start the test.
+            </Text>
             <LoginForm
               onSuccess={() => {
-                push(`/toefl/${toeflId}/${skillType}`);
+                modals.closeAll();
+                router.push(`/toefl/${toeflId}/${skillType}`);
               }}
             />
             <Text fz="sm" c="dark.3" ta="center">
@@ -90,7 +94,7 @@ export function TestSection({
                 fz="sm"
                 href={routes.auth.register}
                 component={Link}
-                onClick={closeDrawer}
+                onClick={() => modals.closeAll()}
               >
                 Register here
               </Anchor>
@@ -100,15 +104,12 @@ export function TestSection({
       });
       return;
     }
-    push(`/toefl/${toeflId}/${skillType}`);
+    router.push(`/toefl/${toeflId}/${skillType}`);
   };
 
-  // const handleOpenEvaluation = () => {
-  //   openDrawer({
-  //     title: 'Evaluation',
-  //     content: '',
-  //   });
-  // };
+  const handleOpenEvaluation = () => {
+    router.push(`/toefl/${toeflId}/${skillType}/evaluation`);
+  };
 
   return (
     <Paper withBorder p="md" radius="md">
@@ -147,16 +148,16 @@ export function TestSection({
           </Group>
         </Stack>
         <Group>
-          {/* {status === 'Finished' && (
+          {status === 'Finished' && (
             <Button
               variant="default"
               onClick={handleOpenEvaluation}
               size="xs"
-              leftSection={<IconChartLine size={16} />}
+              leftSection={<IconStethoscope size={16} />}
             >
               Evaluation
             </Button>
-          )} */}
+          )}
           <Button
             variant="default"
             onClick={handleStartTest}
