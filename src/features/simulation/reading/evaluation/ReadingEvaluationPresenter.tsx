@@ -82,7 +82,7 @@ export function ReadingEvaluationPresenter({ formId, ...props }: Props) {
                 <QuestionAnswerPanel
                   question={question.text ?? 'No Question'}
                   options={question.options ?? []}
-                  reference={question.reference?.text}
+                  reference={question.readingReferenceDetail}
                   value={getUserAnswer(question.id)}
                   correctAnswerOrder={question.key?.option?.order}
                   explanation={question.key?.explanation}

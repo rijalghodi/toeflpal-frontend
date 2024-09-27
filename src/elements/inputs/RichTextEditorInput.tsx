@@ -18,19 +18,20 @@ type Props = {
   value?: string;
   onChange?: (content: string) => void;
   placeholder?: string;
+  mah?: number | string;
+  version?: number;
 } & InputWrapperProps;
 
 export function RichTextEditorInput({
   value,
   onChange,
   size = 'sm',
+  mah,
+  version: parentVersion,
   ...props
 }: Props) {
   const { open, close } = useDrawerAlt2();
   const [version, setVersion] = useState(0);
-  // const firstContent = new DOMParser()
-  //   .parseFromString(DOMPurify.sanitize(value || ''), 'text/html')
-  //   .body.textContent?.trim();
 
   const handleOpenDrawerEditor = () => {
     open({
@@ -93,9 +94,9 @@ export function RichTextEditorInput({
       <RichTextEditor
         initialContent={value}
         onContentChange={onChange}
-        mah={200}
+        mah={mah}
         minimalist
-        version={version}
+        version={parentVersion ?? version}
       />
     </Input.Wrapper>
   );

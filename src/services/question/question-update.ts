@@ -7,6 +7,7 @@ type QuestionUpdateRequest = {
   audio?: File | null;
   questionId: string;
   referenceId?: string;
+  readingReferenceDetail?: string;
 };
 
 type QuestionUpdateResponse = GResponse<{
@@ -16,12 +17,15 @@ type QuestionUpdateResponse = GResponse<{
 export const questionUpdate = async ({
   questionId,
   referenceId,
+  readingReferenceDetail,
   text,
   audio,
 }: QuestionUpdateRequest): Promise<QuestionUpdateResponse> => {
   const formData = new FormData();
 
   if (referenceId) formData.append('referenceId', referenceId);
+  if (readingReferenceDetail)
+    formData.append('readingReferenceDetail', readingReferenceDetail);
   if (text) formData.append('text', text);
   if (audio) formData.append('audio', audio);
 

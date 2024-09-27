@@ -173,7 +173,7 @@ export function ReadingSimulationPresenter({ formId, ...props }: Props) {
                 <QuestionPanel
                   question={question.text ?? 'No Question'}
                   options={question.options ?? []}
-                  reference={question.reference?.text}
+                  reference={question.readingReferenceDetail}
                   questionId={question.id}
                   control={control}
                 />

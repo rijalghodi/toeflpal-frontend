@@ -47,6 +47,7 @@ export function QuestionList({ formId, partId, lastOrder }: Props) {
             audioUrl: question?.audio?.url,
             referenceId: question?.reference?.id,
             referenceName: question?.reference?.name,
+            readingReferenceDetail: question?.readingReferenceDetail,
           }}
           onSuccess={() => {
             refetch();

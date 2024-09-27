@@ -6,6 +6,7 @@ export type QuestionUpdateFormValues = {
   text?: string;
   audio?: File | null;
   referenceId?: string;
+  readingReferenceDetail?: string;
 };
 
 export const questionUpdateSchema: z.ZodType<QuestionUpdateFormValues> =
@@ -13,4 +14,5 @@ export const questionUpdateSchema: z.ZodType<QuestionUpdateFormValues> =
     text: zStringOptional,
     audio: zAudioOptional,
     referenceId: zStringOptional,
+    readingReferenceDetail: zStringOptional,
   });

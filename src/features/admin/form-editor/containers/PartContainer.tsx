@@ -55,6 +55,7 @@ export function PartContainer({
             });
           }}
           onClose={closeDrawer}
+          initValues={{}}
         />
       ),
       size: '100vw',

@@ -1,6 +1,5 @@
 'use client';
 
-import { routes } from '@/utils/constant/routes';
 import { Icon } from '@iconify-icon/react';
 import quoteL from '@iconify-icons/fa/quote-left';
 import {
@@ -18,6 +17,7 @@ import {
 import Image from 'next/image';
 import Link from 'next/link';
 
+import { routes } from '@/utils/constant/routes';
 import hero from '~/hero.png';
 
 const features = [

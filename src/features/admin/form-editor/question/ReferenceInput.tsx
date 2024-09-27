@@ -8,7 +8,6 @@ import {
   Paper,
   ScrollArea,
   Select,
-  SelectProps,
   Stack,
   Text,
 } from '@mantine/core';
@@ -17,6 +16,7 @@ import { IconEdit, IconPlus } from '@tabler/icons-react';
 import { useQuery } from '@tanstack/react-query';
 import DOMPurify from 'dompurify';
 import React, { useEffect, useMemo, useState } from 'react';
+import { Controller } from 'react-hook-form';
 
 import { useDrawerAlt } from '@/contexts';
 import { AudioPlayer } from '@/elements';
@@ -27,17 +27,19 @@ import { ReferenceUpdate } from '../../reference/ReferenceUpdate';
 
 const PAGE_SIZE = 100;
 
-type Props = Omit<SelectProps, 'data'> & {
+type Props = {
   initValues?: {
     name: string;
     id: string;
   };
+  control: any;
+  value: string;
 };
 
 export function ReferenceInput({
-  value,
-  onChange,
   initValues,
+  value,
+  control,
   ...slcProps
 }: Props) {
   const [search, setSearch] = useState('');
@@ -112,29 +114,36 @@ export function ReferenceInput({
   return (
     <Stack>
       <Group align="flex-end">
-        <Select
-          flex={1}
-          clearable
-          data={
-            isLoading
-              ? [{ label: 'Loading...', value: '#####', disabled: true }]
-              : !search && initValues?.name
-                ? [
-                    { label: initValues.name, value: initValues.id },
-                    ...options.filter((val) => val.value !== initValues.id),
-                  ]
-                : options
-          }
-          searchable
-          searchValue={search}
-          value={value}
-          onSearchChange={setSearch}
-          comboboxProps={{ shadow: 'xs' }}
-          onChange={(val, opt) => {
-            onChange?.(val, opt);
-            handleChange(val);
-          }}
-          {...slcProps}
+        <Controller
+          name="referenceId"
+          control={control}
+          render={({ field: { onChange, ...restField } }) => (
+            <Select
+              flex={1}
+              clearable
+              data={
+                isLoading
+                  ? [{ label: 'Loading...', value: '#####', disabled: true }]
+                  : !search && initValues?.name
+                    ? [
+                        { label: initValues.name, value: initValues.id },
+                        ...options.filter((val) => val.value !== initValues.id),
+                      ]
+                    : options
+              }
+              searchable
+              searchValue={search}
+              // value={value}
+              onSearchChange={setSearch}
+              comboboxProps={{ shadow: 'xs' }}
+              onChange={(val, opt) => {
+                onChange?.(val, opt);
+                handleChange(val);
+              }}
+              {...restField}
+              {...slcProps}
+            />
+          )}
         />
         <ActionIcon
           size="lg"

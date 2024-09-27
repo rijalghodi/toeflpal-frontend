@@ -11,14 +11,14 @@ import { notifications } from '@mantine/notifications';
 import { IconX } from '@tabler/icons-react';
 import { useMutation } from '@tanstack/react-query';
 import { debounce } from 'lodash';
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Controller, useForm, useWatch } from 'react-hook-form';
 
 import { AudioInput, RichTextEditorInput } from '@/elements';
 import { questionUpdate } from '@/services';
 
 import { OptionList } from './OptionList';
-import { ReferenceInput } from './ReferenceInput';
+import { ReferenceSelect } from './ReferenceSelect';
 import {
   QuestionUpdateFormValues,
   questionUpdateSchema,
@@ -33,6 +33,7 @@ type Props = {
     audioUrl?: string;
     referenceId?: string;
     referenceName?: string;
+    readingReferenceDetail?: string;
   };
 };
 
@@ -46,12 +47,14 @@ export function QuestionUpdate({
   const {
     control,
     handleSubmit,
+    setValue,
     formState: { isDirty },
   } = useForm<QuestionUpdateFormValues>({
     defaultValues: {
       text: initValues?.text || '',
       audio: null,
       referenceId: initValues?.referenceId,
+      readingReferenceDetail: initValues?.readingReferenceDetail,
     },
     resolver: zodResolver(questionUpdateSchema),
   });
@@ -96,7 +99,9 @@ export function QuestionUpdate({
     return () => {
       debouncedSubmit.cancel();
     };
-  }, [watchedValues]); // eslint-disable-line
+  }, [watchedValues]); // eslint-disable-
+
+  const [versionRichTextEditor, setVersionRichTextEditor] = useState(1000);
 
   return (
     <form>
@@ -105,14 +110,31 @@ export function QuestionUpdate({
           <Controller
             name="referenceId"
             control={control}
-            render={({ field }) => (
-              <ReferenceInput
+            render={({ field: { onChange, ...field } }) => (
+              <ReferenceSelect
                 label="Reference"
                 placeholder="Click here"
                 initValues={{
                   id: initValues?.referenceId ?? '',
                   name: initValues?.referenceName ?? 'No Name',
                 }}
+                onChange={(value, longText) => {
+                  onChange(value);
+                  setValue('readingReferenceDetail', longText);
+                  setVersionRichTextEditor((prevVersion) => prevVersion + 1);
+                }}
+                {...field}
+              />
+            )}
+          />
+          <Controller
+            name="readingReferenceDetail"
+            control={control}
+            render={({ field }) => (
+              <RichTextEditorInput
+                label="Text Reference Detail"
+                placeholder="Type here"
+                version={versionRichTextEditor}
                 {...field}
               />
             )}

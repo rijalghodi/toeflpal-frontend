@@ -91,6 +91,7 @@ export type Question = {
   audio?: Storage;
   order: number;
   reference?: Reference;
+  readingReferenceDetail?: string;
   part?: Part;
   options?: Option[];
 };

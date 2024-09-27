@@ -8,7 +8,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-import { login, setAuthCookie, userSelfGet, userSelfGetKey } from '@/services';
+import { login, setAuthCookie, userSelfGetKey } from '@/services';
 import { LoginFormValues } from '@/types';
 import { loginSchema } from '@/utils/form-schema/auth/login.schema';
 
