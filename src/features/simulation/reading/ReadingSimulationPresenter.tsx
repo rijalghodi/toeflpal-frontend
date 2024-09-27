@@ -202,6 +202,7 @@ export function ReadingSimulationPresenter({ formId, ...props }: Props) {
           <QuestionNavigation
             formId={formId}
             onClickQuestion={(v) => handleJumpTo(v.step)}
+            answers={getValues()}
           />
         </Drawer>
       </AppShell.Main>

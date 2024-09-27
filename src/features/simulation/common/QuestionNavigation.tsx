@@ -19,8 +19,13 @@ type QuestionNav = {
 type Props = {
   onClickQuestion?: (q: QuestionNav) => void;
   formId: string;
+  answers?: any;
 };
-export function QuestionNavigation({ onClickQuestion, formId }: Props) {
+export function QuestionNavigation({
+  onClickQuestion,
+  formId,
+  answers,
+}: Props) {
   // Get questions
   const { data: questions, isLoading } = useQuery({
     queryKey: questionListKey({ formId }),
@@ -52,18 +57,20 @@ export function QuestionNavigation({ onClickQuestion, formId }: Props) {
             textAlign: 'center',
             render: ({ status }) =>
               status === 'answered' ? (
-                <Pill color="green">Answered</Pill>
+                <Pill bg="green.1" c="green.9">
+                  Answered
+                </Pill>
               ) : (
                 <Pill>Not Answered</Pill>
               ),
           },
-          {
-            accessor: 'marked',
-            title: 'Marked',
-            textAlign: 'center',
-            render: ({ marked }) =>
-              marked ? <IconBookmarkFilled size={16} color="#7950f2" /> : '',
-          },
+          // {
+          //   accessor: 'marked',
+          //   title: 'Marked',
+          //   textAlign: 'center',
+          //   render: ({ marked }) =>
+          //     marked ? <IconBookmarkFilled size={16} color="#7950f2" /> : '',
+          // },
         ]}
         records={
           questions?.data.map(({ order, text, id, part }, idx) => ({
@@ -74,7 +81,7 @@ export function QuestionNavigation({ onClickQuestion, formId }: Props) {
             text: new DOMParser()
               .parseFromString(text || '', 'text/html')
               .body.textContent?.trim(),
-            status: 'pending', // find in attempt
+            status: answers[id] ? 'answered' : 'no-answer',
             marked: false, // fnnd in attempt
           })) ?? ([] as QuestionNav[])
         }
