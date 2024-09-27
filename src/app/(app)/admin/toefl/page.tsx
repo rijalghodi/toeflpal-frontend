@@ -8,7 +8,7 @@ import { AdminToeflPaginated } from '@/features/admin/toefl-list/containers/Admi
 export default function AdminSimulationListPage() {
   return (
     <Stack>
-      <Title fw={600} order={1} fz="h3">
+      <Title fw={600} order={1} fz="h3" ta="center">
         Manage TOEFL Simulation
       </Title>
       <Suspense>
