@@ -1,5 +1,4 @@
 import { Container, Pill } from '@mantine/core';
-import { IconBookmarkFilled } from '@tabler/icons-react';
 import { useQuery } from '@tanstack/react-query';
 import { DataTable } from 'mantine-datatable';
 import React from 'react';
