@@ -1,5 +1,6 @@
 'use client';
 
+import { routes } from '@/utils/constant/routes';
 import { Icon } from '@iconify-icon/react';
 import quoteL from '@iconify-icons/fa/quote-left';
 import {
@@ -82,7 +83,7 @@ export default function Home() {
                 prepare systematically—all in one place!
               </Text>
               <Group>
-                <Button component={Link} href="/login" size="lg">
+                <Button component={Link} href={routes.toeflList} size="lg">
                   Try Now
                 </Button>
               </Group>

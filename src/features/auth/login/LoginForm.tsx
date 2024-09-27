@@ -4,11 +4,11 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Button, PasswordInput, Stack, TextInput } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
 import { IconLock, IconMail } from '@tabler/icons-react';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-import { login, setAuthCookie } from '@/services';
+import { login, setAuthCookie, userSelfGet, userSelfGetKey } from '@/services';
 import { LoginFormValues } from '@/types';
 import { loginSchema } from '@/utils/form-schema/auth/login.schema';
 
@@ -16,6 +16,7 @@ type Props = {
   onSuccess?: () => void;
 };
 export function LoginForm({ onSuccess }: Props) {
+  const q = useQueryClient();
   const { register, handleSubmit } = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -30,6 +31,7 @@ export function LoginForm({ onSuccess }: Props) {
     mutationFn: login,
     mutationKey: ['login'],
     onSuccess(data) {
+      q.invalidateQueries({ queryKey: userSelfGetKey() });
       const accessToken = data.data.accessToken;
       if (accessToken) {
         setAuthCookie({

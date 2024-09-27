@@ -12,6 +12,7 @@ import {
 import {
   IconArrowLeft,
   IconArrowRight,
+  IconChevronLeft,
   IconLogout2,
 } from '@tabler/icons-react';
 import { useRouter } from 'next/navigation';
@@ -45,24 +46,19 @@ export function ReadingEvaluationHeader({
     <Stack gap={0} w="100%">
       <Group justify="space-between" w="100%" px="md" py={8}>
         <Group gap="md">
-          <Box hiddenFrom="xs">
-            <Logo size="xs" />
-          </Box>
-          <Box visibleFrom="xs">
-            <LogoAndText size="sm" />
-          </Box>
-        </Group>
-        <Group gap="xs">
           <ActionIcon
             color="dark"
-            variant="default"
+            variant="subtle"
             size="lg"
-            title="Quit"
+            title="Back"
             onClick={handleQuit}
+            radius="xl"
           >
-            <IconLogout2 size={16} />
+            <IconChevronLeft size={16} />
           </ActionIcon>
-
+          <Text fw={600}>Evaluation</Text>
+        </Group>
+        <Group gap="xs">
           <ActionIcon
             color="dark"
             variant="default"
