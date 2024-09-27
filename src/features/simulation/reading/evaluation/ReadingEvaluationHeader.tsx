@@ -1,24 +1,13 @@
 'use client';
 
-import {
-  ActionIcon,
-  Box,
-  Divider,
-  Group,
-  Paper,
-  Stack,
-  Text,
-} from '@mantine/core';
+import { ActionIcon, Divider, Group, Paper, Stack, Text } from '@mantine/core';
 import {
   IconArrowLeft,
   IconArrowRight,
   IconChevronLeft,
-  IconLogout2,
 } from '@tabler/icons-react';
 import { useRouter } from 'next/navigation';
 import React from 'react';
-
-import { Logo, LogoAndText } from '@/elements';
 
 type Props = {
   onNext?: () => void;
