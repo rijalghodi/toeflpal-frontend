@@ -52,10 +52,10 @@ export function RichTextEditor({
           <MantineRichTextEditor.Bold />
           <MantineRichTextEditor.Italic />
           <MantineRichTextEditor.Underline />
+          <MantineRichTextEditor.Highlight />
           {!minimalist && (
             <>
               <MantineRichTextEditor.ClearFormatting />
-              <MantineRichTextEditor.Highlight />
             </>
           )}
         </MantineRichTextEditor.ControlsGroup>
