@@ -1,12 +1,7 @@
 'use client';
 
 import { Group, NavLink, Stack, Text } from '@mantine/core';
-import {
-  IconAlignJustified,
-  IconBolt,
-  IconPlayerPlay,
-  IconSchool,
-} from '@tabler/icons-react';
+import { IconEditCircle, IconPlayerPlay } from '@tabler/icons-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React from 'react';
@@ -23,20 +18,20 @@ const userNavs = [
   //   icon: <IconBrandSpeedtest size={16} />,
   // },
   {
-    label: 'Simulation',
+    label: 'Simulation Test',
     href: routes.toeflList,
     icon: <IconPlayerPlay size={16} />,
   },
-  {
-    label: 'Practice',
-    href: routes.practiceList,
-    icon: <IconBolt size={16} />,
-  },
-  {
-    label: 'Lesson',
-    href: routes.lessonList,
-    icon: <IconSchool size={16} />,
-  },
+  // {
+  //   label: 'Practice',
+  //   href: routes.practiceList,
+  //   icon: <IconBolt size={16} />,
+  // },
+  // {
+  //   label: 'Lesson',
+  //   href: routes.lessonList,
+  //   icon: <IconSchool size={16} />,
+  // },
 ];
 
 const superAdminNavs = [
@@ -46,20 +41,25 @@ const superAdminNavs = [
     icon: <IconPlayerPlay size={16} />,
   },
   {
-    label: 'Practice',
-    href: routes.adminPracticeList,
-    icon: <IconBolt size={16} />,
+    label: 'Manage Simulations',
+    href: routes.adminToeflList,
+    icon: <IconEditCircle size={16} />,
   },
-  {
-    label: 'References',
-    href: routes.adminReferenceList,
-    icon: <IconAlignJustified size={16} />,
-  },
-  {
-    label: 'Lesson',
-    href: routes.adminLessonList,
-    icon: <IconSchool size={16} />,
-  },
+  // {
+  //   label: 'Practice',
+  //   href: routes.adminPracticeList,
+  //   icon: <IconBolt size={16} />,
+  // },
+  // {
+  //   label: 'References',
+  //   href: routes.adminReferenceList,
+  //   icon: <IconAlignJustified size={16} />,
+  // },
+  // {
+  //   label: 'Lesson',
+  //   href: routes.adminLessonList,
+  //   icon: <IconSchool size={16} />,
+  // },
 ];
 
 type Props = {

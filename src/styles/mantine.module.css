@@ -24,6 +24,7 @@
   align-items: start !important;
   box-shadow: var(--mantine-shadow-sm) !important;
   border: 1px solid var(--mantine-color-gray-3);
+  padding: 16px;
 }
 
 .notification-icon {
@@ -38,6 +39,11 @@
   min-height: 28px;
   display: flex;
   align-items: center;
+}
+
+.notification-loader::after {
+  /* width: 20px !important;
+  height: 20px !important; */
 }
 
 .modal-title {

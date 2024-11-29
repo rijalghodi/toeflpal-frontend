@@ -2,7 +2,6 @@ import {
   ActionIcon,
   Avatar,
   Button,
-  NavLink,
   Popover,
   Stack,
   Text,
@@ -43,7 +42,7 @@ export function UserAvatar() {
   }
 
   return (
-    <Popover radius="md" shadow="xs" width={200} position="bottom-end">
+    <Popover radius="md" shadow="xs" width={250} position="bottom-end">
       <Popover.Target>
         <ActionIcon
           variant="transparent"
@@ -54,18 +53,22 @@ export function UserAvatar() {
           <Avatar radius="xl" name={user?.email} color="indigo" />
         </ActionIcon>
       </Popover.Target>
-      <Popover.Dropdown p="xs">
-        <Stack gap={0}>
-          <Text fz="sm" px="sm" py="xs" c="indigo">
+      <Popover.Dropdown p="md">
+        <Stack gap={8}>
+          <Text fz="sm" fw={600}>
+            {user.roles[0]}
+          </Text>
+          <Text fz="sm">
             {truncate(user?.email, { length: 20, omission: '..' })}
           </Text>
-          <NavLink
+          <Button
             leftSection={<IconLogout size={16} />}
-            variant="subtle"
+            variant="light"
             color="dark"
             onClick={handleLogout}
-            label="Logout"
-          ></NavLink>
+          >
+            Logout
+          </Button>
         </Stack>
       </Popover.Dropdown>
     </Popover>

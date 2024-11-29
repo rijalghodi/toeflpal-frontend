@@ -160,6 +160,7 @@ export const theme: MantineProviderProps['theme'] = createTheme({
         title: classes['notification-title'],
         description: classes['notification-description'],
         icon: classes['notification-icon'],
+        loader: classes['notification-loader'],
       },
     }),
     Modal: Modal.extend({
@@ -179,14 +180,15 @@ export const theme: MantineProviderProps['theme'] = createTheme({
     Button: Button.extend({
       defaultProps: {
         loaderProps: {
-          type: 'dots',
+          type: 'oval',
         },
       },
     }),
 
     Loader: Loader.extend({
       defaultProps: {
-        type: 'dots',
+        type: 'oval',
+        size: 'xs',
       },
     }),
   },

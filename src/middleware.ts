@@ -5,7 +5,7 @@ import { routes } from './utils/constant/routes';
 
 const adminPath = ['/admin', '/form'];
 
-const userPath = ['/toefl', '/lesson', '/practice', '/dashboard'];
+const userPath = ['/toefl'];
 
 const authPath = ['/login', '/register', '/forgot-password'];
 
@@ -27,10 +27,6 @@ export async function middleware(request: NextRequest, response: NextResponse) {
   const isUserPage = userPath.find((path) => {
     return pathname.startsWith(path);
   });
-
-  if (isUserPage || (!isAuthPage && !isAdminPage)) {
-    return NextResponse.next();
-  }
 
   try {
     // --- Fetch user role information ---
@@ -69,11 +65,19 @@ export async function middleware(request: NextRequest, response: NextResponse) {
     return NextResponse.next();
   } catch {
     // Remove a cookie
-    response.cookies.delete('accessToken');
+    response?.cookies?.delete('accessToken');
     return NextResponse.redirect(`${homePage}`);
   }
 }
 
 export const config = {
-  matcher: [...authPath, ...userPath, ...adminPath],
+  // matcher: [...authPath, ...userPath, ...adminPath],
+  matcher: [
+    '/admin',
+    '/form',
+    '/toefl',
+    '/login',
+    '/register',
+    '/forgot-password',
+  ],
 };

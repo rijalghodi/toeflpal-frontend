@@ -16,27 +16,27 @@ import { useEffect, useState } from 'react';
 import { LogoAndText } from '@/elements/brand/LogoAndText';
 import { routes } from '@/utils/constant/routes';
 
-const navs = [
-  {
-    title: 'Simulation',
-    href: routes.toeflList,
-  },
-  {
-    title: 'Practice',
-    href: routes.practiceList,
-  },
-  {
-    title: 'Lessons',
-    href: routes.lessonList,
-  },
-];
+// const navs = [
+//   {
+//     title: 'Simulation Test',
+//     href: routes.toeflList,
+//   },
+//   {
+//     title: 'Practice',
+//     href: routes.practiceList,
+//   },
+//   {
+//     title: 'Lessons',
+//     href: routes.lessonList,
+//   },
+// ];
 
 export default function PublicLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const [opened, { toggle, close }] = useDisclosure();
+  const [opened, { toggle }] = useDisclosure();
 
   const [scrolled, setScrolled] = useState(false);
 
@@ -87,7 +87,7 @@ export default function PublicLayout({
           <Link href={routes.home}>
             <LogoAndText size="sm" />
           </Link>
-          <Group align="center" gap="xl" component="nav" visibleFrom="sm">
+          {/* <Group align="center" gap="xl" component="nav" visibleFrom="sm">
             {navs.map((item, i) => (
               <Anchor
                 underline="hover"
@@ -99,7 +99,7 @@ export default function PublicLayout({
                 {item.title}
               </Anchor>
             ))}
-          </Group>
+          </Group> */}
           <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
           <Group gap="md" visibleFrom="sm">
             <Button variant="light" size="sm" component={Link} href="/login">
@@ -136,7 +136,7 @@ export default function PublicLayout({
         </Stack>
       </AppShell.Main>
 
-      <AppShell.Aside py="md" px={4} bg="#f5fbff">
+      {/* <AppShell.Aside py="md" px={4} bg="#f5fbff">
         <Stack maw={200} mx="auto" pt="xl" pb="xl" gap="xl">
           {navs.map((item, i) => (
             <Anchor
@@ -161,7 +161,7 @@ export default function PublicLayout({
             </Button>
           </Stack>
         </Stack>
-      </AppShell.Aside>
+      </AppShell.Aside> */}
     </AppShell>
   );
 }

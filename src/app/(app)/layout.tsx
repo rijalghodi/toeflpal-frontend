@@ -1,15 +1,6 @@
 'use client';
 
-import {
-  ActionIcon,
-  AppShell,
-  Box,
-  Container,
-  Flex,
-  Group,
-} from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
-import { IconMenu3 } from '@tabler/icons-react';
+import { AppShell, Box, Container, Flex, Group } from '@mantine/core';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 
@@ -23,8 +14,6 @@ type Props = {
 };
 
 export default function AppLayout({ children }: Props) {
-  const [opened, { toggle }] = useDisclosure();
-
   const [scrolled, setScrolled] = useState(false);
 
   // FIXME: It doesnt work
@@ -48,11 +37,11 @@ export default function AppLayout({ children }: Props) {
     <AppShell
       header={{ height: { base: 54, sm: 60 }, offset: true }}
       footer={{ height: { base: 70, sm: 0 }, offset: true }}
-      navbar={{
-        width: 200,
-        breakpoint: 'sm',
-        collapsed: { desktop: opened, mobile: !opened },
-      }}
+      // navbar={{
+      //   width: 200,
+      //   breakpoint: 'sm',
+      //   collapsed: { desktop: opened, mobile: !opened },
+      // }}
       withBorder={false}
       px={{ base: 'md', xs: 'lg', sm: 'xl' }}
     >
@@ -71,9 +60,10 @@ export default function AppLayout({ children }: Props) {
           w="100%"
           pl="md"
           pr="md"
+          maw={1000}
         >
           <Flex gap={{ base: 'md', sm: 'lg' }}>
-            <ActionIcon
+            {/* <ActionIcon
               size="lg"
               onClick={toggle}
               variant="subtle"
@@ -81,7 +71,7 @@ export default function AppLayout({ children }: Props) {
               visibleFrom="sm"
             >
               <IconMenu3 />
-            </ActionIcon>
+            </ActionIcon> */}
             <Box visibleFrom="xs">
               <Link href={routes.home}>
                 <LogoAndText size="sm" />
@@ -119,7 +109,7 @@ export default function AppLayout({ children }: Props) {
       >
         <Navbar mobile />
       </AppShell.Footer>
-      <AppShell.Navbar
+      {/* <AppShell.Navbar
         visibleFrom="sm"
         py="md"
         px="sm"
@@ -131,7 +121,7 @@ export default function AppLayout({ children }: Props) {
         }}
       >
         <Navbar />
-      </AppShell.Navbar>
+      </AppShell.Navbar> */}
     </AppShell>
   );
 }

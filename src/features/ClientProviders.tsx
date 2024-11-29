@@ -1,6 +1,5 @@
 'use client';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { AppProgressBar } from 'next-nprogress-bar';
 import React from 'react';
 
@@ -20,7 +19,7 @@ export function ClientProviders({ children }: Props) {
   });
   return (
     <QueryClientProvider client={queryClient}>
-      <ReactQueryDevtools initialIsOpen={false} position="bottom" />
+      {/* <ReactQueryDevtools initialIsOpen={false} position="bottom" /> */}
       <AppProgressBar
         height="3px"
         color="#5c7cfa"
